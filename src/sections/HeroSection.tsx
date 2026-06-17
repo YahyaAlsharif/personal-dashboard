@@ -1,3 +1,4 @@
+import profilePicture from '../assets/profile/profile-picture.png';
 import { heroLinks, profile } from '../data/profile';
 
 export function HeroSection() {
@@ -40,13 +41,15 @@ export function HeroSection() {
 
         <div className="mx-auto w-full max-w-sm">
           <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-card)] p-4 shadow-xl shadow-slate-950/10">
-            <div className="grid aspect-square place-items-center rounded-lg bg-[var(--color-profile)] text-center">
-              <div>
-                <div className="mx-auto grid h-28 w-28 place-items-center rounded-full border border-white/40 bg-white/20 text-4xl font-semibold text-white shadow-lg">
-                  YA
-                </div>
-                <p className="mt-6 text-xl font-semibold text-white">{profile.name}</p>
-                <p className="mt-2 px-6 text-sm leading-6 text-white/85">{profile.location}</p>
+            <div className="overflow-hidden rounded-lg bg-[var(--color-profile)]">
+              <img
+                src={profilePicture}
+                alt="Yahya Al-Sharif"
+                className="aspect-[4/5] w-full object-cover object-center"
+              />
+              <div className="px-5 py-5 text-center">
+                <p className="text-xl font-semibold text-white">{profile.name}</p>
+                <p className="mt-2 text-sm leading-6 text-white/85">{profile.location}</p>
               </div>
             </div>
           </div>
