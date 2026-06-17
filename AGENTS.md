@@ -4,17 +4,18 @@
 
 This repository is for a static, serverless personal dashboard / portfolio website for Yahya Al-Sharif.
 
-The site should present:
+The site should present Yahya in a professional, polished, and honest way:
 
-* Yahya’s personal introduction.
+* Personal introduction.
 * Software Engineering and AI background.
 * KAUST Academy AI journey.
+* Education.
 * Projects such as ESAS and Home AI.
 * Skills and tools.
 * CV preview/download.
 * Contact links for LinkedIn and email.
 
-The project must remain simple, clean, and easy to deploy as a static website.
+The project must remain simple, clean, public-safe, and easy to deploy as a static website.
 
 ## Core Architecture Rules
 
@@ -36,9 +37,184 @@ Preferred stack:
 * TypeScript
 * Vite
 * Tailwind CSS
-* Optional lightweight animation library, only if needed
+
+Optional later:
+
+* Lightweight animation library only if needed and approved.
+* Lightweight localization approach only when Arabic support is intentionally started.
 
 Do not introduce extra libraries unless they clearly improve the project and are explained before installation.
+
+## Primary Website Structure
+
+The website should be a single-page dashboard, not a multi-page app.
+
+Preferred section order:
+
+1. Hero / Greeting
+2. About Me
+3. Education & KAUST Academy
+4. Projects
+5. CV
+6. Contact
+7. Back to Top control
+
+Use anchor navigation instead of routing.
+
+Hero buttons should scroll to page sections:
+
+* About Me
+* Education
+* Projects
+* Contact
+
+Example section anchors:
+
+* `#about`
+* `#education`
+* `#projects`
+* `#contact`
+
+Do not add React Router unless Yahya explicitly approves a multi-page structure later.
+
+## Dashboard Layout Rules
+
+The page should feel like a modern personal dashboard.
+
+Design goals:
+
+* Clean modern layout.
+* Professional first impression.
+* Strong hero section with Yahya’s picture and name.
+* Clear short introduction.
+* Dashboard-style cards.
+* Soft gradients.
+* Subtle borders.
+* Clean spacing.
+* Good typography.
+* Responsive desktop and mobile layout.
+* Smooth section scrolling.
+* Clear call-to-action buttons.
+* Back-to-top button near the bottom of the page.
+
+The site should be polished, but not distracting.
+
+Avoid:
+
+* Overly flashy effects.
+* Busy animations.
+* Gaming-style visuals.
+* Forced full-screen sections everywhere.
+* Empty vertical space.
+* Design choices that reduce readability.
+
+## Page Height and Scrolling Rules
+
+The page height should be content-driven.
+
+* The hero section may be large because it is the landing area.
+* Other sections should grow naturally based on their content.
+* Do not force every section to use `min-height: 100vh`.
+* If a section has little content, it should stay compact.
+* The page should scroll only until the real content ends.
+* The back-to-top control should appear at or near the bottom of the page.
+
+## Light Mode and Dark Mode Rules
+
+The site should support light mode and dark mode.
+
+Behavior expectations:
+
+* Add a clear theme toggle.
+* Respect the user’s saved preference if implemented.
+* Prefer `localStorage` for remembering the selected mode.
+* If no saved preference exists, it is acceptable to use the system preference.
+* Both modes must look intentional and polished.
+* Do not make dark mode an afterthought.
+* Check contrast in both modes.
+* Avoid hardcoded colors scattered across many components.
+
+Implementation preference:
+
+* Use a simple app-level theme state or class/data attribute.
+* Keep theme logic small and easy to understand.
+* Do not add a theme library unless Yahya approves it.
+
+## Future Arabic Mode Rules
+
+Arabic support is planned for later, not part of the first English UI unless Yahya explicitly asks for it.
+
+When Arabic mode is implemented:
+
+* Do not blindly mirror the entire layout.
+* Do not reorder navigation buttons.
+* Do not reorder the main dashboard cards unless Yahya approves it.
+* Keep the visual structure stable when switching languages.
+* Translate text content.
+* Arabic text should use proper `dir="rtl"` where needed.
+* Arabic paragraphs should align naturally to the right.
+* English text should remain `ltr`.
+* The button order should stay visually consistent across English and Arabic.
+* Avoid confusing layout jumps when changing language.
+
+Preferred future approach:
+
+* Keep content in structured data files.
+* Start with English content first.
+* Later add Arabic content as separate translation data.
+* Apply RTL behavior at the text/content level, not by globally flipping the whole UI without control.
+
+## Content Source Rules
+
+Use the files under `docs/` as content references.
+
+Current expected references:
+
+* `docs/cv.md` for CV/profile/education/projects/skills content.
+* `docs/links.md` for LinkedIn and email contact links.
+* `docs/dashboard-content.en.md` for the planned English dashboard content outline, if present.
+
+If a public CV PDF exists in `docs/`, it may be copied or referenced for placement under `public/cv/` when implementing the CV download section.
+
+Do not hardcode all content directly inside section components. Prefer structured data files such as:
+
+* `src/data/profile.ts`
+* `src/data/education.ts`
+* `src/data/projects.ts`
+* `src/data/skills.ts`
+* `src/data/contact.ts`
+
+## Content Accuracy Rules
+
+The portfolio should present Yahya honestly.
+
+Do not claim that a project is completed if it is planned, in progress, or only conceptual.
+
+Use clear labels such as:
+
+* Completed
+* In progress
+* Planned
+* Academic project
+* Graduation project
+
+For KAUST Academy:
+
+* Keep the wording professional and accurate.
+* Mention completed stages only when supported by the provided content.
+* Mention Stage 4 as accepted/upcoming/in progress unless Yahya says it is completed.
+* Do not overstate the summer program before completion.
+
+For ESAS:
+
+* Describe it as a graduation project focused on authentic Saudi tourism experiences.
+* Mention Yahya’s official role as Coordinator if relevant.
+* Do not claim sole ownership.
+
+For Home AI:
+
+* Describe it as a privacy-focused AI project if included.
+* Mark it as planned/current unless Yahya says it is completed.
 
 ## Plan-First Rule
 
@@ -80,6 +256,7 @@ All code should be:
 * Modular
 * Easy to maintain
 * Responsive on desktop and mobile
+* Type-safe
 * Free from unnecessary complexity
 
 Avoid:
@@ -98,57 +275,35 @@ Avoid:
 
 Prefer:
 
-* Small components
-* Clear folder structure
-* Local data files for portfolio content
-* Reusable UI sections
-* Descriptive names
-* Minimal, focused changes
+* Small components.
+* Clear folder structure.
+* Local data files for portfolio content.
+* Reusable UI sections.
+* Descriptive names.
+* Minimal, focused changes.
+* Simple CSS/Tailwind patterns.
 
-## UI and Design Standard
+## Accessibility and UX Rules
 
-The website should feel polished and modern, but not overly complex.
+The site should be usable and professional.
 
-Design expectations:
+Follow these expectations:
 
-* Clean dashboard-style layout.
-* Strong hero section.
-* Clear section hierarchy.
-* Smooth spacing.
-* Good typography.
-* Mobile-friendly layout.
-* Professional color usage.
-* Accessible contrast.
-* Buttons and links should be obvious.
-* Animations should be subtle and not distracting.
-
-Do not add flashy effects that hurt readability, performance, or professionalism.
-
-## Content Rules
-
-The portfolio should present Yahya honestly.
-
-Do not claim that a project is completed if it is planned, in progress, or only conceptual.
-
-Use clear labels such as:
-
-* Completed
-* In progress
-* Planned
-* Academic project
-* Graduation project
-
-For KAUST Academy, keep the wording professional and accurate.
-
-For ESAS, describe it as a graduation project focused on authentic Saudi tourism experiences.
-
-For Home AI, describe it as a privacy-focused AI project if included before completion.
+* Use semantic HTML where possible.
+* Use proper section IDs for anchor navigation.
+* Buttons and links should be keyboard accessible.
+* Links should have clear labels.
+* External links should be understandable.
+* Images should have useful alt text.
+* Text contrast should be readable in light and dark mode.
+* Smooth scrolling should not break normal browser behavior.
+* Do not hide important information behind hover-only interactions.
 
 ## Testing and Validation Rule
 
 After implementation, run the appropriate validation commands when available.
 
-For a React/Vite project, this usually includes:
+For this React/Vite project, this usually includes:
 
 * `npm run build`
 * `npm run lint` if linting is configured
@@ -160,11 +315,11 @@ When changes affect UI behavior, manually review or explain what should be check
 
 Before reporting completion, include:
 
-* What changed
-* Files changed
-* Commands run
-* Results of validation
-* Any remaining risks or follow-up tasks
+* What changed.
+* Files changed.
+* Commands run.
+* Results of validation.
+* Any remaining risks or follow-up tasks.
 
 ## Regression Check Rule
 
@@ -172,10 +327,16 @@ After meaningful changes, verify that the following still work:
 
 * The site starts locally.
 * The homepage renders.
-* Navigation or section scrolling works.
-* Main sections are still visible.
-* Contact links still work.
-* CV link or preview still works if implemented.
+* Smooth scrolling / anchor navigation works.
+* Hero section is visible.
+* About section is visible.
+* Education / KAUST section is visible.
+* Projects section is visible.
+* CV section is visible if implemented.
+* Contact section is visible.
+* Contact links work if implemented.
+* CV link or preview works if implemented.
+* Light/dark mode works if implemented.
 * Mobile layout does not obviously break.
 * Build output succeeds.
 
@@ -193,9 +354,9 @@ The `.gitignore` should ignore real generated or temporary files, including comm
 * `.env`
 * `.env.local`
 * `.env.*.local`
-* log files
-* temporary editor files
-* OS files such as `.DS_Store` and `Thumbs.db`
+* log files.
+* temporary editor files.
+* OS files such as `.DS_Store` and `Thumbs.db`.
 
 Do not ignore important source files.
 
@@ -229,6 +390,10 @@ src/
   main.tsx
 public/
   cv/
+docs/
+  cv.md
+  links.md
+  dashboard-content.en.md
 ```
 
 Adjust only if the actual project structure requires it.
@@ -239,11 +404,11 @@ Do not expose private information.
 
 Do not include:
 
-* Passwords
-* API keys
-* Private tokens
-* Sensitive personal data
-* Private documents not meant for public GitHub
+* Passwords.
+* API keys.
+* Private tokens.
+* Sensitive personal data.
+* Private documents not meant for public GitHub.
 
 Contact links should use public/professional contact information only.
 
