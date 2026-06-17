@@ -1,19 +1,62 @@
+import { useEffect, useState } from 'react';
+
+import { ThemeToggle } from './components/ThemeToggle';
+import { AboutSection } from './sections/AboutSection';
+import { BackToTop } from './sections/BackToTop';
+import { ContactSection } from './sections/ContactSection';
+import { CvSection } from './sections/CvSection';
+import { EducationSection } from './sections/EducationSection';
+import { HeroSection } from './sections/HeroSection';
+import { ProjectsSection } from './sections/ProjectsSection';
+
+type Theme = 'light' | 'dark';
+
+const getInitialTheme = (): Theme => {
+  const savedTheme = localStorage.getItem('theme');
+
+  if (savedTheme === 'light' || savedTheme === 'dark') {
+    return savedTheme;
+  }
+
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+};
+
 function App() {
+  const [theme, setTheme] = useState<Theme>(getInitialTheme);
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((currentTheme) => (currentTheme === 'dark' ? 'light' : 'dark'));
+  };
+
   return (
-    <main className="min-h-screen bg-slate-950 text-slate-100">
-      <section className="mx-auto flex min-h-screen w-full max-w-5xl flex-col justify-center px-6 py-16">
-        <p className="mb-4 text-sm font-medium uppercase tracking-wide text-cyan-300">
-          Personal Dashboard
-        </p>
-        <h1 className="max-w-3xl text-4xl font-semibold leading-tight sm:text-5xl">
-          Yahya Al-Sharif
-        </h1>
-        <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-300">
-          A clean React, TypeScript, Vite, and Tailwind CSS foundation is ready
-          for the portfolio/dashboard build.
-        </p>
-      </section>
-    </main>
+    <div className="min-h-screen bg-[var(--color-page)] text-[var(--color-body)]">
+      <header className="sticky top-0 z-20 border-b border-[var(--color-border)] bg-[var(--color-header)] backdrop-blur">
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4 sm:px-6 lg:px-8">
+          <a
+            href="#top"
+            className="text-sm font-semibold text-[var(--color-heading)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
+          >
+            Yahya Al-Sharif
+          </a>
+          <ThemeToggle theme={theme} onToggle={toggleTheme} />
+        </div>
+      </header>
+
+      <main>
+        <HeroSection />
+        <AboutSection />
+        <EducationSection />
+        <ProjectsSection />
+        <CvSection />
+        <ContactSection />
+        <BackToTop />
+      </main>
+    </div>
   );
 }
 
