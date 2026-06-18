@@ -115,6 +115,14 @@ a {
   transform: translateY(0);
 }
 
+.language-content {
+  animation: language-fade 260ms ease-out;
+}
+
+.localized-text {
+  text-align: right;
+}
+
 .action-button {
   display: inline-flex;
   align-items: center;
@@ -164,6 +172,11 @@ a {
     text-align: justify;
     text-align-last: left;
   }
+
+  .prose-justify.localized-text {
+    text-align: justify;
+    text-align-last: right;
+  }
 }
 
 @media (min-width: 1024px) {
@@ -177,9 +190,25 @@ a {
     scroll-behavior: auto;
   }
 
+  .language-content {
+    animation: none;
+  }
+
   .reveal {
     opacity: 1;
     transform: none;
     transition: none;
+  }
+}
+
+@keyframes language-fade {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

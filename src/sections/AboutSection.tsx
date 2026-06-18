@@ -4,34 +4,43 @@ import cnnCourseImage from '../assets/learning/cnn-course.png';
 import { DashboardCard } from '../components/DashboardCard';
 import { Reveal } from '../components/Reveal';
 import { SectionHeading } from '../components/SectionHeading';
-import {
-  aboutIntro,
-  aboutJumpLinks,
-  artificialIntelligenceStory,
-  softwareEngineeringStory,
-} from '../data/about';
-import { skillGroups } from '../data/skills';
+import { useLanguage } from '../context/useLanguage';
+import { localizedContent } from '../data/content';
 
 export function AboutSection() {
+  const { language, isArabic } = useLanguage();
+  const { about, skills } = localizedContent[language];
+  const textDirection = isArabic ? 'rtl' : 'ltr';
+  const localizedClass = isArabic ? 'localized-text' : '';
+  const softwareEngineeringStory = about.softwareEngineering;
+  const artificialIntelligenceStory = about.artificialIntelligence;
+
   return (
     <section id="about" className="scroll-mt-24 py-16">
       <div className="page-container">
         <SectionHeading
-          eyebrow="About"
-          title="About Me"
-          description={aboutIntro.subtitle}
+          eyebrow={about.eyebrow}
+          title={about.title}
+          description={about.description}
+          isArabic={isArabic}
         />
 
         <div className="w-full space-y-5 text-base leading-8 text-[var(--color-muted)] sm:text-lg">
-          {aboutIntro.paragraphs.map((paragraph, index) => (
-            <Reveal as="p" key={paragraph} delay={index * 80} className="prose-justify">
+          {about.paragraphs.map((paragraph, index) => (
+            <Reveal
+              as="p"
+              key={paragraph}
+              delay={index * 80}
+              dir={textDirection}
+              className={`prose-justify ${localizedClass}`}
+            >
               {paragraph}
             </Reveal>
           ))}
         </div>
 
         <Reveal as="div" delay={140} className="mt-7 flex flex-wrap gap-3">
-          {aboutJumpLinks.map((link) => (
+          {about.jumpLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
@@ -50,13 +59,20 @@ export function AboutSection() {
             <div>
               <Reveal
                 as="h3"
-                className="text-2xl font-semibold text-[var(--color-heading)] sm:text-3xl"
+                dir={textDirection}
+                className={`text-2xl font-semibold text-[var(--color-heading)] sm:text-3xl ${localizedClass}`}
               >
                 {softwareEngineeringStory.title}
               </Reveal>
               <div className="mt-6 max-w-4xl space-y-5 text-base leading-8 text-[var(--color-muted)]">
                 {softwareEngineeringStory.paragraphs.map((paragraph, index) => (
-                  <Reveal as="p" key={paragraph} delay={index * 70} className="prose-justify">
+                  <Reveal
+                    as="p"
+                    key={paragraph}
+                    delay={index * 70}
+                    dir={textDirection}
+                    className={`prose-justify ${localizedClass}`}
+                  >
                     {paragraph}
                   </Reveal>
                 ))}
@@ -64,14 +80,17 @@ export function AboutSection() {
             </div>
 
             <aside className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
-              {softwareEngineeringStory.sidebars.map((sidebar, index) => (
+              {softwareEngineeringStory.sidebars?.map((sidebar, index) => (
                 <DashboardCard
                   key={sidebar.title}
                   as="div"
                   className="p-5"
                   revealDelay={index * 80}
                 >
-                  <h4 className="text-sm font-semibold uppercase text-[var(--color-muted)]">
+                  <h4
+                    dir={textDirection}
+                    className={`text-sm font-semibold uppercase text-[var(--color-muted)] ${localizedClass}`}
+                  >
                     {sidebar.title}
                   </h4>
                   <div className="mt-4 flex flex-wrap gap-2">
@@ -80,7 +99,7 @@ export function AboutSection() {
                         <a
                           key={item}
                           href={sidebar.href}
-                          aria-label={`View ${item} in the projects section`}
+                          aria-label={about.sidebarLinkLabel(item)}
                           className="action-button rounded-md border px-3 py-1.5 text-xs font-semibold transition"
                         >
                           {item}
@@ -88,7 +107,8 @@ export function AboutSection() {
                       ) : (
                         <span
                           key={item}
-                          className="rounded-md bg-[var(--color-chip)] px-3 py-1.5 text-xs font-medium text-[var(--color-chip-text)]"
+                          dir={textDirection}
+                          className={`rounded-md bg-[var(--color-chip)] px-3 py-1.5 text-xs font-medium text-[var(--color-chip-text)] ${localizedClass}`}
                         >
                           {item}
                         </span>
@@ -109,14 +129,20 @@ export function AboutSection() {
             <div>
               <Reveal
                 as="h3"
-                className="text-2xl font-semibold text-[var(--color-heading)] sm:text-3xl"
+                dir={textDirection}
+                className={`text-2xl font-semibold text-[var(--color-heading)] sm:text-3xl ${localizedClass}`}
               >
                 {artificialIntelligenceStory.title}
               </Reveal>
               <div className="mt-6 max-w-4xl space-y-5 text-base leading-8 text-[var(--color-muted)]">
                 {artificialIntelligenceStory.paragraphs.map((paragraph, index) => (
                   <Fragment key={paragraph}>
-                    <Reveal as="p" delay={index * 70} className="prose-justify">
+                    <Reveal
+                      as="p"
+                      delay={index * 70}
+                      dir={textDirection}
+                      className={`prose-justify ${localizedClass}`}
+                    >
                       {paragraph}
                     </Reveal>
                     {index === 4 ? (
@@ -127,11 +153,13 @@ export function AboutSection() {
                       >
                         <img
                           src={cnnCourseImage}
-                          alt={artificialIntelligenceStory.courseImage.alt}
+                          alt={artificialIntelligenceStory.courseImage?.alt ?? ''}
                           className="w-full rounded-md border border-[var(--color-border)] object-contain"
                         />
                         <figcaption className="mt-3 text-sm leading-6 text-[var(--color-muted)]">
-                          {artificialIntelligenceStory.courseImage.caption}
+                          <span dir={textDirection} className={localizedClass}>
+                            {artificialIntelligenceStory.courseImage?.caption}
+                          </span>
                         </figcaption>
                       </Reveal>
                     ) : null}
@@ -142,14 +170,18 @@ export function AboutSection() {
 
             <aside>
               <DashboardCard as="div" className="p-5">
-                <h4 className="text-sm font-semibold uppercase text-[var(--color-muted)]">
-                  Highlights
+                <h4
+                  dir={textDirection}
+                  className={`text-sm font-semibold uppercase text-[var(--color-muted)] ${localizedClass}`}
+                >
+                  {artificialIntelligenceStory.highlightsTitle}
                 </h4>
                 <div className="mt-4 flex flex-wrap gap-2">
-                  {artificialIntelligenceStory.highlights.map((highlight) => (
+                  {artificialIntelligenceStory.highlights?.map((highlight) => (
                     <span
                       key={highlight}
-                      className="rounded-md bg-[var(--color-chip)] px-3 py-1.5 text-xs font-medium text-[var(--color-chip-text)]"
+                      dir={textDirection}
+                      className={`rounded-md bg-[var(--color-chip)] px-3 py-1.5 text-xs font-medium text-[var(--color-chip-text)] ${localizedClass}`}
                     >
                       {highlight}
                     </span>
@@ -162,18 +194,23 @@ export function AboutSection() {
         </div>
 
         <div className="mt-14 border-t border-[var(--color-border)] pt-8">
-          <Reveal as="h3" className="text-lg font-semibold text-[var(--color-heading)]">
-            Skills & Tools
+          <Reveal
+            as="h3"
+            dir={textDirection}
+            className={`text-lg font-semibold text-[var(--color-heading)] ${localizedClass}`}
+          >
+            {skills.title}
           </Reveal>
           <Reveal
             as="p"
             delay={80}
-            className="mt-2 max-w-3xl text-sm leading-6 text-[var(--color-muted)]"
+            dir={textDirection}
+            className={`mt-2 max-w-3xl text-sm leading-6 text-[var(--color-muted)] ${localizedClass}`}
           >
-            A compact view of the tools, foundations, and practices that support my work.
+            {skills.description}
           </Reveal>
           <div className="mt-5 grid gap-y-6 md:grid-cols-2 md:gap-x-4 xl:grid-cols-5">
-            {skillGroups.map((group, index) => (
+            {skills.groups.map((group, index) => (
               <Reveal
                 as="div"
                 key={group.title}
@@ -182,18 +219,23 @@ export function AboutSection() {
                   'pl-0',
                   index % 2 === 1 ? 'md:border-l md:border-[var(--color-border)] md:pl-4' : '',
                   index > 0 ? 'xl:border-l xl:border-[var(--color-border)] xl:pl-4' : '',
+                  localizedClass,
                 ]
                   .filter(Boolean)
                   .join(' ')}
               >
-                <h3 className="text-sm font-semibold text-[var(--color-heading)]">
+                <h3
+                  dir={textDirection}
+                  className={`text-sm font-semibold text-[var(--color-heading)] ${localizedClass}`}
+                >
                   {group.title}
                 </h3>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {group.skills.map((skill) => (
                     <span
                       key={skill}
-                      className="skill-chip rounded-md bg-[var(--color-chip)] px-3 py-1 text-xs font-medium leading-snug text-[var(--color-chip-text)]"
+                      dir={textDirection}
+                      className={`skill-chip rounded-md bg-[var(--color-chip)] px-3 py-1 text-xs font-medium leading-snug text-[var(--color-chip-text)] ${localizedClass}`}
                     >
                       {skill}
                     </span>

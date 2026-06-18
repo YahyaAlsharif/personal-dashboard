@@ -3,15 +3,21 @@ type Theme = 'light' | 'dark';
 type ThemeToggleProps = {
   theme: Theme;
   onToggle: () => void;
+  labels: {
+    light: string;
+    dark: string;
+    switchToLight: string;
+    switchToDark: string;
+  };
 };
 
-export function ThemeToggle({ theme, onToggle }: ThemeToggleProps) {
+export function ThemeToggle({ theme, onToggle, labels }: ThemeToggleProps) {
   const isDark = theme === 'dark';
 
   return (
     <button
       type="button"
-      aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
+      aria-label={isDark ? labels.switchToLight : labels.switchToDark}
       onClick={onToggle}
       className="inline-flex items-center gap-3 rounded-full border border-[var(--color-border)] bg-[var(--color-button)] px-3 py-2 text-sm font-medium text-[var(--color-button-text)] shadow-sm transition hover:border-[var(--color-border-strong)] hover:bg-[var(--color-button-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
     >
@@ -54,7 +60,7 @@ export function ThemeToggle({ theme, onToggle }: ThemeToggleProps) {
           <path d="M20.99 13.12A8 8 0 1 1 10.88 3.01 6.5 6.5 0 0 0 20.99 13.12Z" />
         </svg>
       </span>
-      <span>{isDark ? 'Dark' : 'Light'}</span>
+      <span>{isDark ? labels.dark : labels.light}</span>
     </button>
   );
 }

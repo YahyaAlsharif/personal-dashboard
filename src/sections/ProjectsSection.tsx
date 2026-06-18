@@ -1,18 +1,24 @@
 import { DashboardCard } from '../components/DashboardCard';
 import { SectionHeading } from '../components/SectionHeading';
-import { projects } from '../data/projects';
+import { useLanguage } from '../context/useLanguage';
+import { localizedContent } from '../data/content';
 
 export function ProjectsSection() {
-  const featuredProjects = projects.filter((project) => project.featured);
-  const supportingProjects = projects.filter((project) => !project.featured);
+  const { language, isArabic } = useLanguage();
+  const { projects } = localizedContent[language];
+  const featuredProjects = projects.items.filter((project) => project.featured);
+  const supportingProjects = projects.items.filter((project) => !project.featured);
+  const textDirection = isArabic ? 'rtl' : 'ltr';
+  const localizedClass = isArabic ? 'localized-text' : '';
 
   return (
     <section id="projects" className="scroll-mt-24 py-14">
       <div className="page-container">
         <SectionHeading
-          eyebrow="Projects"
-          title="Projects"
-          description="The work that reflects my software engineering practice, AI direction, and public portfolio development."
+          eyebrow={projects.eyebrow}
+          title={projects.title}
+          description={projects.description}
+          isArabic={isArabic}
         />
 
         <div className="flex flex-col gap-5">
@@ -29,38 +35,39 @@ export function ProjectsSection() {
                     <span className="rounded-md bg-[var(--color-accent-soft)] px-3 py-1 text-xs font-semibold text-[var(--color-accent-strong)]">
                       {project.status}
                     </span>
-                    {project.role ? (
+                  {project.role ? (
                       <span className="rounded-md bg-[var(--color-chip)] px-3 py-1 text-xs font-semibold text-[var(--color-chip-text)]">
-                        Role: {project.role}
+                        {projects.roleLabel}: {project.role}
                       </span>
                     ) : null}
                   </div>
-                  <h3 className="mt-4 text-2xl font-semibold text-[var(--color-heading)]">
+                  <h3
+                    dir={textDirection}
+                    className={`mt-4 text-2xl font-semibold text-[var(--color-heading)] ${localizedClass}`}
+                  >
                     {project.name}
                   </h3>
                 </div>
-                {project.logoSrc ? (
-                  <div className="grid h-24 w-24 flex-none place-items-center rounded-lg border border-[var(--color-border)] bg-white p-3 shadow-sm shadow-black/5 sm:h-28 sm:w-28">
-                    <img
-                      src={project.logoSrc}
-                      alt={project.logoAlt}
-                      className="max-h-full max-w-full object-contain"
-                    />
-                  </div>
-                ) : null}
               </div>
-              <p className="prose-justify mt-4 text-sm leading-6 text-[var(--color-muted)]">
+              <p
+                dir={textDirection}
+                className={`prose-justify mt-4 text-sm leading-6 text-[var(--color-muted)] ${localizedClass}`}
+              >
                 {project.description}
               </p>
               {project.details?.map((detail) => (
                 <p
                   key={detail}
-                  className="prose-justify mt-4 text-sm leading-6 text-[var(--color-muted)]"
+                  dir={textDirection}
+                  className={`prose-justify mt-4 text-sm leading-6 text-[var(--color-muted)] ${localizedClass}`}
                 >
                   {detail}
                 </p>
               ))}
-              <ul className="mt-5 space-y-3 text-sm leading-6 text-[var(--color-muted)]">
+              <ul
+                dir={textDirection}
+                className={`mt-5 space-y-3 text-sm leading-6 text-[var(--color-muted)] ${localizedClass}`}
+              >
                 {project.points.map((point) => (
                   <li key={point} className="flex gap-3">
                     <span
@@ -75,7 +82,8 @@ export function ProjectsSection() {
                 {project.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="rounded-md bg-[var(--color-chip)] px-2.5 py-1 text-xs font-medium text-[var(--color-chip-text)]"
+                    dir={textDirection}
+                    className={`rounded-md bg-[var(--color-chip)] px-2.5 py-1 text-xs font-medium text-[var(--color-chip-text)] ${localizedClass}`}
                   >
                     {tag}
                   </span>
@@ -98,22 +106,35 @@ export function ProjectsSection() {
                   </span>
                   {project.role ? (
                     <span className="rounded-md bg-[var(--color-chip)] px-3 py-1 text-xs font-semibold text-[var(--color-chip-text)]">
-                      Role: {project.role}
+                      {projects.roleLabel}: {project.role}
                     </span>
                   ) : null}
                 </div>
-                <h3 className="mt-5 text-xl font-semibold text-[var(--color-heading)]">
+                <h3
+                  dir={textDirection}
+                  className={`mt-5 text-xl font-semibold text-[var(--color-heading)] ${localizedClass}`}
+                >
                   {project.name}
                 </h3>
-                <p className="mt-4 text-sm leading-6 text-[var(--color-muted)]">
+                <p
+                  dir={textDirection}
+                  className={`mt-4 text-sm leading-6 text-[var(--color-muted)] ${localizedClass}`}
+                >
                   {project.description}
                 </p>
                 {project.details?.map((detail) => (
-                  <p key={detail} className="mt-4 text-sm leading-6 text-[var(--color-muted)]">
+                  <p
+                    key={detail}
+                    dir={textDirection}
+                    className={`mt-4 text-sm leading-6 text-[var(--color-muted)] ${localizedClass}`}
+                  >
                     {detail}
                   </p>
                 ))}
-                <ul className="mt-5 space-y-3 text-sm leading-6 text-[var(--color-muted)]">
+                <ul
+                  dir={textDirection}
+                  className={`mt-5 space-y-3 text-sm leading-6 text-[var(--color-muted)] ${localizedClass}`}
+                >
                   {project.points.map((point) => (
                     <li key={point} className="flex gap-3">
                       <span
@@ -128,7 +149,8 @@ export function ProjectsSection() {
                   {project.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-md bg-[var(--color-chip)] px-2.5 py-1 text-xs font-medium text-[var(--color-chip-text)]"
+                      dir={textDirection}
+                      className={`rounded-md bg-[var(--color-chip)] px-2.5 py-1 text-xs font-medium text-[var(--color-chip-text)] ${localizedClass}`}
                     >
                       {tag}
                     </span>

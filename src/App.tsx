@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
 
+import { LanguageToggle } from './components/LanguageToggle';
 import { ThemeToggle } from './components/ThemeToggle';
+import { LanguageProvider } from './context/LanguageContext';
+import { useLanguage } from './context/useLanguage';
+import { localizedContent } from './data/content';
 import { AboutSection } from './sections/AboutSection';
 import { BackToTop } from './sections/BackToTop';
 import { ContactSection } from './sections/ContactSection';
@@ -22,8 +26,10 @@ const getInitialTheme = (): Theme => {
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 };
 
-function App() {
+function Dashboard() {
   const [theme, setTheme] = useState<Theme>(getInitialTheme);
+  const { language, setLanguage } = useLanguage();
+  const content = localizedContent[language];
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
@@ -37,18 +43,25 @@ function App() {
   return (
     <div className="min-h-screen bg-[var(--color-page)] text-[var(--color-body)]">
       <header className="sticky top-0 z-20 border-b border-[var(--color-border)] bg-[var(--color-header)] backdrop-blur">
-        <div className="page-container flex items-center justify-between gap-4 py-4">
+        <div className="page-container flex flex-wrap items-center justify-between gap-3 py-4">
           <a
             href="#top"
             className="text-sm font-semibold text-[var(--color-heading)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
           >
-            Yahya Alsharif
+            {content.header.brand}
           </a>
-          <ThemeToggle theme={theme} onToggle={toggleTheme} />
+          <div className="flex flex-wrap items-center justify-end gap-3">
+            <LanguageToggle language={language} onChange={setLanguage} />
+            <ThemeToggle
+              theme={theme}
+              onToggle={toggleTheme}
+              labels={content.header.theme}
+            />
+          </div>
         </div>
       </header>
 
-      <main>
+      <main key={language} className="language-content">
         <HeroSection />
         <AboutSection />
         <EducationSection />
@@ -59,6 +72,14 @@ function App() {
         <BackToTop />
       </main>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <LanguageProvider>
+      <Dashboard />
+    </LanguageProvider>
   );
 }
 

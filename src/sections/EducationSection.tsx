@@ -1,19 +1,26 @@
 import { DashboardCard } from '../components/DashboardCard';
 import { SectionHeading } from '../components/SectionHeading';
-import { certificates, education } from '../data/education';
+import { useLanguage } from '../context/useLanguage';
+import { localizedContent } from '../data/content';
 
 export function EducationSection() {
+  const { language, isArabic } = useLanguage();
+  const { education } = localizedContent[language];
+  const textDirection = isArabic ? 'rtl' : 'ltr';
+  const localizedClass = isArabic ? 'localized-text' : '';
+
   return (
     <section id="education" className="scroll-mt-24 py-14">
       <div className="page-container">
         <SectionHeading
-          eyebrow="Education"
-          title="Education"
-          description="My software engineering education alongside a focused KAUST Academy artificial intelligence journey."
+          eyebrow={education.eyebrow}
+          title={education.title}
+          description={education.description}
+          isArabic={isArabic}
         />
 
         <div className="flex w-full flex-col gap-5">
-          {education.map((item, index) => (
+          {education.items.map((item, index) => (
             <DashboardCard key={item.title} revealDelay={index * 90}>
               <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
                 <div className="flex min-w-0 flex-col gap-4 sm:flex-row sm:items-center">
@@ -25,10 +32,16 @@ export function EducationSection() {
                     />
                   </div>
                   <div className="min-w-0">
-                    <h3 className="text-xl font-semibold text-[var(--color-heading)]">
+                    <h3
+                      dir={textDirection}
+                      className={`text-xl font-semibold text-[var(--color-heading)] ${localizedClass}`}
+                    >
                       {item.title}
                     </h3>
-                    <p className="mt-1 text-sm font-medium text-[var(--color-muted)]">
+                    <p
+                      dir={textDirection}
+                      className={`mt-1 text-sm font-medium text-[var(--color-muted)] ${localizedClass}`}
+                    >
                       {item.organization}
                     </p>
                   </div>
@@ -44,18 +57,25 @@ export function EducationSection() {
                   ) : null}
                 </div>
               </div>
-              <p className="prose-justify mt-5 text-base leading-7 text-[var(--color-muted)]">
+              <p
+                dir={textDirection}
+                className={`prose-justify mt-5 text-base leading-7 text-[var(--color-muted)] ${localizedClass}`}
+              >
                 {item.description}
               </p>
               {item.details?.map((detail) => (
                 <p
                   key={detail}
-                  className="prose-justify mt-4 text-base leading-7 text-[var(--color-muted)]"
+                  dir={textDirection}
+                  className={`prose-justify mt-4 text-base leading-7 text-[var(--color-muted)] ${localizedClass}`}
                 >
                   {detail}
                 </p>
               ))}
-              <ul className="mt-5 space-y-3 text-sm leading-6 text-[var(--color-muted)]">
+              <ul
+                dir={textDirection}
+                className={`mt-5 space-y-3 text-sm leading-6 text-[var(--color-muted)] ${localizedClass}`}
+              >
                 {item.points.map((point) => (
                   <li key={point} className="flex gap-3">
                     <span
@@ -71,14 +91,18 @@ export function EducationSection() {
         </div>
 
         <DashboardCard as="div" className="mt-5" revealDelay={120}>
-          <h3 className="text-lg font-semibold text-[var(--color-heading)]">
-            Certificates & Training
+          <h3
+            dir={textDirection}
+            className={`text-lg font-semibold text-[var(--color-heading)] ${localizedClass}`}
+          >
+            {education.certificatesTitle}
           </h3>
           <div className="mt-4 flex flex-wrap gap-2">
-            {certificates.map((certificate) => (
+            {education.certificates.map((certificate) => (
               <span
                 key={certificate}
-                className="rounded-md bg-[var(--color-chip)] px-3 py-2 text-sm font-medium text-[var(--color-chip-text)]"
+                dir={textDirection}
+                className={`rounded-md bg-[var(--color-chip)] px-3 py-2 text-sm font-medium text-[var(--color-chip-text)] ${localizedClass}`}
               >
                 {certificate}
               </span>

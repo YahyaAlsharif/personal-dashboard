@@ -3,13 +3,16 @@ import { useRef, useState } from 'react';
 import { CvViewerModal } from '../components/CvViewerModal';
 import { DashboardCard } from '../components/DashboardCard';
 import { SectionHeading } from '../components/SectionHeading';
-import { cv } from '../data/contact';
-
-const cvTitle = 'Yahya Alsharif - CV | Software Engineering & AI';
+import { useLanguage } from '../context/useLanguage';
+import { localizedContent } from '../data/content';
 
 export function CvSection() {
   const [isCvViewerOpen, setIsCvViewerOpen] = useState(false);
   const viewCvButtonRef = useRef<HTMLButtonElement>(null);
+  const { language, isArabic } = useLanguage();
+  const { cv } = localizedContent[language];
+  const textDirection = isArabic ? 'rtl' : 'ltr';
+  const localizedClass = isArabic ? 'localized-text' : '';
 
   const closeCvViewer = () => {
     setIsCvViewerOpen(false);
@@ -23,9 +26,10 @@ export function CvSection() {
       <section id="cv" className="scroll-mt-24 py-14">
         <div className="page-container">
           <SectionHeading
-            eyebrow="CV"
-            title="CV"
-            description="A direct link to the full view of my profile, education, certificates, projects, and skills."
+            eyebrow={cv.eyebrow}
+            title={cv.title}
+            description={cv.description}
+            isArabic={isArabic}
           />
 
           <DashboardCard
@@ -34,12 +38,17 @@ export function CvSection() {
             revealDelay={100}
           >
             <div>
-              <h3 className="text-xl font-semibold text-[var(--color-heading)]">
-                Yahya Alsharif Software Engineer CV
+              <h3
+                dir={textDirection}
+                className={`text-xl font-semibold text-[var(--color-heading)] ${localizedClass}`}
+              >
+                {cv.cardTitle}
               </h3>
-              <p className="mt-3 max-w-2xl text-base leading-7 text-[var(--color-muted)]">
-                Want the full version of my background, education, certificates, projects, and
-                skills? You can view or download my CV here.
+              <p
+                dir={textDirection}
+                className={`mt-3 max-w-2xl text-base leading-7 text-[var(--color-muted)] ${localizedClass}`}
+              >
+                {cv.cardText}
               </p>
             </div>
             <div className="flex flex-wrap gap-3">
@@ -49,14 +58,14 @@ export function CvSection() {
                 onClick={() => setIsCvViewerOpen(true)}
                 className="action-button rounded-lg border px-5 py-3 text-sm font-semibold transition"
               >
-                View CV
+                {cv.viewButton}
               </button>
               <a
                 href={cv.href}
                 download={cv.fileName}
                 className="action-button rounded-lg border px-5 py-3 text-sm font-semibold transition"
               >
-                Download CV
+                {cv.downloadButton}
               </a>
             </div>
           </DashboardCard>
@@ -65,9 +74,13 @@ export function CvSection() {
 
       <CvViewerModal
         isOpen={isCvViewerOpen}
-        title={cvTitle}
+        title={cv.modalTitle}
         pdfHref={cv.href}
         fileName={cv.fileName}
+        downloadLabel={cv.downloadButton}
+        closeLabel={cv.closeButton}
+        closeAriaLabel={cv.closeAriaLabel}
+        isArabic={isArabic}
         onClose={closeCvViewer}
       />
     </>

@@ -5,6 +5,10 @@ type CvViewerModalProps = {
   title: string;
   pdfHref: string;
   fileName: string;
+  downloadLabel: string;
+  closeLabel: string;
+  closeAriaLabel: string;
+  isArabic: boolean;
   onClose: () => void;
 };
 
@@ -13,9 +17,15 @@ export function CvViewerModal({
   title,
   pdfHref,
   fileName,
+  downloadLabel,
+  closeLabel,
+  closeAriaLabel,
+  isArabic,
   onClose,
 }: CvViewerModalProps) {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const textDirection = isArabic ? 'rtl' : 'ltr';
+  const localizedClass = isArabic ? 'localized-text' : '';
 
   useEffect(() => {
     if (!isOpen) {
@@ -63,7 +73,8 @@ export function CvViewerModal({
           <div className="min-w-0">
             <h2
               id="cv-viewer-title"
-              className="text-base font-semibold text-[var(--color-heading)] sm:text-lg"
+              dir={textDirection}
+              className={`text-base font-semibold text-[var(--color-heading)] sm:text-lg ${localizedClass}`}
             >
               {title}
             </h2>
@@ -75,16 +86,16 @@ export function CvViewerModal({
               download={fileName}
               className="action-button inline-flex min-h-11 items-center justify-center rounded-lg border px-4 text-sm font-semibold leading-none transition"
             >
-              Download CV
+              {downloadLabel}
             </a>
             <button
               ref={closeButtonRef}
               type="button"
-              aria-label="Close CV viewer"
+              aria-label={closeAriaLabel}
               onClick={onClose}
               className="inline-flex min-h-11 items-center justify-center rounded-lg border border-[var(--color-border)] bg-[var(--color-button)] px-4 text-sm font-semibold leading-none text-[var(--color-button-text)] transition hover:border-[var(--color-border-strong)] hover:bg-[var(--color-button-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
             >
-              Close
+              {closeLabel}
             </button>
           </div>
         </header>
