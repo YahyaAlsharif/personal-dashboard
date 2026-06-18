@@ -47,5 +47,5 @@ export const contactOptions: ContactOption[] = [
 
 export const cv = {
   fileName: 'Yahya_Alsharif_Software_Engineer_CV.pdf',
-  href: '/cv/Yahya_Alsharif_Software_Engineer_CV.pdf',
+  href: `${import.meta.env.BASE_URL}cv/Yahya_Alsharif_Software_Engineer_CV.pdf`,
 };
