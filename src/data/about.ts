@@ -15,9 +15,9 @@ export const softwareEngineeringStory = {
   id: 'about-software-engineering',
   title: 'Software Engineering',
   paragraphs: [
-    'I started studying Software Engineering at Umm Al-Qura University in 2023. Through the program, I have been building a foundation in requirements engineering, software design, software architecture, documentation, Java and object-oriented programming, software testing, system analysis, algorithms, and data structures.',
-    'At Umm Al-Qura University, I also had the opportunity to attend NVIDIA deep learning training and earn the NVIDIA Fundamentals of Deep Learning certificate. That experience gave me my first real glimpse of how artificial intelligence works in practice, beyond only using AI tools from the outside.',
-    'I apply these software engineering skills through ESAS - Experience Saudi As a Saudi, our graduation project focused on authentic Saudi tourism experiences. My work includes requirements gathering, understanding tourism and user needs, SRS documentation, workflows, implementation support, testing and demo readiness, and presenting the project clearly to others.',
+    'I started studying for my Bachelor\'s degree in Software Engineering at Umm Al-Qura University in 2023. Since then, I have been building a foundation in requirements engineering, software design, software architecture, documentation, Java and object-oriented programming, software testing, system analysis, algorithms, and data structures.',
+    'When I was in my third year of my bachelor\'s degree, I got the chance to attend NVIDIA\'s Deep Learning workshop and earn the NVIDIA Fundamentals of Deep Learning certificate. The workshop was led by an instructor from the university, and it gave me my first real glimpse of how artificial intelligence works in practice, beyond only using AI tools from the outside.',
+    'I applied these software engineering skills in ESAS - Experience Saudi As a Saudi, our graduation project focused on authentic Saudi tourism experiences. My work included requirements gathering, understanding tourism and user needs, SRS documentation, workflows, implementation support, testing and demo readiness, and presenting the project clearly.',
   ],
   sidebars: [
     {
@@ -39,7 +39,6 @@ export const softwareEngineeringStory = {
       title: 'Project',
       items: ['ESAS - Experience Saudi As a Saudi'],
       href: '#project-esas',
-      actionLabel: 'View project',
     },
   ],
 };
@@ -67,8 +66,8 @@ export const artificialIntelligenceStory = {
     'KAUST Academy AI Specialization',
     'Stage 4 - King Khalid University, Abha',
   ],
-  placeholder: {
-    title: 'Future certificate image',
-    description: 'Reserved for a later CNN or learning certificate asset provided by Yahya.',
+  courseImage: {
+    alt: 'DeepLearning.AI Convolutional Neural Networks course screenshot from Coursera',
+    caption: 'Convolutional Neural Networks preparation through DeepLearning.AI on Coursera.',
   },
 };

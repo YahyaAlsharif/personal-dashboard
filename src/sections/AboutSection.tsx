@@ -1,3 +1,6 @@
+import { Fragment } from 'react';
+
+import cnnCourseImage from '../assets/learning/cnn-course.png';
 import { DashboardCard } from '../components/DashboardCard';
 import { SectionHeading } from '../components/SectionHeading';
 import {
@@ -60,22 +63,25 @@ export function AboutSection() {
                   </h4>
                   <div className="mt-4 flex flex-wrap gap-2">
                     {sidebar.items.map((item) => (
-                      <span
-                        key={item}
-                        className="rounded-md bg-[var(--color-chip)] px-3 py-1.5 text-xs font-medium text-[var(--color-chip-text)]"
-                      >
-                        {item}
-                      </span>
+                      sidebar.href ? (
+                        <a
+                          key={item}
+                          href={sidebar.href}
+                          aria-label={`View ${item} in the projects section`}
+                          className="rounded-md border border-[var(--color-border)] bg-[var(--color-button)] px-3 py-1.5 text-xs font-semibold text-[var(--color-button-text)] transition hover:border-[var(--color-border-strong)] hover:bg-[var(--color-button-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
+                        >
+                          {item}
+                        </a>
+                      ) : (
+                        <span
+                          key={item}
+                          className="rounded-md bg-[var(--color-chip)] px-3 py-1.5 text-xs font-medium text-[var(--color-chip-text)]"
+                        >
+                          {item}
+                        </span>
+                      )
                     ))}
                   </div>
-                  {sidebar.href ? (
-                    <a
-                      href={sidebar.href}
-                      className="mt-4 inline-flex rounded-lg border border-[var(--color-border)] bg-[var(--color-button)] px-3 py-2 text-xs font-semibold text-[var(--color-button-text)] transition hover:border-[var(--color-border-strong)] hover:bg-[var(--color-button-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
-                    >
-                      {sidebar.actionLabel}
-                    </a>
-                  ) : null}
                 </DashboardCard>
               ))}
             </aside>
@@ -92,8 +98,22 @@ export function AboutSection() {
                 {artificialIntelligenceStory.title}
               </h3>
               <div className="mt-6 max-w-4xl space-y-5 text-base leading-8 text-[var(--color-muted)]">
-                {artificialIntelligenceStory.paragraphs.map((paragraph) => (
-                  <p key={paragraph}>{paragraph}</p>
+                {artificialIntelligenceStory.paragraphs.map((paragraph, index) => (
+                  <Fragment key={paragraph}>
+                    <p>{paragraph}</p>
+                    {index === 4 ? (
+                      <figure className="rounded-lg border border-[var(--color-border)] bg-[var(--color-card-strong)] p-3 shadow-sm shadow-black/5">
+                        <img
+                          src={cnnCourseImage}
+                          alt={artificialIntelligenceStory.courseImage.alt}
+                          className="w-full rounded-md border border-[var(--color-border)] object-contain"
+                        />
+                        <figcaption className="mt-3 text-sm leading-6 text-[var(--color-muted)]">
+                          {artificialIntelligenceStory.courseImage.caption}
+                        </figcaption>
+                      </figure>
+                    ) : null}
+                  </Fragment>
                 ))}
               </div>
             </div>
@@ -115,14 +135,6 @@ export function AboutSection() {
                 </div>
               </DashboardCard>
 
-              <DashboardCard as="div" className="mt-4 border-dashed p-5">
-                <h4 className="text-sm font-semibold text-[var(--color-heading)]">
-                  {artificialIntelligenceStory.placeholder.title}
-                </h4>
-                <p className="mt-3 text-sm leading-6 text-[var(--color-muted)]">
-                  {artificialIntelligenceStory.placeholder.description}
-                </p>
-              </DashboardCard>
             </aside>
           </div>
         </div>
