@@ -17,7 +17,7 @@ export function SectionHeading({
   const localizedClass = isArabic ? 'localized-text' : '';
 
   return (
-    <div className="mb-8 max-w-6xl">
+    <div className={`mb-8 ${isArabic ? 'localized-heading-block' : 'max-w-6xl'}`}>
       {eyebrow ? (
         <Reveal
           as="p"
@@ -39,7 +39,7 @@ export function SectionHeading({
           as="p"
           delay={140}
           dir={textDirection}
-          className={`mt-4 max-w-6xl text-base leading-7 text-[var(--color-muted)] sm:text-lg ${localizedClass}`}
+          className={`mt-4 text-base leading-7 text-[var(--color-muted)] sm:text-lg ${localizedClass}`}
         >
           {description}
         </Reveal>

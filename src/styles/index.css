@@ -123,6 +123,46 @@ a {
   text-align: right;
 }
 
+.localized-heading-block {
+  width: 100%;
+  max-width: none;
+}
+
+.localized-hero-copy {
+  width: 100%;
+  text-align: right;
+}
+
+.localized-hero-copy .localized-text {
+  width: 100%;
+  max-width: none;
+}
+
+.localized-prose {
+  text-align: right;
+  text-align-last: right;
+}
+
+.localized-chip-list,
+.localized-actions {
+  justify-content: flex-end;
+}
+
+.localized-skill-column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.localized-skill-column .localized-chip-list {
+  width: 100%;
+}
+
+.localized-inline {
+  unicode-bidi: plaintext;
+}
+
 .action-button {
   display: inline-flex;
   align-items: center;
@@ -163,6 +203,11 @@ a {
   overflow-wrap: break-word;
 }
 
+.skill-chip.localized-text {
+  text-align: center;
+  text-align-last: center;
+}
+
 @media (min-width: 640px) {
   .page-container {
     padding-inline: 1.5rem;
@@ -174,7 +219,12 @@ a {
   }
 
   .prose-justify.localized-text {
-    text-align: justify;
+    text-align: right;
+    text-align-last: right;
+  }
+
+  .prose-justify.localized-prose {
+    text-align: right;
     text-align-last: right;
   }
 }

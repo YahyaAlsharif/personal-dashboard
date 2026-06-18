@@ -28,7 +28,7 @@ export function ContactSection() {
               revealDelay={(index % 3) * 90}
             >
               <h3
-                dir={textDirection}
+                dir="auto"
                 className={`text-lg font-semibold text-[var(--color-heading)] ${localizedClass}`}
               >
                 {option.title}
@@ -39,14 +39,18 @@ export function ContactSection() {
               >
                 {option.description}
               </p>
-              <div className="mt-auto pt-5">
+              <div
+                className={`mt-auto flex pt-5 ${isArabic ? 'localized-actions' : ''}`}
+              >
                 <a
                   href={option.href}
                   target={option.external ? '_blank' : undefined}
                   rel={option.external ? 'noreferrer' : undefined}
                   className="action-button inline-flex rounded-lg border px-5 py-3 text-sm font-semibold transition"
                 >
-                  {option.buttonText}
+                  <span dir={isArabic ? 'auto' : undefined} className="localized-inline">
+                    {option.buttonText}
+                  </span>
                 </a>
               </div>
             </DashboardCard>

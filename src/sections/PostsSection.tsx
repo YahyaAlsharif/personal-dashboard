@@ -52,14 +52,16 @@ export function PostsSection() {
                 />
               </div>
 
-              <div className="mt-auto">
+              <div className={`mt-auto flex ${isArabic ? 'localized-actions' : ''}`}>
                 <a
                   href={post.postUrl}
                   target="_blank"
                   rel="noreferrer"
                   className="action-button rounded-lg border px-5 py-3 text-sm font-semibold transition"
                 >
-                  {posts.viewButton}
+                  <span dir={isArabic ? 'auto' : undefined} className="localized-inline">
+                    {posts.viewButton}
+                  </span>
                 </a>
               </div>
             </DashboardCard>

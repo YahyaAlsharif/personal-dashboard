@@ -51,21 +51,27 @@ export function CvSection() {
                 {cv.cardText}
               </p>
             </div>
-            <div className="flex flex-wrap gap-3">
+            <div
+              className={`flex flex-wrap gap-3 ${isArabic ? 'localized-actions' : ''}`}
+            >
               <button
                 ref={viewCvButtonRef}
                 type="button"
                 onClick={() => setIsCvViewerOpen(true)}
                 className="action-button rounded-lg border px-5 py-3 text-sm font-semibold transition"
               >
-                {cv.viewButton}
+                <span dir={isArabic ? 'auto' : undefined} className="localized-inline">
+                  {cv.viewButton}
+                </span>
               </button>
               <a
                 href={cv.href}
                 download={cv.fileName}
                 className="action-button rounded-lg border px-5 py-3 text-sm font-semibold transition"
               >
-                {cv.downloadButton}
+                <span dir={isArabic ? 'auto' : undefined} className="localized-inline">
+                  {cv.downloadButton}
+                </span>
               </a>
             </div>
           </DashboardCard>

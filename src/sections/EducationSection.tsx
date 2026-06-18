@@ -46,12 +46,22 @@ export function EducationSection() {
                     </p>
                   </div>
                 </div>
-                <div className="flex flex-wrap gap-2 sm:justify-end">
-                  <span className="rounded-md bg-[var(--color-chip)] px-3 py-1 text-xs font-semibold text-[var(--color-chip-text)]">
+                <div
+                  className={`flex flex-wrap gap-2 sm:justify-end ${
+                    isArabic ? 'localized-chip-list' : ''
+                  }`}
+                >
+                  <span
+                    dir="auto"
+                    className="rounded-md bg-[var(--color-chip)] px-3 py-1 text-xs font-semibold text-[var(--color-chip-text)]"
+                  >
                     {item.period}
                   </span>
                   {item.status ? (
-                    <span className="rounded-md bg-[var(--color-accent-soft)] px-3 py-1 text-xs font-semibold text-[var(--color-accent-strong)]">
+                    <span
+                      dir="auto"
+                      className="rounded-md bg-[var(--color-accent-soft)] px-3 py-1 text-xs font-semibold text-[var(--color-accent-strong)]"
+                    >
                       {item.status}
                     </span>
                   ) : null}
@@ -97,11 +107,13 @@ export function EducationSection() {
           >
             {education.certificatesTitle}
           </h3>
-          <div className="mt-4 flex flex-wrap gap-2">
+          <div
+            className={`mt-4 flex flex-wrap gap-2 ${isArabic ? 'localized-chip-list' : ''}`}
+          >
             {education.certificates.map((certificate) => (
               <span
                 key={certificate}
-                dir={textDirection}
+                dir="auto"
                 className={`rounded-md bg-[var(--color-chip)] px-3 py-2 text-sm font-medium text-[var(--color-chip-text)] ${localizedClass}`}
               >
                 {certificate}

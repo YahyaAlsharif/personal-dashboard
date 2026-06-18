@@ -8,6 +8,7 @@ export function HeroSection() {
   const { hero } = localizedContent[language];
   const textDirection = isArabic ? 'rtl' : 'ltr';
   const localizedClass = isArabic ? 'localized-text' : '';
+  const heroCopyClass = isArabic ? 'localized-hero-copy' : '';
 
   return (
     <section
@@ -15,7 +16,7 @@ export function HeroSection() {
       className="relative overflow-hidden border-b border-[var(--color-border)] bg-[var(--color-hero)]"
     >
       <div className="page-container grid gap-8 py-14 sm:py-16 lg:grid-cols-[minmax(0,1.08fr)_minmax(18rem,0.56fr)] lg:items-center">
-        <div>
+        <div className={heroCopyClass}>
           <Reveal as="p" className="text-sm font-semibold uppercase text-[var(--color-accent)]">
             {hero.eyebrow}
           </Reveal>
@@ -23,7 +24,7 @@ export function HeroSection() {
             as="h1"
             delay={80}
             dir={textDirection}
-            className={`mt-4 max-w-3xl text-4xl font-semibold leading-tight text-[var(--color-heading)] sm:text-5xl lg:text-6xl ${localizedClass}`}
+            className={`mt-4 text-4xl font-semibold leading-tight text-[var(--color-heading)] sm:text-5xl lg:text-6xl ${isArabic ? 'w-full max-w-none' : 'max-w-3xl'} ${localizedClass}`}
           >
             {hero.title}
           </Reveal>
@@ -31,7 +32,7 @@ export function HeroSection() {
             as="p"
             delay={140}
             dir={textDirection}
-            className={`mt-4 max-w-2xl text-lg leading-8 text-[var(--color-muted)] ${localizedClass}`}
+            className={`mt-4 text-lg leading-8 text-[var(--color-muted)] ${isArabic ? 'w-full max-w-none' : 'max-w-2xl'} ${localizedClass}`}
           >
             {hero.intro}
           </Reveal>
@@ -51,7 +52,9 @@ export function HeroSection() {
                 href={link.href}
                 className="action-button rounded-lg border px-5 py-3 text-sm font-semibold shadow-sm shadow-black/5 transition"
               >
-                {link.label}
+                <span dir={isArabic ? 'auto' : undefined} className="localized-inline">
+                  {link.label}
+                </span>
               </a>
             ))}
           </Reveal>

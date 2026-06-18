@@ -86,7 +86,9 @@ export function CvViewerModal({
               download={fileName}
               className="action-button inline-flex min-h-11 items-center justify-center rounded-lg border px-4 text-sm font-semibold leading-none transition"
             >
-              {downloadLabel}
+              <span dir={isArabic ? 'auto' : undefined} className="localized-inline">
+                {downloadLabel}
+              </span>
             </a>
             <button
               ref={closeButtonRef}
@@ -95,7 +97,9 @@ export function CvViewerModal({
               onClick={onClose}
               className="inline-flex min-h-11 items-center justify-center rounded-lg border border-[var(--color-border)] bg-[var(--color-button)] px-4 text-sm font-semibold leading-none text-[var(--color-button-text)] transition hover:border-[var(--color-border-strong)] hover:bg-[var(--color-button-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
             >
-              {closeLabel}
+              <span dir={isArabic ? 'auto' : undefined} className="localized-inline">
+                {closeLabel}
+              </span>
             </button>
           </div>
         </header>

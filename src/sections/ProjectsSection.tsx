@@ -31,12 +31,20 @@ export function ProjectsSection() {
             >
               <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
                 <div className="min-w-0">
-                  <div className="flex flex-wrap gap-2">
-                    <span className="rounded-md bg-[var(--color-accent-soft)] px-3 py-1 text-xs font-semibold text-[var(--color-accent-strong)]">
+                  <div
+                    className={`flex flex-wrap gap-2 ${isArabic ? 'localized-chip-list' : ''}`}
+                  >
+                    <span
+                      dir="auto"
+                      className="rounded-md bg-[var(--color-accent-soft)] px-3 py-1 text-xs font-semibold text-[var(--color-accent-strong)]"
+                    >
                       {project.status}
                     </span>
                   {project.role ? (
-                      <span className="rounded-md bg-[var(--color-chip)] px-3 py-1 text-xs font-semibold text-[var(--color-chip-text)]">
+                      <span
+                        dir="auto"
+                        className="rounded-md bg-[var(--color-chip)] px-3 py-1 text-xs font-semibold text-[var(--color-chip-text)]"
+                      >
                         {projects.roleLabel}: {project.role}
                       </span>
                     ) : null}
@@ -78,11 +86,15 @@ export function ProjectsSection() {
                   </li>
                 ))}
               </ul>
-              <div className="mt-auto flex flex-wrap gap-2 pt-6">
+              <div
+                className={`mt-auto flex flex-wrap gap-2 pt-6 ${
+                  isArabic ? 'localized-chip-list' : ''
+                }`}
+              >
                 {project.tags.map((tag) => (
                   <span
                     key={tag}
-                    dir={textDirection}
+                    dir="auto"
                     className={`rounded-md bg-[var(--color-chip)] px-2.5 py-1 text-xs font-medium text-[var(--color-chip-text)] ${localizedClass}`}
                   >
                     {tag}
@@ -100,12 +112,20 @@ export function ProjectsSection() {
                 className="flex h-full scroll-mt-28 flex-col"
                 revealDelay={index * 90}
               >
-                <div className="flex flex-wrap gap-2">
-                  <span className="rounded-md bg-[var(--color-accent-soft)] px-3 py-1 text-xs font-semibold text-[var(--color-accent-strong)]">
+                <div
+                  className={`flex flex-wrap gap-2 ${isArabic ? 'localized-chip-list' : ''}`}
+                >
+                  <span
+                    dir="auto"
+                    className="rounded-md bg-[var(--color-accent-soft)] px-3 py-1 text-xs font-semibold text-[var(--color-accent-strong)]"
+                  >
                     {project.status}
                   </span>
                   {project.role ? (
-                    <span className="rounded-md bg-[var(--color-chip)] px-3 py-1 text-xs font-semibold text-[var(--color-chip-text)]">
+                    <span
+                      dir="auto"
+                      className="rounded-md bg-[var(--color-chip)] px-3 py-1 text-xs font-semibold text-[var(--color-chip-text)]"
+                    >
                       {projects.roleLabel}: {project.role}
                     </span>
                   ) : null}
@@ -145,11 +165,15 @@ export function ProjectsSection() {
                     </li>
                   ))}
                 </ul>
-                <div className="mt-auto flex flex-wrap gap-2 pt-6">
+                <div
+                  className={`mt-auto flex flex-wrap gap-2 pt-6 ${
+                    isArabic ? 'localized-chip-list' : ''
+                  }`}
+                >
                   {project.tags.map((tag) => (
                     <span
                       key={tag}
-                      dir={textDirection}
+                      dir="auto"
                       className={`rounded-md bg-[var(--color-chip)] px-2.5 py-1 text-xs font-medium text-[var(--color-chip-text)] ${localizedClass}`}
                     >
                       {tag}

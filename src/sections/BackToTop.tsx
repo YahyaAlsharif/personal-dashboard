@@ -13,7 +13,9 @@ export function BackToTop() {
             href="#top"
             className="action-button min-h-12 w-full rounded-lg border px-6 py-3 shadow-md shadow-black/10 transition sm:w-auto"
           >
-            {backToTop}
+            <span dir="auto" className="localized-inline">
+              {backToTop}
+            </span>
           </a>
         </div>
       </div>

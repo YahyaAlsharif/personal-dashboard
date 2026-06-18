@@ -474,7 +474,7 @@ export const localizedContent: Record<Language, DashboardContent> = {
       viewButton: 'View on LinkedIn',
       items: [
         {
-          title: 'Graduation Project / ESAS',
+          title: 'مشروع التخرج / ESAS',
           description:
             'A LinkedIn milestone post about ESAS, my graduation project focused on authentic, locally curated tourism experiences in Saudi Arabia.',
           embedUrl: links.embedEsas,
@@ -482,7 +482,7 @@ export const localizedContent: Record<Language, DashboardContent> = {
           iframeTitle: 'LinkedIn post about Graduation Project and ESAS',
         },
         {
-          title: 'KAUST Academy Stage 3 to Stage 4',
+          title: 'أكاديمية كاوست: من المرحلة الثالثة إلى المرحلة الرابعة',
           description:
             'A LinkedIn milestone post about finishing KAUST Academy Stage 3 and being accepted into Stage 4 of the AI journey.',
           embedUrl: links.embedKaust,

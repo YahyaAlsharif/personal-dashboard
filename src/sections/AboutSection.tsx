@@ -46,7 +46,9 @@ export function AboutSection() {
               href={link.href}
               className="action-button rounded-lg border px-4 py-2.5 text-sm font-semibold transition"
             >
-              {link.label}
+              <span dir={isArabic ? 'auto' : undefined} className="localized-inline">
+                {link.label}
+              </span>
             </a>
           ))}
         </Reveal>
@@ -93,7 +95,11 @@ export function AboutSection() {
                   >
                     {sidebar.title}
                   </h4>
-                  <div className="mt-4 flex flex-wrap gap-2">
+                  <div
+                    className={`mt-4 flex flex-wrap gap-2 ${
+                      isArabic ? 'localized-chip-list' : ''
+                    }`}
+                  >
                     {sidebar.items.map((item) => (
                       sidebar.href ? (
                         <a
@@ -102,12 +108,14 @@ export function AboutSection() {
                           aria-label={about.sidebarLinkLabel(item)}
                           className="action-button rounded-md border px-3 py-1.5 text-xs font-semibold transition"
                         >
-                          {item}
+                          <span dir={isArabic ? 'auto' : undefined} className="localized-inline">
+                            {item}
+                          </span>
                         </a>
                       ) : (
                         <span
                           key={item}
-                          dir={textDirection}
+                          dir="auto"
                           className={`rounded-md bg-[var(--color-chip)] px-3 py-1.5 text-xs font-medium text-[var(--color-chip-text)] ${localizedClass}`}
                         >
                           {item}
@@ -156,10 +164,11 @@ export function AboutSection() {
                           alt={artificialIntelligenceStory.courseImage?.alt ?? ''}
                           className="w-full rounded-md border border-[var(--color-border)] object-contain"
                         />
-                        <figcaption className="mt-3 text-sm leading-6 text-[var(--color-muted)]">
-                          <span dir={textDirection} className={localizedClass}>
-                            {artificialIntelligenceStory.courseImage?.caption}
-                          </span>
+                        <figcaption
+                          dir={textDirection}
+                          className={`mt-3 text-sm leading-6 text-[var(--color-muted)] ${localizedClass}`}
+                        >
+                          {artificialIntelligenceStory.courseImage?.caption}
                         </figcaption>
                       </Reveal>
                     ) : null}
@@ -176,11 +185,15 @@ export function AboutSection() {
                 >
                   {artificialIntelligenceStory.highlightsTitle}
                 </h4>
-                <div className="mt-4 flex flex-wrap gap-2">
+                <div
+                  className={`mt-4 flex flex-wrap gap-2 ${
+                    isArabic ? 'localized-chip-list' : ''
+                  }`}
+                >
                   {artificialIntelligenceStory.highlights?.map((highlight) => (
                     <span
                       key={highlight}
-                      dir={textDirection}
+                      dir="auto"
                       className={`rounded-md bg-[var(--color-chip)] px-3 py-1.5 text-xs font-medium text-[var(--color-chip-text)] ${localizedClass}`}
                     >
                       {highlight}
@@ -205,7 +218,9 @@ export function AboutSection() {
             as="p"
             delay={80}
             dir={textDirection}
-            className={`mt-2 max-w-3xl text-sm leading-6 text-[var(--color-muted)] ${localizedClass}`}
+            className={`mt-2 text-sm leading-6 text-[var(--color-muted)] ${
+              isArabic ? 'w-full max-w-none' : 'max-w-3xl'
+            } ${localizedClass}`}
           >
             {skills.description}
           </Reveal>
@@ -219,6 +234,7 @@ export function AboutSection() {
                   'pl-0',
                   index % 2 === 1 ? 'md:border-l md:border-[var(--color-border)] md:pl-4' : '',
                   index > 0 ? 'xl:border-l xl:border-[var(--color-border)] xl:pl-4' : '',
+                  isArabic ? 'localized-skill-column' : '',
                   localizedClass,
                 ]
                   .filter(Boolean)
@@ -230,11 +246,15 @@ export function AboutSection() {
                 >
                   {group.title}
                 </h3>
-                <div className="mt-4 flex flex-wrap gap-2">
+                <div
+                  className={`mt-4 flex flex-wrap gap-2 ${
+                    isArabic ? 'localized-chip-list' : ''
+                  }`}
+                >
                   {group.skills.map((skill) => (
                     <span
                       key={skill}
-                      dir={textDirection}
+                      dir="auto"
                       className={`skill-chip rounded-md bg-[var(--color-chip)] px-3 py-1 text-xs font-medium leading-snug text-[var(--color-chip-text)] ${localizedClass}`}
                     >
                       {skill}
