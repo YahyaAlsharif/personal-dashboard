@@ -193,7 +193,7 @@ export function AboutSection() {
                   {group.skills.map((skill) => (
                     <span
                       key={skill}
-                      className="rounded-md bg-[var(--color-chip)] px-3 py-1 text-xs font-medium text-[var(--color-chip-text)]"
+                      className="inline-flex w-fit max-w-full items-center rounded-md bg-[var(--color-chip)] px-3 py-1 text-xs font-medium leading-snug text-[var(--color-chip-text)]"
                     >
                       {skill}
                     </span>

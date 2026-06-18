@@ -20,5 +20,6 @@ export const heroLinks = [
   { label: 'About Me', href: '#about' },
   { label: 'Education', href: '#education' },
   { label: 'Projects', href: '#projects' },
+  { label: 'CV', href: '#cv' },
   { label: 'Contact', href: '#contact' },
 ];

@@ -61,22 +61,19 @@ export function CvViewerModal({
       >
         <header className="flex flex-col gap-4 border-b border-[var(--color-border)] bg-[var(--color-card)] px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5">
           <div className="min-w-0">
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--color-muted)]">
-              CV Viewer
-            </p>
             <h2
               id="cv-viewer-title"
-              className="mt-1 text-base font-semibold text-[var(--color-heading)] sm:text-lg"
+              className="text-base font-semibold text-[var(--color-heading)] sm:text-lg"
             >
               {title}
             </h2>
           </div>
 
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap items-center gap-3">
             <a
               href={pdfHref}
               download={fileName}
-              className="rounded-lg border border-[var(--color-border)] bg-[var(--color-button)] px-4 py-2.5 text-sm font-semibold text-[var(--color-button-text)] transition hover:border-[var(--color-border-strong)] hover:bg-[var(--color-button-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
+              className="inline-flex min-h-11 items-center justify-center rounded-lg border border-[var(--color-border)] bg-[var(--color-button)] px-4 text-sm font-semibold leading-none text-[var(--color-button-text)] transition hover:border-[var(--color-border-strong)] hover:bg-[var(--color-button-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
             >
               Download CV
             </a>
@@ -85,7 +82,7 @@ export function CvViewerModal({
               type="button"
               aria-label="Close CV viewer"
               onClick={onClose}
-              className="rounded-lg border border-[var(--color-border)] bg-[var(--color-button)] px-4 py-2.5 text-sm font-semibold text-[var(--color-button-text)] transition hover:border-[var(--color-border-strong)] hover:bg-[var(--color-button-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
+              className="inline-flex min-h-11 items-center justify-center rounded-lg border border-[var(--color-border)] bg-[var(--color-button)] px-4 text-sm font-semibold leading-none text-[var(--color-button-text)] transition hover:border-[var(--color-border-strong)] hover:bg-[var(--color-button-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
             >
               Close
             </button>
