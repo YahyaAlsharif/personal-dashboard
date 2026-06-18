@@ -43,6 +43,17 @@ npm.cmd run build
 npm.cmd run lint
 ```
 
+## Social Preview Image
+
+The public link-preview image is generated from the existing dashboard profile
+asset and saved at `public/social-preview.png`.
+
+Regenerate it after changing the profile image or social preview text:
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts\generate-social-preview.ps1
+```
+
 ## Project Structure
 
 ```txt
