@@ -18,7 +18,7 @@ export function HeroSection() {
             delay={80}
             className="mt-4 max-w-3xl text-4xl font-semibold leading-tight text-[var(--color-heading)] sm:text-5xl lg:text-6xl"
           >
-            Hi, I am {profile.name}.
+            Hi, I'm {profile.name}.
           </Reveal>
           <Reveal
             as="p"

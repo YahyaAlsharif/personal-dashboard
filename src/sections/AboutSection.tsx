@@ -163,14 +163,14 @@ export function AboutSection() {
 
         <div className="mt-14 border-t border-[var(--color-border)] pt-8">
           <Reveal as="h3" className="text-lg font-semibold text-[var(--color-heading)]">
-            Selected Skills & Tools
+            Skills & Tools
           </Reveal>
           <Reveal
             as="p"
             delay={80}
             className="mt-2 max-w-3xl text-sm leading-6 text-[var(--color-muted)]"
           >
-            A compact view of the tools and foundations that support the story above.
+            A compact view of the tools, foundations, and practices that support my work.
           </Reveal>
           <div className="mt-5 grid gap-y-6 md:grid-cols-2 md:gap-x-4 xl:grid-cols-5">
             {skillGroups.map((group, index) => (

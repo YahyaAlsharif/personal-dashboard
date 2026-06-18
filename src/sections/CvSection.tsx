@@ -25,7 +25,7 @@ export function CvSection() {
           <SectionHeading
             eyebrow="CV"
             title="CV"
-            description="A direct link to the full profile, education, certificates, projects, and skills."
+            description="A direct link to the full view of my profile, education, certificates, projects, and skills."
           />
 
           <DashboardCard

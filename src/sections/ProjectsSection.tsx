@@ -12,7 +12,7 @@ export function ProjectsSection() {
         <SectionHeading
           eyebrow="Projects"
           title="Projects"
-          description="Selected work that shows software engineering practice, AI direction, and public portfolio development."
+          description="The work that reflects my software engineering practice, AI direction, and public portfolio development."
         />
 
         <div className="flex flex-col gap-5">

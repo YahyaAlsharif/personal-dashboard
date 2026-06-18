@@ -9,7 +9,7 @@ export function EducationSection() {
         <SectionHeading
           eyebrow="Education"
           title="Education"
-          description="Academic software engineering foundations alongside a focused KAUST Academy artificial intelligence path."
+          description="My software engineering education alongside a focused KAUST Academy artificial intelligence journey."
         />
 
         <div className="flex w-full flex-col gap-5">

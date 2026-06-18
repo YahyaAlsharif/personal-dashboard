@@ -68,7 +68,7 @@ export const projects: Project[] = [
     description:
       'This website is a public personal dashboard and portfolio built with React, TypeScript, Vite, and Tailwind CSS. It presents my background, education, projects, CV, and contact links in a clean static frontend-only site.',
     details: [
-      'The project keeps content organized in local data files and includes responsive layout behavior, light/dark mode, a CV viewer, anchor navigation, and scroll reveal animations without adding a backend.',
+      'This project keeps my content organized in local data files and includes responsive layout behavior, light/dark mode, a CV viewer, anchor navigation, and scroll reveal animations without adding a backend.',
     ],
     points: [
       'Frontend-only and deployable as a static website.',
