@@ -40,7 +40,7 @@ export function HeroSection() {
               <a
                 key={link.href}
                 href={link.href}
-                className="rounded-lg border border-[var(--color-border)] bg-[var(--color-button)] px-5 py-3 text-sm font-semibold text-[var(--color-button-text)] shadow-sm shadow-black/5 transition hover:border-[var(--color-border-strong)] hover:bg-[var(--color-button-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
+                className="action-button rounded-lg border px-5 py-3 text-sm font-semibold shadow-sm shadow-black/5 transition"
               >
                 {link.label}
               </a>

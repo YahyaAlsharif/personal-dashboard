@@ -31,7 +31,7 @@ export function ContactSection() {
                   href={option.href}
                   target={option.external ? '_blank' : undefined}
                   rel={option.external ? 'noreferrer' : undefined}
-                  className="inline-flex rounded-lg border border-[var(--color-border)] bg-[var(--color-button)] px-5 py-3 text-sm font-semibold text-[var(--color-button-text)] transition hover:border-[var(--color-border-strong)] hover:bg-[var(--color-button-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
+                  className="action-button inline-flex rounded-lg border px-5 py-3 text-sm font-semibold transition"
                 >
                   {option.buttonText}
                 </a>

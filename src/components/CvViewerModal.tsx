@@ -73,7 +73,7 @@ export function CvViewerModal({
             <a
               href={pdfHref}
               download={fileName}
-              className="inline-flex min-h-11 items-center justify-center rounded-lg border border-[var(--color-border)] bg-[var(--color-button)] px-4 text-sm font-semibold leading-none text-[var(--color-button-text)] transition hover:border-[var(--color-border-strong)] hover:bg-[var(--color-button-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
+              className="action-button inline-flex min-h-11 items-center justify-center rounded-lg border px-4 text-sm font-semibold leading-none transition"
             >
               Download CV
             </a>

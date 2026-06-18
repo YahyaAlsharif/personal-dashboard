@@ -7,7 +7,7 @@ export function BackToTop() {
         <Reveal as="div" className="flex justify-center">
           <a
             href="#top"
-            className="mx-auto inline-flex min-h-11 items-center justify-center rounded-lg border border-[var(--color-border)] bg-[var(--color-button)] px-5 text-sm font-semibold text-[var(--color-button-text)] shadow-sm shadow-black/5 transition hover:border-[var(--color-border-strong)] hover:bg-[var(--color-button-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
+            className="action-button mx-auto inline-flex min-h-11 items-center justify-center rounded-lg border px-5 text-sm font-semibold shadow-sm shadow-black/5 transition"
           >
             Back to Top
           </a>
