@@ -4,8 +4,8 @@ import { certificates, education } from '../data/education';
 
 export function EducationSection() {
   return (
-    <section id="education" className="scroll-mt-24 px-5 py-14 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-6xl">
+    <section id="education" className="scroll-mt-24 py-14">
+      <div className="page-container">
         <SectionHeading
           eyebrow="Education"
           title="Education & AI Journey"
@@ -20,7 +20,7 @@ export function EducationSection() {
                   <h3 className="text-xl font-semibold text-[var(--color-heading)]">
                     {item.title}
                   </h3>
-                  <p className="mt-1 text-sm font-medium text-[var(--color-accent)]">
+                  <p className="mt-1 text-sm font-medium text-[var(--color-muted)]">
                     {item.organization}
                   </p>
                 </div>
@@ -43,7 +43,7 @@ export function EducationSection() {
                   <li key={point} className="flex gap-3">
                     <span
                       aria-hidden="true"
-                      className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-[var(--color-accent)]"
+                      className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-[var(--color-heading)]"
                     />
                     <span>{point}</span>
                   </li>

@@ -1,4 +1,5 @@
 export type Project = {
+  id?: string;
   name: string;
   status: string;
   role?: string;
@@ -9,6 +10,7 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    id: 'project-esas',
     name: 'ESAS - Experience Saudi As a Saudi',
     status: 'Graduation Project',
     role: 'Coordinator',

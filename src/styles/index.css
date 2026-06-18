@@ -2,20 +2,28 @@
 
 :root {
   color-scheme: light;
-  --color-page: #f5f7fb;
-  --color-header: rgb(245 247 251 / 0.88);
-  --color-hero: linear-gradient(135deg, #eef9f7 0%, #f8fafc 50%, #edf3ff 100%);
-  --color-profile: linear-gradient(135deg, #0f766e 0%, #2563eb 100%);
-  --color-card: rgb(255 255 255 / 0.88);
-  --color-border: #d8e1ea;
-  --color-heading: #111827;
-  --color-body: #243244;
-  --color-muted: #526173;
-  --color-accent: #0f766e;
-  --color-accent-strong: #115e59;
-  --color-accent-soft: #d8f5f0;
-  --color-chip: #eef3f7;
-  --color-chip-text: #334155;
+  --color-page: #ffffff;
+  --color-header: rgb(255 255 255 / 0.88);
+  --color-hero: linear-gradient(135deg, #ffffff 0%, #f7f7f7 52%, #eeeeee 100%);
+  --color-profile: #fafafa;
+  --color-card: rgb(250 250 250 / 0.9);
+  --color-card-strong: #ffffff;
+  --color-button: #fafafa;
+  --color-button-hover: #f3f3f3;
+  --color-button-text: #0a0a0a;
+  --color-border: #dedede;
+  --color-border-strong: #b8b8b8;
+  --color-heading: #0a0a0a;
+  --color-body: #262626;
+  --color-muted: #5f5f5f;
+  --color-accent: #111111;
+  --color-accent-strong: #000000;
+  --color-accent-soft: #eeeeee;
+  --color-chip: #f3f3f3;
+  --color-chip-text: #404040;
+  --color-primary-button: #0a0a0a;
+  --color-primary-button-text: #ffffff;
+  --color-secondary-hover: #f3f3f3;
   font-family:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
@@ -27,20 +35,28 @@
 
 [data-theme='dark'] {
   color-scheme: dark;
-  --color-page: #111417;
-  --color-header: rgb(17 20 23 / 0.88);
-  --color-hero: linear-gradient(135deg, #121d1f 0%, #111417 48%, #151a24 100%);
-  --color-profile: linear-gradient(135deg, #0f766e 0%, #1d4ed8 100%);
-  --color-card: rgb(25 30 36 / 0.9);
-  --color-border: #303942;
-  --color-heading: #f5f7fb;
-  --color-body: #d8e1ea;
-  --color-muted: #a8b3c0;
-  --color-accent: #2dd4bf;
-  --color-accent-strong: #99f6e4;
-  --color-accent-soft: rgb(45 212 191 / 0.14);
-  --color-chip: rgb(148 163 184 / 0.12);
-  --color-chip-text: #dbeafe;
+  --color-page: #000000;
+  --color-header: rgb(0 0 0 / 0.88);
+  --color-hero: linear-gradient(135deg, #000000 0%, #050505 52%, #0a0a0a 100%);
+  --color-profile: #111111;
+  --color-card: rgb(10 10 10 / 0.92);
+  --color-card-strong: #111111;
+  --color-button: #171717;
+  --color-button-hover: #222222;
+  --color-button-text: #f5f5f5;
+  --color-border: #262626;
+  --color-border-strong: #3f3f3f;
+  --color-heading: #f5f5f5;
+  --color-body: #e5e5e5;
+  --color-muted: #a3a3a3;
+  --color-accent: #f5f5f5;
+  --color-accent-strong: #ffffff;
+  --color-accent-soft: #1a1a1a;
+  --color-chip: #151515;
+  --color-chip-text: #d4d4d4;
+  --color-primary-button: #171717;
+  --color-primary-button-text: #f5f5f5;
+  --color-secondary-hover: #111111;
 }
 
 * {
@@ -67,6 +83,25 @@ select {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+.page-container {
+  width: 100%;
+  max-width: 80rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .page-container {
+    padding-inline: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-container {
+    padding-inline: 2rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

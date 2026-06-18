@@ -4,8 +4,8 @@ import { projects } from '../data/projects';
 
 export function ProjectsSection() {
   return (
-    <section id="projects" className="scroll-mt-24 px-5 py-14 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-6xl">
+    <section id="projects" className="scroll-mt-24 py-14">
+      <div className="page-container">
         <SectionHeading
           eyebrow="Projects"
           title="Projects"
@@ -14,7 +14,11 @@ export function ProjectsSection() {
 
         <div className="grid gap-5 lg:grid-cols-3">
           {projects.map((project) => (
-            <DashboardCard key={project.name} className="flex h-full flex-col">
+            <DashboardCard
+              key={project.name}
+              id={project.id}
+              className="flex h-full scroll-mt-28 flex-col"
+            >
               <div className="flex flex-wrap gap-2">
                 <span className="rounded-md bg-[var(--color-accent-soft)] px-3 py-1 text-xs font-semibold text-[var(--color-accent-strong)]">
                   {project.status}
@@ -36,7 +40,7 @@ export function ProjectsSection() {
                   <li key={point} className="flex gap-3">
                     <span
                       aria-hidden="true"
-                      className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-[var(--color-accent)]"
+                    className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-[var(--color-heading)]"
                     />
                     <span>{point}</span>
                   </li>

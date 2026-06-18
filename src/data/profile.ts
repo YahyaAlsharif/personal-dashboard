@@ -1,5 +1,5 @@
 export const profile = {
-  name: 'Yahya Al-Sharif',
+  name: 'Yahya Alsharif',
   location: 'Makkah Region, Saudi Arabia',
   title: 'Software Engineering Student | AI Learner | Project Coordinator',
   intro:

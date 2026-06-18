@@ -13,7 +13,7 @@ export function DashboardCard({
 }: DashboardCardProps) {
   return (
     <Component
-      className={`rounded-lg border border-[var(--color-border)] bg-[var(--color-card)] p-6 shadow-sm shadow-slate-950/5 backdrop-blur ${className}`}
+      className={`rounded-lg border border-[var(--color-border)] bg-[var(--color-card)] p-6 shadow-sm shadow-black/5 backdrop-blur ${className}`}
       {...props}
     >
       {children}

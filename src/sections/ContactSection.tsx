@@ -4,8 +4,8 @@ import { contact } from '../data/contact';
 
 export function ContactSection() {
   return (
-    <section id="contact" className="scroll-mt-24 px-5 py-14 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-6xl">
+    <section id="contact" className="scroll-mt-24 py-14">
+      <div className="page-container">
         <SectionHeading
           eyebrow="Contact"
           title="Contact"
@@ -22,7 +22,7 @@ export function ContactSection() {
               href={contact.linkedin.url}
               target="_blank"
               rel="noreferrer"
-              className="mt-5 inline-flex rounded-lg bg-[var(--color-accent)] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[var(--color-accent-strong)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
+              className="mt-5 inline-flex rounded-lg border border-[var(--color-border)] bg-[var(--color-primary-button)] px-5 py-3 text-sm font-semibold text-[var(--color-primary-button-text)] transition hover:border-[var(--color-border-strong)] hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
             >
               Connect on LinkedIn
             </a>
@@ -35,7 +35,7 @@ export function ContactSection() {
             </p>
             <a
               href={`mailto:${contact.email.address}`}
-              className="mt-5 inline-flex rounded-lg border border-[var(--color-border)] bg-[var(--color-card)] px-5 py-3 text-sm font-semibold text-[var(--color-heading)] transition hover:border-[var(--color-accent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
+              className="mt-5 inline-flex rounded-lg border border-[var(--color-border)] bg-[var(--color-button)] px-5 py-3 text-sm font-semibold text-[var(--color-button-text)] transition hover:border-[var(--color-border-strong)] hover:bg-[var(--color-button-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
             >
               Send Email
             </a>

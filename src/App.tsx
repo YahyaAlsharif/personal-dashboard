@@ -36,12 +36,12 @@ function App() {
   return (
     <div className="min-h-screen bg-[var(--color-page)] text-[var(--color-body)]">
       <header className="sticky top-0 z-20 border-b border-[var(--color-border)] bg-[var(--color-header)] backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4 sm:px-6 lg:px-8">
+        <div className="page-container flex items-center justify-between gap-4 py-4">
           <a
             href="#top"
             className="text-sm font-semibold text-[var(--color-heading)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
           >
-            Yahya Al-Sharif
+            Yahya Alsharif
           </a>
           <ThemeToggle theme={theme} onToggle={toggleTheme} />
         </div>
