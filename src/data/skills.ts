@@ -5,23 +5,14 @@ export type SkillGroup = {
 
 export const skillGroups: SkillGroup[] = [
   {
-    title: 'Frontend',
-    skills: ['React', 'TypeScript', 'Tailwind CSS', 'Flutter'],
-  },
-  {
-    title: 'Backend',
-    skills: ['Java', 'Spring Boot', 'PostgreSQL'],
-  },
-  {
-    title: 'AI / Machine Learning',
+    title: 'Full-Stack',
     skills: [
-      'Python',
-      'Machine learning fundamentals',
-      'Deep learning fundamentals',
-      'Neural networks',
-      'Convolutional neural networks',
-      'Computer vision concepts',
-      'Applied AI problem-solving',
+      'React',
+      'Tailwind CSS',
+      'Flutter',
+      'Java',
+      'Spring Boot',
+      'PostgreSQL',
     ],
   },
   {
@@ -36,7 +27,27 @@ export const skillGroups: SkillGroup[] = [
     ],
   },
   {
+    title: 'Artificial Intelligence',
+    skills: [
+      'AI foundations',
+      'Neural networks',
+      'Deep learning fundamentals',
+      'Computer vision concepts',
+      'Applied AI problem-solving',
+    ],
+  },
+  {
+    title: 'Machine Learning',
+    skills: [
+      'Python',
+      'Machine learning fundamentals',
+      'Model training concepts',
+      'Data preprocessing',
+      'Model evaluation basics',
+    ],
+  },
+  {
     title: 'Tools',
-    skills: ['Git', 'GitHub', 'VS Code', 'IntelliJ', 'Docker', 'Postman', 'Codex'],
+    skills: ['Git', 'GitHub', 'VS Code', 'Docker', 'Codex'],
   },
 ];

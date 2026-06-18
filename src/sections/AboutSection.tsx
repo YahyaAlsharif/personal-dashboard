@@ -146,9 +146,18 @@ export function AboutSection() {
           <p className="mt-2 max-w-3xl text-sm leading-6 text-[var(--color-muted)]">
             A compact view of the tools and foundations that support the story above.
           </p>
-          <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-5">
-            {skillGroups.map((group) => (
-              <div key={group.title} className="border-l border-[var(--color-border)] pl-4">
+          <div className="mt-5 grid gap-y-6 md:grid-cols-2 md:gap-x-4 xl:grid-cols-5">
+            {skillGroups.map((group, index) => (
+              <div
+                key={group.title}
+                className={[
+                  'pl-0',
+                  index % 2 === 1 ? 'md:border-l md:border-[var(--color-border)] md:pl-4' : '',
+                  index > 0 ? 'xl:border-l xl:border-[var(--color-border)] xl:pl-4' : '',
+                ]
+                  .filter(Boolean)
+                  .join(' ')}
+              >
                 <h3 className="text-sm font-semibold text-[var(--color-heading)]">
                   {group.title}
                 </h3>
