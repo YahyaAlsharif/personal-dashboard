@@ -7,6 +7,7 @@ import { ContactSection } from './sections/ContactSection';
 import { CvSection } from './sections/CvSection';
 import { EducationSection } from './sections/EducationSection';
 import { HeroSection } from './sections/HeroSection';
+import { PostsSection } from './sections/PostsSection';
 import { ProjectsSection } from './sections/ProjectsSection';
 
 type Theme = 'light' | 'dark';
@@ -53,6 +54,7 @@ function App() {
         <EducationSection />
         <ProjectsSection />
         <CvSection />
+        <PostsSection />
         <ContactSection />
         <BackToTop />
       </main>

@@ -21,5 +21,6 @@ export const heroLinks = [
   { label: 'Education', href: '#education' },
   { label: 'Projects', href: '#projects' },
   { label: 'CV', href: '#cv' },
+  { label: 'Posts', href: '#posts' },
   { label: 'Contact', href: '#contact' },
 ];
