@@ -1,8 +1,9 @@
 export const aboutIntro = {
-  subtitle: 'Who I am, what I am interested in, and how I approach the projects I work on.',
+  subtitle: 'A closer look at my interests, learning style, and how I approach the projects I build.',
   paragraphs: [
     'I am a Software Engineering student at Umm Al-Qura University and a KAUST Academy AI Specialization participant who advanced to the final summer program.',
-    'My interests sit between software engineering and artificial intelligence: practical projects, requirements, design, implementation, testing, and clear presentation. I like work that starts with understanding people and ends with something useful enough to explain, test, and improve.',
+    'I study software engineering in Makkah, and my interests sit between building software systems properly and understanding how artificial intelligence can be used in practical, responsible ways. I enjoy moving from the early idea stage into requirements, design, implementation, testing, documentation, and presentation, because that full process shows how an idea becomes something people can actually use.',
+    'I also like researching concepts and learning how things work under the surface, especially in AI models, machine learning, deep learning, computer vision, and the tools used to build modern software. For me, the most interesting projects combine learning with building: understanding the problem, thinking about users, testing the solution, and improving it until it can be explained clearly to others.',
   ],
 };
 

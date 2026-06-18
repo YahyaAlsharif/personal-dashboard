@@ -44,11 +44,14 @@ export function EducationSection() {
                   ) : null}
                 </div>
               </div>
-              <p className="mt-5 text-base leading-7 text-[var(--color-muted)]">
+              <p className="prose-justify mt-5 text-base leading-7 text-[var(--color-muted)]">
                 {item.description}
               </p>
               {item.details?.map((detail) => (
-                <p key={detail} className="mt-4 text-base leading-7 text-[var(--color-muted)]">
+                <p
+                  key={detail}
+                  className="prose-justify mt-4 text-base leading-7 text-[var(--color-muted)]"
+                >
                   {detail}
                 </p>
               ))}

@@ -22,9 +22,9 @@ export function AboutSection() {
           description={aboutIntro.subtitle}
         />
 
-        <div className="max-w-4xl space-y-5 text-base leading-8 text-[var(--color-muted)] sm:text-lg">
+        <div className="w-full space-y-5 text-base leading-8 text-[var(--color-muted)] sm:text-lg">
           {aboutIntro.paragraphs.map((paragraph, index) => (
-            <Reveal as="p" key={paragraph} delay={index * 80}>
+            <Reveal as="p" key={paragraph} delay={index * 80} className="prose-justify">
               {paragraph}
             </Reveal>
           ))}
@@ -56,7 +56,7 @@ export function AboutSection() {
               </Reveal>
               <div className="mt-6 max-w-4xl space-y-5 text-base leading-8 text-[var(--color-muted)]">
                 {softwareEngineeringStory.paragraphs.map((paragraph, index) => (
-                  <Reveal as="p" key={paragraph} delay={index * 70}>
+                  <Reveal as="p" key={paragraph} delay={index * 70} className="prose-justify">
                     {paragraph}
                   </Reveal>
                 ))}
@@ -116,7 +116,7 @@ export function AboutSection() {
               <div className="mt-6 max-w-4xl space-y-5 text-base leading-8 text-[var(--color-muted)]">
                 {artificialIntelligenceStory.paragraphs.map((paragraph, index) => (
                   <Fragment key={paragraph}>
-                    <Reveal as="p" delay={index * 70}>
+                    <Reveal as="p" delay={index * 70} className="prose-justify">
                       {paragraph}
                     </Reveal>
                     {index === 4 ? (
@@ -193,7 +193,7 @@ export function AboutSection() {
                   {group.skills.map((skill) => (
                     <span
                       key={skill}
-                      className="inline-flex w-fit max-w-full items-center rounded-md bg-[var(--color-chip)] px-3 py-1 text-xs font-medium leading-snug text-[var(--color-chip-text)]"
+                      className="skill-chip rounded-md bg-[var(--color-chip)] px-3 py-1 text-xs font-medium leading-snug text-[var(--color-chip-text)]"
                     >
                       {skill}
                     </span>

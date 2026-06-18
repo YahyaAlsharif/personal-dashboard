@@ -49,11 +49,14 @@ export function ProjectsSection() {
                   </div>
                 ) : null}
               </div>
-              <p className="mt-4 text-sm leading-6 text-[var(--color-muted)]">
+              <p className="prose-justify mt-4 text-sm leading-6 text-[var(--color-muted)]">
                 {project.description}
               </p>
               {project.details?.map((detail) => (
-                <p key={detail} className="mt-4 text-sm leading-6 text-[var(--color-muted)]">
+                <p
+                  key={detail}
+                  className="prose-justify mt-4 text-sm leading-6 text-[var(--color-muted)]"
+                >
                   {detail}
                 </p>
               ))}

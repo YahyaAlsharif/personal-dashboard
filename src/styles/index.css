@@ -116,9 +116,18 @@ a {
 }
 
 .action-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   border-color: var(--color-action-button);
   background: var(--color-action-button);
   color: var(--color-action-button-text);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+  text-align: center;
+  vertical-align: middle;
 }
 
 .action-button:hover {
@@ -131,9 +140,29 @@ a {
   outline-offset: 2px;
 }
 
+.prose-justify {
+  text-align: left;
+}
+
+.skill-chip {
+  display: inline-flex;
+  width: fit-content;
+  max-width: min(100%, 16ch);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
 @media (min-width: 640px) {
   .page-container {
     padding-inline: 1.5rem;
+  }
+
+  .prose-justify {
+    text-align: justify;
+    text-align-last: left;
   }
 }
 
