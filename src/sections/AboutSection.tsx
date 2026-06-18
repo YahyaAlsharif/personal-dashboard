@@ -2,6 +2,7 @@ import { Fragment } from 'react';
 
 import cnnCourseImage from '../assets/learning/cnn-course.png';
 import { DashboardCard } from '../components/DashboardCard';
+import { Reveal } from '../components/Reveal';
 import { SectionHeading } from '../components/SectionHeading';
 import {
   aboutIntro,
@@ -22,12 +23,14 @@ export function AboutSection() {
         />
 
         <div className="max-w-4xl space-y-5 text-base leading-8 text-[var(--color-muted)] sm:text-lg">
-          {aboutIntro.paragraphs.map((paragraph) => (
-            <p key={paragraph}>{paragraph}</p>
+          {aboutIntro.paragraphs.map((paragraph, index) => (
+            <Reveal as="p" key={paragraph} delay={index * 80}>
+              {paragraph}
+            </Reveal>
           ))}
         </div>
 
-        <div className="mt-7 flex flex-wrap gap-3">
+        <Reveal as="div" delay={140} className="mt-7 flex flex-wrap gap-3">
           {aboutJumpLinks.map((link) => (
             <a
               key={link.href}
@@ -37,7 +40,7 @@ export function AboutSection() {
               {link.label}
             </a>
           ))}
-        </div>
+        </Reveal>
 
         <div
           id={softwareEngineeringStory.id}
@@ -45,19 +48,29 @@ export function AboutSection() {
         >
           <div className="grid gap-8 lg:grid-cols-[minmax(0,0.72fr)_minmax(17rem,0.28fr)]">
             <div>
-              <h3 className="text-2xl font-semibold text-[var(--color-heading)] sm:text-3xl">
+              <Reveal
+                as="h3"
+                className="text-2xl font-semibold text-[var(--color-heading)] sm:text-3xl"
+              >
                 {softwareEngineeringStory.title}
-              </h3>
+              </Reveal>
               <div className="mt-6 max-w-4xl space-y-5 text-base leading-8 text-[var(--color-muted)]">
-                {softwareEngineeringStory.paragraphs.map((paragraph) => (
-                  <p key={paragraph}>{paragraph}</p>
+                {softwareEngineeringStory.paragraphs.map((paragraph, index) => (
+                  <Reveal as="p" key={paragraph} delay={index * 70}>
+                    {paragraph}
+                  </Reveal>
                 ))}
               </div>
             </div>
 
             <aside className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
-              {softwareEngineeringStory.sidebars.map((sidebar) => (
-                <DashboardCard key={sidebar.title} as="div" className="p-5">
+              {softwareEngineeringStory.sidebars.map((sidebar, index) => (
+                <DashboardCard
+                  key={sidebar.title}
+                  as="div"
+                  className="p-5"
+                  revealDelay={index * 80}
+                >
                   <h4 className="text-sm font-semibold uppercase text-[var(--color-muted)]">
                     {sidebar.title}
                   </h4>
@@ -94,15 +107,24 @@ export function AboutSection() {
         >
           <div className="grid gap-8 lg:grid-cols-[minmax(0,0.72fr)_minmax(17rem,0.28fr)]">
             <div>
-              <h3 className="text-2xl font-semibold text-[var(--color-heading)] sm:text-3xl">
+              <Reveal
+                as="h3"
+                className="text-2xl font-semibold text-[var(--color-heading)] sm:text-3xl"
+              >
                 {artificialIntelligenceStory.title}
-              </h3>
+              </Reveal>
               <div className="mt-6 max-w-4xl space-y-5 text-base leading-8 text-[var(--color-muted)]">
                 {artificialIntelligenceStory.paragraphs.map((paragraph, index) => (
                   <Fragment key={paragraph}>
-                    <p>{paragraph}</p>
+                    <Reveal as="p" delay={index * 70}>
+                      {paragraph}
+                    </Reveal>
                     {index === 4 ? (
-                      <figure className="rounded-lg border border-[var(--color-border)] bg-[var(--color-card-strong)] p-3 shadow-sm shadow-black/5">
+                      <Reveal
+                        as="figure"
+                        delay={80}
+                        className="rounded-lg border border-[var(--color-border)] bg-[var(--color-card-strong)] p-3 shadow-sm shadow-black/5"
+                      >
                         <img
                           src={cnnCourseImage}
                           alt={artificialIntelligenceStory.courseImage.alt}
@@ -111,7 +133,7 @@ export function AboutSection() {
                         <figcaption className="mt-3 text-sm leading-6 text-[var(--color-muted)]">
                           {artificialIntelligenceStory.courseImage.caption}
                         </figcaption>
-                      </figure>
+                      </Reveal>
                     ) : null}
                   </Fragment>
                 ))}
@@ -140,16 +162,22 @@ export function AboutSection() {
         </div>
 
         <div className="mt-14 border-t border-[var(--color-border)] pt-8">
-          <h3 className="text-lg font-semibold text-[var(--color-heading)]">
+          <Reveal as="h3" className="text-lg font-semibold text-[var(--color-heading)]">
             Selected Skills & Tools
-          </h3>
-          <p className="mt-2 max-w-3xl text-sm leading-6 text-[var(--color-muted)]">
+          </Reveal>
+          <Reveal
+            as="p"
+            delay={80}
+            className="mt-2 max-w-3xl text-sm leading-6 text-[var(--color-muted)]"
+          >
             A compact view of the tools and foundations that support the story above.
-          </p>
+          </Reveal>
           <div className="mt-5 grid gap-y-6 md:grid-cols-2 md:gap-x-4 xl:grid-cols-5">
             {skillGroups.map((group, index) => (
-              <div
+              <Reveal
+                as="div"
                 key={group.title}
+                delay={(index % 5) * 70}
                 className={[
                   'pl-0',
                   index % 2 === 1 ? 'md:border-l md:border-[var(--color-border)] md:pl-4' : '',
@@ -171,7 +199,7 @@ export function AboutSection() {
                     </span>
                   ))}
                 </div>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>

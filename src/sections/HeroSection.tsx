@@ -1,4 +1,5 @@
 import profilePicture from '../assets/profile/profile-picture-optimized.jpg';
+import { Reveal } from '../components/Reveal';
 import { heroLinks, profile } from '../data/profile';
 
 export function HeroSection() {
@@ -9,20 +10,32 @@ export function HeroSection() {
     >
       <div className="page-container grid gap-8 py-14 sm:py-16 lg:grid-cols-[minmax(0,1.08fr)_minmax(18rem,0.56fr)] lg:items-center">
         <div>
-          <p className="text-sm font-semibold uppercase text-[var(--color-accent)]">
+          <Reveal as="p" className="text-sm font-semibold uppercase text-[var(--color-accent)]">
             Personal Dashboard
-          </p>
-          <h1 className="mt-4 max-w-3xl text-4xl font-semibold leading-tight text-[var(--color-heading)] sm:text-5xl lg:text-6xl">
+          </Reveal>
+          <Reveal
+            as="h1"
+            delay={80}
+            className="mt-4 max-w-3xl text-4xl font-semibold leading-tight text-[var(--color-heading)] sm:text-5xl lg:text-6xl"
+          >
             Hi, I am {profile.name}.
-          </h1>
-          <p className="mt-4 max-w-2xl text-lg leading-8 text-[var(--color-muted)]">
+          </Reveal>
+          <Reveal
+            as="p"
+            delay={140}
+            className="mt-4 max-w-2xl text-lg leading-8 text-[var(--color-muted)]"
+          >
             {profile.intro}
-          </p>
-          <p className="mt-3 text-base font-medium text-[var(--color-heading)]">
+          </Reveal>
+          <Reveal
+            as="p"
+            delay={180}
+            className="mt-3 text-base font-medium text-[var(--color-heading)]"
+          >
             {profile.title}
-          </p>
+          </Reveal>
 
-          <div className="mt-6 flex flex-wrap gap-3">
+          <Reveal as="div" delay={220} className="mt-6 flex flex-wrap gap-3">
             {heroLinks.map((link) => (
               <a
                 key={link.href}
@@ -32,10 +45,14 @@ export function HeroSection() {
                 {link.label}
               </a>
             ))}
-          </div>
+          </Reveal>
         </div>
 
-        <div className="w-full max-w-xs sm:max-w-sm lg:ml-auto lg:max-w-[21rem]">
+        <Reveal
+          as="div"
+          delay={180}
+          className="w-full max-w-xs sm:max-w-sm lg:ml-auto lg:max-w-[21rem]"
+        >
           <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-card)] p-3 shadow-xl shadow-black/10">
             <div className="overflow-hidden rounded-lg bg-[var(--color-profile)]">
               <img
@@ -53,7 +70,7 @@ export function HeroSection() {
               </div>
             </div>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

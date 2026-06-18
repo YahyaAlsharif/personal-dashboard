@@ -13,8 +13,8 @@ export function EducationSection() {
         />
 
         <div className="grid gap-5 lg:grid-cols-2">
-          {education.map((item) => (
-            <DashboardCard key={item.title}>
+          {education.map((item, index) => (
+            <DashboardCard key={item.title} revealDelay={index * 90}>
               <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                 <div>
                   <h3 className="text-xl font-semibold text-[var(--color-heading)]">
@@ -53,7 +53,7 @@ export function EducationSection() {
           ))}
         </div>
 
-        <DashboardCard as="div" className="mt-5">
+        <DashboardCard as="div" className="mt-5" revealDelay={120}>
           <h3 className="text-lg font-semibold text-[var(--color-heading)]">
             Certificates & Training
           </h3>

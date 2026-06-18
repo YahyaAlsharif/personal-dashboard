@@ -13,8 +13,13 @@ export function ContactSection() {
         />
 
         <div className="grid gap-5 md:grid-cols-3">
-          {contactOptions.map((option) => (
-            <DashboardCard key={option.title} as="div" className="flex h-full flex-col">
+          {contactOptions.map((option, index) => (
+            <DashboardCard
+              key={option.title}
+              as="div"
+              className="flex h-full flex-col"
+              revealDelay={(index % 3) * 90}
+            >
               <h3 className="text-lg font-semibold text-[var(--color-heading)]">
                 {option.title}
               </h3>

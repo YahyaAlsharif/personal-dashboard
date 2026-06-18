@@ -31,6 +31,7 @@ export function CvSection() {
           <DashboardCard
             as="div"
             className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between"
+            revealDelay={100}
           >
             <div>
               <h3 className="text-xl font-semibold text-[var(--color-heading)]">
