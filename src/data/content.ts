@@ -151,7 +151,7 @@ export type DashboardContent = {
   backToTop: string;
 };
 
-const cvFileName = 'Yahya_Alsharif_Software_Engineer_CV.pdf';
+const cvFileName = 'yahya_alsharif_software_engineer_cv.pdf';
 const cvHref = `${import.meta.env.BASE_URL}cv/${cvFileName}`;
 
 const links = {
