@@ -30,6 +30,7 @@ function Dashboard() {
   const [theme, setTheme] = useState<Theme>(getInitialTheme);
   const { language, setLanguage } = useLanguage();
   const content = localizedContent[language];
+  const logoSrc = `${import.meta.env.BASE_URL}y-logo.svg`;
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
@@ -46,9 +47,10 @@ function Dashboard() {
         <div className="page-container flex flex-wrap items-center justify-between gap-3 py-4">
           <a
             href="#top"
-            className="text-sm font-semibold text-[var(--color-heading)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
+            aria-label="Yahya Alsharif home"
+            className="site-logo-link focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
           >
-            {content.header.brand}
+            <img src={logoSrc} alt="" className="site-logo-image" />
           </a>
           <div className="flex flex-wrap items-center justify-end gap-3">
             <LanguageToggle language={language} onChange={setLanguage} />

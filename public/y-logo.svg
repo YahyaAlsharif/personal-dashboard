@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="Yahya Alsharif Y logo">
+  <defs>
+    <filter id="y-depth" x="-30%" y="-20%" width="160%" height="150%">
+      <feDropShadow dx="0" dy="3" stdDeviation="2.2" flood-color="#0b1112" flood-opacity="0.32" />
+      <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#7fd4da" flood-opacity="0.42" />
+    </filter>
+  </defs>
+  <text
+    x="48"
+    y="70"
+    fill="#050607"
+    filter="url(#y-depth)"
+    font-family="Inter, Arial, Helvetica, sans-serif"
+    font-size="78"
+    font-weight="900"
+    letter-spacing="0"
+    text-anchor="middle"
+  >Y</text>
+</svg>

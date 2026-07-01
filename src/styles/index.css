@@ -163,6 +163,29 @@ a {
   unicode-bidi: plaintext;
 }
 
+.site-logo-link {
+  display: inline-flex;
+  min-height: 2.75rem;
+  min-width: 2.75rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.site-logo-image {
+  display: block;
+  height: 2.5rem;
+  width: 2.5rem;
+  filter:
+    drop-shadow(0 1px 1px rgb(255 255 255 / 0.44))
+    drop-shadow(0 0 10px rgb(127 212 218 / 0.38));
+}
+
+.hero-background-video {
+  background:
+    radial-gradient(circle at 18% 20%, rgb(184 223 225 / 0.14), transparent 28%),
+    linear-gradient(135deg, #020303 0%, #070b0c 48%, #000000 100%);
+}
+
 .action-button {
   display: inline-flex;
   align-items: center;
@@ -238,6 +261,10 @@ a {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  .hero-background-video {
+    display: none;
   }
 
   .language-content {
