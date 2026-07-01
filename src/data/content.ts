@@ -474,7 +474,7 @@ export const localizedContent: Record<Language, DashboardContent> = {
       viewButton: 'View on LinkedIn',
       items: [
         {
-          title: 'مشروع التخرج / ESAS',
+          title: 'Graduation Project / ESAS',
           description:
             'A LinkedIn milestone post about ESAS, my graduation project focused on authentic, locally curated tourism experiences in Saudi Arabia.',
           embedUrl: links.embedEsas,
@@ -482,7 +482,7 @@ export const localizedContent: Record<Language, DashboardContent> = {
           iframeTitle: 'LinkedIn post about Graduation Project and ESAS',
         },
         {
-          title: 'أكاديمية كاوست: من المرحلة الثالثة إلى المرحلة الرابعة',
+          title: 'KAUST Academy Stage 3 to Stage 4',
           description:
             'A LinkedIn milestone post about finishing KAUST Academy Stage 3 and being accepted into Stage 4 of the AI journey.',
           embedUrl: links.embedKaust,
@@ -825,7 +825,7 @@ export const localizedContent: Record<Language, DashboardContent> = {
       viewButton: 'عرض على LinkedIn',
       items: [
         {
-          title: 'Graduation Project / ESAS',
+          title: 'مشروع التخرج / ESAS',
           description:
             'منشور مهم على LinkedIn حول ESAS، مشروع تخرجي الذي يركز على تجارب سياحية أصيلة ومنتقاة محليًا في المملكة العربية السعودية.',
           embedUrl: links.embedEsas,
@@ -833,7 +833,7 @@ export const localizedContent: Record<Language, DashboardContent> = {
           iframeTitle: 'LinkedIn post about Graduation Project and ESAS',
         },
         {
-          title: 'KAUST Academy Stage 3 to Stage 4',
+          title: 'أكاديمية كاوست: من المرحلة الثالثة إلى المرحلة الرابعة',
           description:
             'منشور مهم على LinkedIn حول إكمال المرحلة الثالثة من أكاديمية كاوست والقبول في المرحلة الرابعة من رحلة الذكاء الاصطناعي.',
           embedUrl: links.embedKaust,

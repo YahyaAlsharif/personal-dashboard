@@ -1,15 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Yahya Alsharif site icon">
   <defs>
-    <radialGradient id="favicon-bg" cx="34%" cy="24%" r="74%">
-      <stop offset="0%" stop-color="#f7ffff" />
-      <stop offset="45%" stop-color="#b8dfe1" />
-      <stop offset="100%" stop-color="#5ba6ad" />
-    </radialGradient>
     <filter id="favicon-depth" x="-20%" y="-20%" width="140%" height="150%">
-      <feDropShadow dx="0" dy="2" stdDeviation="1.4" flood-color="#001214" flood-opacity="0.45" />
+      <feDropShadow dx="0" dy="2" stdDeviation="1.5" flood-color="#001214" flood-opacity="0.34" />
+      <feDropShadow dx="0" dy="0" stdDeviation="1.6" flood-color="#7fd4da" flood-opacity="0.42" />
     </filter>
   </defs>
-  <circle cx="32" cy="32" r="30" fill="url(#favicon-bg)" />
+  <rect width="64" height="64" fill="#ffffff" />
+  <rect x="5" y="5" width="54" height="54" rx="17" fill="#ffffff" />
+  <circle cx="32" cy="32" r="25" fill="#ffffff" stroke="#b8dfe1" stroke-width="2" />
   <text
     x="32"
     y="45"
