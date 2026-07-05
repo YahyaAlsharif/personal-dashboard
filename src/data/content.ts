@@ -181,8 +181,8 @@ export const localizedContent: Record<Language, DashboardContent> = {
       eyebrow: 'Personal Dashboard',
       title: "Hi, I'm Yahya Alsharif.",
       intro:
-        'I am a Software Engineering student at Umm Al-Qura University with a growing focus on artificial intelligence, practical software development, and building projects that connect technical ideas with real user needs.',
-      role: 'Software Engineering Student | AI Learner | Project Coordinator',
+        "I'm an AI engineer and software engineering student at Umm Al-Qura University, focused on artificial intelligence, practical software development, and building projects that connect technical ideas with real user needs.",
+      role: 'AI Engineer & Researcher | Software Engineering Student @ UQU',
       profileName: 'Yahya Alsharif',
       profileLocation: 'Makkah Region, Saudi Arabia',
       profileAlt: 'Yahya Alsharif',
@@ -536,8 +536,8 @@ export const localizedContent: Record<Language, DashboardContent> = {
       eyebrow: 'Personal Dashboard',
       title: 'مرحبًا، أنا يحيى الشريف.',
       intro:
-        'أنا طالب هندسة برمجيات في جامعة أم القرى، ولدي اهتمام متنامٍ بالذكاء الاصطناعي، وتطوير البرمجيات بشكل عملي، وبناء مشاريع تربط الأفكار التقنية باحتياجات المستخدمين الحقيقية.',
-      role: 'طالب هندسة برمجيات | متعلم في الذكاء الاصطناعي | منسق مشاريع',
+        'أنا مهندس وباحث في الذكاء الاصطناعي وطالب هندسة برمجيات في جامعة أم القرى، أركز على الذكاء الاصطناعي، وتطوير البرمجيات بشكل عملي، وبناء مشاريع تربط الأفكار التقنية باحتياجات المستخدمين الحقيقية.',
+      role: 'مهندس وباحث في الذكاء الاصطناعي | طالب هندسة برمجيات في جامعة أم القرى',
       profileName: 'يحيى الشريف',
       profileLocation: 'منطقة مكة المكرمة، المملكة العربية السعودية',
       profileAlt: 'يحيى الشريف',

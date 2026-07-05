@@ -7,9 +7,11 @@ $scriptDirectory = Split-Path -Parent $MyInvocation.MyCommand.Path
 $projectRoot = Resolve-Path (Join-Path $scriptDirectory '..')
 $profileImagePath = Join-Path $projectRoot 'src\assets\profile\profile-picture-optimized.jpg'
 $outputPath = Join-Path $projectRoot 'public\social-preview.png'
+$outputTempPath = Join-Path (Split-Path -Parent $outputPath) 'social-preview.tmp.png'
 
 $width = 1200
 $height = 630
+$roleText = 'AI Engineer & Researcher | Software Engineering Student @ UQU'
 
 function New-RoundedRectanglePath {
   param (
@@ -98,6 +100,36 @@ function Draw-Text {
   }
 }
 
+function Draw-CoverImage {
+  param (
+    [Parameter(Mandatory = $true)]
+    [System.Drawing.Graphics] $Graphics,
+    [Parameter(Mandatory = $true)]
+    [System.Drawing.Image] $Image,
+    [Parameter(Mandatory = $true)]
+    [System.Drawing.RectangleF] $Destination
+  )
+
+  $sourceRatio = $Image.Width / $Image.Height
+  $destinationRatio = $Destination.Width / $Destination.Height
+
+  if ($sourceRatio -gt $destinationRatio) {
+    $sourceHeight = $Image.Height
+    $sourceWidth = $Image.Height * $destinationRatio
+    $sourceX = ($Image.Width - $sourceWidth) / 2
+    $sourceY = 0
+  }
+  else {
+    $sourceWidth = $Image.Width
+    $sourceHeight = $Image.Width / $destinationRatio
+    $sourceX = 0
+    $sourceY = ($Image.Height - $sourceHeight) / 2
+  }
+
+  $sourceRectangle = [System.Drawing.RectangleF]::new($sourceX, $sourceY, $sourceWidth, $sourceHeight)
+  $Graphics.DrawImage($Image, $Destination, $sourceRectangle, [System.Drawing.GraphicsUnit]::Pixel)
+}
+
 if (-not (Test-Path $profileImagePath)) {
   throw "Profile image not found: $profileImagePath"
 }
@@ -106,24 +138,19 @@ $bitmap = [System.Drawing.Bitmap]::new($width, $height)
 $graphics = [System.Drawing.Graphics]::FromImage($bitmap)
 
 $backgroundBrush = $null
-$cardBrush = $null
-$strongCardBrush = $null
-$borderPen = $null
+$surfaceBrush = $null
+$surfacePen = $null
 $accentBrush = $null
-$accentSoftBrush = $null
 $headingBrush = $null
-$mutedBrush = $null
 $bodyBrush = $null
 $shadowBrush = $null
+$photoOverlayBrush = $null
+$photoBorderPen = $null
 $profile = $null
+$outputStream = $null
 
-$labelFont = [System.Drawing.Font]::new('Segoe UI', 20, [System.Drawing.FontStyle]::Bold, [System.Drawing.GraphicsUnit]::Pixel)
-$titleFont = [System.Drawing.Font]::new('Segoe UI', 68, [System.Drawing.FontStyle]::Bold, [System.Drawing.GraphicsUnit]::Pixel)
-$roleFont = [System.Drawing.Font]::new('Segoe UI', 31, [System.Drawing.FontStyle]::Regular, [System.Drawing.GraphicsUnit]::Pixel)
-$supportFont = [System.Drawing.Font]::new('Segoe UI', 25, [System.Drawing.FontStyle]::Regular, [System.Drawing.GraphicsUnit]::Pixel)
-$smallFont = [System.Drawing.Font]::new('Segoe UI', 23, [System.Drawing.FontStyle]::Regular, [System.Drawing.GraphicsUnit]::Pixel)
-$cardTitleFont = [System.Drawing.Font]::new('Segoe UI', 30, [System.Drawing.FontStyle]::Bold, [System.Drawing.GraphicsUnit]::Pixel)
-$cardTextFont = [System.Drawing.Font]::new('Segoe UI', 21, [System.Drawing.FontStyle]::Regular, [System.Drawing.GraphicsUnit]::Pixel)
+$titleFont = [System.Drawing.Font]::new('Segoe UI', 74, [System.Drawing.FontStyle]::Bold, [System.Drawing.GraphicsUnit]::Pixel)
+$roleFont = [System.Drawing.Font]::new('Segoe UI', 34, [System.Drawing.FontStyle]::Regular, [System.Drawing.GraphicsUnit]::Pixel)
 
 try {
   $graphics.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::AntiAlias
@@ -133,88 +160,79 @@ try {
 
   $backgroundBrush = [System.Drawing.Drawing2D.LinearGradientBrush]::new(
     [System.Drawing.Rectangle]::new(0, 0, $width, $height),
-    [System.Drawing.ColorTranslator]::FromHtml('#ffffff'),
-    [System.Drawing.ColorTranslator]::FromHtml('#eeeeee'),
+    [System.Drawing.ColorTranslator]::FromHtml('#020405'),
+    [System.Drawing.ColorTranslator]::FromHtml('#142024'),
     [System.Drawing.Drawing2D.LinearGradientMode]::ForwardDiagonal
   )
   $graphics.FillRectangle($backgroundBrush, 0, 0, $width, $height)
 
-  $cardBrush = New-SolidBrush '#fafafa'
-  $strongCardBrush = New-SolidBrush '#ffffff'
-  $borderPen = [System.Drawing.Pen]::new([System.Drawing.ColorTranslator]::FromHtml('#dedede'), 2)
-  $accentBrush = New-SolidBrush '#2f8a94'
-  $accentSoftBrush = New-SolidBrush '#b8dfe1'
-  $headingBrush = New-SolidBrush '#0a0a0a'
-  $mutedBrush = New-SolidBrush '#5f5f5f'
-  $bodyBrush = New-SolidBrush '#262626'
-  $shadowBrush = [System.Drawing.SolidBrush]::new([System.Drawing.Color]::FromArgb(22, 0, 0, 0))
+  $surfaceBrush = [System.Drawing.SolidBrush]::new([System.Drawing.Color]::FromArgb(224, 7, 16, 18))
+  $surfacePen = [System.Drawing.Pen]::new([System.Drawing.Color]::FromArgb(118, 184, 223, 225), 2)
+  $accentBrush = New-SolidBrush '#b8dfe1'
+  $headingBrush = New-SolidBrush '#ffffff'
+  $bodyBrush = [System.Drawing.SolidBrush]::new([System.Drawing.Color]::FromArgb(226, 235, 247, 248))
+  $shadowBrush = [System.Drawing.SolidBrush]::new([System.Drawing.Color]::FromArgb(78, 0, 0, 0))
+  $photoOverlayBrush = [System.Drawing.Drawing2D.LinearGradientBrush]::new(
+    [System.Drawing.Rectangle]::new(760, 72, 352, 486),
+    [System.Drawing.Color]::FromArgb(105, 3, 5, 6),
+    [System.Drawing.Color]::FromArgb(6, 3, 5, 6),
+    [System.Drawing.Drawing2D.LinearGradientMode]::Horizontal
+  )
+  $photoBorderPen = [System.Drawing.Pen]::new([System.Drawing.Color]::FromArgb(72, 184, 223, 225), 2)
 
-  Draw-RoundedRectangle -Graphics $graphics -Rectangle ([System.Drawing.RectangleF]::new(60, 70, 1080, 490)) -Radius 28 -Brush $shadowBrush
-  Draw-RoundedRectangle -Graphics $graphics -Rectangle ([System.Drawing.RectangleF]::new(52, 58, 1080, 490)) -Radius 28 -Brush $cardBrush -Pen $borderPen
-
-  Draw-RoundedRectangle -Graphics $graphics -Rectangle ([System.Drawing.RectangleF]::new(92, 98, 225, 46)) -Radius 18 -Brush $accentSoftBrush
-  Draw-Text -Graphics $graphics -Text 'Personal Dashboard' -Font $labelFont -Brush $headingBrush -Rectangle ([System.Drawing.RectangleF]::new(116, 109, 190, 26))
-
-  Draw-Text -Graphics $graphics -Text 'Yahya Alsharif' -Font $titleFont -Brush $headingBrush -Rectangle ([System.Drawing.RectangleF]::new(90, 177, 650, 88))
-  Draw-Text -Graphics $graphics -Text 'Software Engineering Student | AI Learner | Project Coordinator' -Font $roleFont -Brush $bodyBrush -Rectangle ([System.Drawing.RectangleF]::new(94, 278, 620, 92))
-
-  $bullet = [string][char]0x2022
-  $supportText = "Software Engineering $bullet Artificial Intelligence $bullet ESAS $bullet KAUST Academy"
-  Draw-Text -Graphics $graphics -Text $supportText -Font $supportFont -Brush $mutedBrush -Rectangle ([System.Drawing.RectangleF]::new(94, 394, 655, 72))
-
-  Draw-RoundedRectangle -Graphics $graphics -Rectangle ([System.Drawing.RectangleF]::new(94, 484, 360, 52)) -Radius 16 -Brush $strongCardBrush -Pen $borderPen
-  Draw-Text -Graphics $graphics -Text 'Makkah Region, Saudi Arabia' -Font $smallFont -Brush $mutedBrush -Rectangle ([System.Drawing.RectangleF]::new(118, 497, 315, 34))
-
-  Draw-RoundedRectangle -Graphics $graphics -Rectangle ([System.Drawing.RectangleF]::new(788, 88, 295, 415)) -Radius 18 -Brush $shadowBrush
-  Draw-RoundedRectangle -Graphics $graphics -Rectangle ([System.Drawing.RectangleF]::new(776, 78, 295, 415)) -Radius 18 -Brush $strongCardBrush -Pen $borderPen
+  Draw-RoundedRectangle -Graphics $graphics -Rectangle ([System.Drawing.RectangleF]::new(72, 80, 1080, 490)) -Radius 34 -Brush $shadowBrush
+  Draw-RoundedRectangle -Graphics $graphics -Rectangle ([System.Drawing.RectangleF]::new(56, 60, 1088, 504)) -Radius 34 -Brush $surfaceBrush -Pen $surfacePen
 
   $profile = [System.Drawing.Image]::FromFile($profileImagePath)
-  $imageRectangle = [System.Drawing.RectangleF]::new(800, 102, 247, 247)
-  $imagePath = New-RoundedRectanglePath -Rectangle $imageRectangle -Radius 16
+  $photoRectangle = [System.Drawing.RectangleF]::new(760, 72, 352, 486)
+  $photoShadowRectangle = [System.Drawing.RectangleF]::new(778, 92, 352, 486)
+  Draw-RoundedRectangle -Graphics $graphics -Rectangle $photoShadowRectangle -Radius 36 -Brush $shadowBrush
+
+  $photoPath = New-RoundedRectanglePath -Rectangle $photoRectangle -Radius 36
   $previousClip = $graphics.Clip.Clone()
   try {
-    $graphics.SetClip($imagePath)
-    $graphics.DrawImage($profile, $imageRectangle)
+    $graphics.SetClip($photoPath)
+    Draw-CoverImage -Graphics $graphics -Image $profile -Destination $photoRectangle
+    $graphics.FillRectangle($photoOverlayBrush, $photoRectangle)
   }
   finally {
     $graphics.SetClip($previousClip, [System.Drawing.Drawing2D.CombineMode]::Replace)
     $previousClip.Dispose()
-    $imagePath.Dispose()
+  }
+  $graphics.DrawPath($photoBorderPen, $photoPath)
+  $photoPath.Dispose()
+
+  Draw-Text -Graphics $graphics -Text 'Yahya Alsharif' -Font $titleFont -Brush $headingBrush -Rectangle ([System.Drawing.RectangleF]::new(92, 190, 630, 96))
+  Draw-Text -Graphics $graphics -Text $roleText -Font $roleFont -Brush $bodyBrush -Rectangle ([System.Drawing.RectangleF]::new(96, 306, 600, 120))
+  Draw-RoundedRectangle -Graphics $graphics -Rectangle ([System.Drawing.RectangleF]::new(96, 462, 290, 8)) -Radius 4 -Brush $accentBrush
+
+  $graphics.Dispose()
+  $graphics = $null
+
+  if (Test-Path $outputTempPath) {
+    Remove-Item -LiteralPath $outputTempPath -Force
   }
 
-  $centerFormat = [System.Drawing.StringFormat]::new()
-  $centerFormat.Alignment = [System.Drawing.StringAlignment]::Center
-  $centerFormat.LineAlignment = [System.Drawing.StringAlignment]::Near
-  try {
-    Draw-Text -Graphics $graphics -Text 'Yahya Alsharif' -Font $cardTitleFont -Brush $headingBrush -Rectangle ([System.Drawing.RectangleF]::new(805, 376, 238, 42)) -Format $centerFormat
-    Draw-Text -Graphics $graphics -Text 'Makkah Region, Saudi Arabia' -Font $cardTextFont -Brush $mutedBrush -Rectangle ([System.Drawing.RectangleF]::new(808, 429, 232, 52)) -Format $centerFormat
-  }
-  finally {
-    $centerFormat.Dispose()
-  }
-
-  $bitmap.Save($outputPath, [System.Drawing.Imaging.ImageFormat]::Png)
+  $outputStream = [System.IO.MemoryStream]::new()
+  $bitmap.Save($outputStream, [System.Drawing.Imaging.ImageFormat]::Png)
+  [System.IO.File]::WriteAllBytes($outputTempPath, $outputStream.ToArray())
+  Move-Item -LiteralPath $outputTempPath -Destination $outputPath -Force
   Write-Host "Generated $outputPath"
 }
 finally {
   if ($null -ne $profile) { $profile.Dispose() }
-  $graphics.Dispose()
+  if ($null -ne $outputStream) { $outputStream.Dispose() }
+  if ($null -ne $graphics) { $graphics.Dispose() }
   $bitmap.Dispose()
-  $labelFont.Dispose()
   $titleFont.Dispose()
   $roleFont.Dispose()
-  $supportFont.Dispose()
-  $smallFont.Dispose()
-  $cardTitleFont.Dispose()
-  $cardTextFont.Dispose()
   if ($null -ne $backgroundBrush) { $backgroundBrush.Dispose() }
-  if ($null -ne $cardBrush) { $cardBrush.Dispose() }
-  if ($null -ne $strongCardBrush) { $strongCardBrush.Dispose() }
-  if ($null -ne $borderPen) { $borderPen.Dispose() }
+  if ($null -ne $surfaceBrush) { $surfaceBrush.Dispose() }
+  if ($null -ne $surfacePen) { $surfacePen.Dispose() }
   if ($null -ne $accentBrush) { $accentBrush.Dispose() }
-  if ($null -ne $accentSoftBrush) { $accentSoftBrush.Dispose() }
   if ($null -ne $headingBrush) { $headingBrush.Dispose() }
-  if ($null -ne $mutedBrush) { $mutedBrush.Dispose() }
   if ($null -ne $bodyBrush) { $bodyBrush.Dispose() }
   if ($null -ne $shadowBrush) { $shadowBrush.Dispose() }
+  if ($null -ne $photoOverlayBrush) { $photoOverlayBrush.Dispose() }
+  if ($null -ne $photoBorderPen) { $photoBorderPen.Dispose() }
 }

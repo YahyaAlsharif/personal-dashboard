@@ -1,9 +1,9 @@
 export const profile = {
   name: 'Yahya Alsharif',
   location: 'Makkah Region, Saudi Arabia',
-  title: 'Software Engineering Student | AI Learner | Project Coordinator',
+  title: 'AI Engineer & Researcher | Software Engineering Student @ UQU',
   intro:
-    'I am a Software Engineering student at Umm Al-Qura University with a growing focus on artificial intelligence, practical software development, and building projects that connect technical ideas with real user needs.',
+    "I'm an AI engineer and software engineering student at Umm Al-Qura University, focused on artificial intelligence, practical software development, and building projects that connect technical ideas with real user needs.",
   about: [
     'I am interested in the intersection of software engineering and artificial intelligence: how systems are designed, how users interact with them, and how AI can be used responsibly to solve practical problems.',
     'I enjoy working on projects from the early idea stage through requirements, design, documentation, implementation, testing, and presentation. My current focus is strengthening my skills in software development, AI, and building polished projects that can be clearly explained to others.',

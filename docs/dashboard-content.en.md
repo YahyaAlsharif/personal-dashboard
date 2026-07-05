@@ -14,11 +14,11 @@ Title:
 
 Intro:
 
-- I am a Software Engineering student at Umm Al-Qura University with a growing focus on artificial intelligence, practical software development, and building projects that connect technical ideas with real user needs.
+- I'm an AI engineer and software engineering student at Umm Al-Qura University, focused on artificial intelligence, practical software development, and building projects that connect technical ideas with real user needs.
 
 Role:
 
-- Software Engineering Student | AI Learner | Project Coordinator
+- AI Engineer & Researcher | Software Engineering Student @ UQU
 
 Hero navigation buttons:
 
