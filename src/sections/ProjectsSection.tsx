@@ -101,6 +101,20 @@ export function ProjectsSection() {
                   </span>
                 ))}
               </div>
+              {project.link ? (
+                <div className={`flex pt-5 ${isArabic ? 'localized-actions' : ''}`}>
+                  <a
+                    href={project.link.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="action-button rounded-lg border px-5 py-3 text-sm font-semibold transition"
+                  >
+                    <span dir={isArabic ? 'auto' : undefined} className="localized-inline">
+                      {project.link.label}
+                    </span>
+                  </a>
+                </div>
+              ) : null}
             </DashboardCard>
           ))}
 
@@ -180,6 +194,20 @@ export function ProjectsSection() {
                     </span>
                   ))}
                 </div>
+                {project.link ? (
+                  <div className={`flex pt-5 ${isArabic ? 'localized-actions' : ''}`}>
+                    <a
+                      href={project.link.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="action-button rounded-lg border px-5 py-3 text-sm font-semibold transition"
+                    >
+                      <span dir={isArabic ? 'auto' : undefined} className="localized-inline">
+                        {project.link.label}
+                      </span>
+                    </a>
+                  </div>
+                ) : null}
               </DashboardCard>
             ))}
           </div>

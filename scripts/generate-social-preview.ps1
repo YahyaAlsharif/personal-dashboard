@@ -11,7 +11,7 @@ $outputTempPath = Join-Path (Split-Path -Parent $outputPath) 'social-preview.tmp
 
 $width = 1200
 $height = 630
-$roleText = 'AI Engineer & Researcher | Software Engineering Student @ UQU'
+$roleText = 'AI & Software Development | Software Engineering Student'
 
 function New-RoundedRectanglePath {
   param (

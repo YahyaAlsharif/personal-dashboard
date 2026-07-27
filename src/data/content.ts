@@ -53,6 +53,7 @@ export type Project = {
   details?: string[];
   points: string[];
   tags: string[];
+  link?: LocalizedLink;
 };
 
 export type Post = {
@@ -140,6 +141,8 @@ export type DashboardContent = {
     title: string;
     description: string;
     viewButton: string;
+    previousButton: string;
+    nextButton: string;
     items: Post[];
   };
   contact: {
@@ -151,15 +154,20 @@ export type DashboardContent = {
   backToTop: string;
 };
 
-const cvFileName = 'yahya_alsharif_software_engineer_cv.pdf';
+const cvFileName = 'yahya_alsharif_cv.pdf';
 const cvHref = `${import.meta.env.BASE_URL}cv/${cvFileName}`;
 
 const links = {
-  linkedin: 'https://www.linkedin.com/in/yahya-sultan-alsharif-204103304',
+  linkedin: 'https://www.linkedin.com/in/yahya-alsharif-204103304',
   github: 'https://github.com/YahyaAlsharif',
   email: 'yahya.alsharif567@gmail.com',
+  kaggleInpainting:
+    'https://www.kaggle.com/code/ghostylicious/mi-gan-inpainting-comp-03',
+  postSummerSchool: 'https://www.linkedin.com/feed/update/urn:li:share:7479585722992226305',
   postEsas: 'https://www.linkedin.com/feed/update/urn:li:ugcPost:7470469804227932160',
   postKaust: 'https://www.linkedin.com/feed/update/urn:li:ugcPost:7439279422131589120',
+  embedSummerSchool:
+    'https://www.linkedin.com/embed/feed/update/urn:li:share:7479585722992226305?collapsed=1',
   embedEsas:
     'https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7470469804227932160?collapsed=1',
   embedKaust:
@@ -181,8 +189,8 @@ export const localizedContent: Record<Language, DashboardContent> = {
       eyebrow: 'Personal Dashboard',
       title: "Hi, I'm Yahya Alsharif.",
       intro:
-        "I'm an AI engineer and software engineering student at Umm Al-Qura University, focused on artificial intelligence, practical software development, and building projects that connect technical ideas with real user needs.",
-      role: 'AI Engineer & Researcher | Software Engineering Student @ UQU',
+        "I'm a Software Engineering student at Umm Al-Qura University working across artificial intelligence and practical software development, with a focus on building reliable projects that connect technical ideas with real user needs.",
+      role: 'AI & Software Development | Software Engineering Student',
       profileName: 'Yahya Alsharif',
       profileLocation: 'Makkah Region, Saudi Arabia',
       profileAlt: 'Yahya Alsharif',
@@ -201,7 +209,7 @@ export const localizedContent: Record<Language, DashboardContent> = {
       description:
         'A closer look at my interests, learning style, and how I approach the projects I build.',
       paragraphs: [
-        'I am a Software Engineering student at Umm Al-Qura University and a KAUST Academy AI Specialization participant who advanced to the final summer program.',
+        'I am a Software Engineering student at Umm Al-Qura University and a KAUST Academy AI Specialisation participant currently attending the final AI Summer Programme.',
         'I study software engineering in Makkah, and my interests sit between building software systems properly and understanding how artificial intelligence can be used in practical, responsible ways. I enjoy moving from the early idea stage into requirements, design, implementation, testing, documentation, and presentation, because that full process shows how an idea becomes something people can actually use.',
         'I also like researching concepts and learning how things work under the surface, especially in AI models, machine learning, deep learning, computer vision, and the tools used to build modern software. For me, the most interesting projects combine learning with building: understanding the problem, thinking about users, testing the solution, and improving it until it can be explained clearly to others.',
       ],
@@ -246,10 +254,10 @@ export const localizedContent: Record<Language, DashboardContent> = {
         paragraphs: [
           'My first real glimpse into AI came through the NVIDIA Fundamentals of Deep Learning experience at Umm Al-Qura University. It made me want to learn not only how to use AI tools, but how AI systems actually work.',
           'I started with prompt engineering and practical ways to use AI, then moved deeper into the foundations: Python, mathematics, machine learning, neural networks, and model training.',
-          'KAUST Academy became a major part of that journey. Its Artificial Intelligence Specialization is a competitive multi-stage program. Stage 1 focused on foundational preparation such as Python and mathematics. Stage 2 introduced machine learning, practical AI work, and applied PyTorch-style learning. Stage 3 focused on computer vision and CNN-related topics.',
-          'Along the way, I completed KAUST Academy certificates in Introduction to Artificial Intelligence and Advanced Artificial Intelligence. After completing the first three stages, I advanced to the final Summer Program, ranking among the top 100 students selected from 14,000+ applicants.',
+          'KAUST Academy became a major part of that journey. Its Artificial Intelligence Specialisation is a competitive multi-stage programme. The earlier stages developed foundations in Python, mathematics, machine learning, PyTorch, neural networks, CNNs, and computer vision.',
+          'After completing the first three stages, I advanced to the final AI Summer Programme, ranking among the top 100 students selected from more than 14,000 applicants.',
           'After Stage 2, I felt I needed to improve my practical performance, especially with applied PyTorch and coding work. Before Stage 3, I studied Convolutional Neural Networks through DeepLearning.AI on Coursera, taught by Andrew Ng, to prepare for computer vision and CNN topics.',
-          'That preparation improved my confidence before Stage 3. During Stage 3, I focused heavily, studied consistently, and improved my performance. I was selected for Stage 4 of the KAUST Academy AI Summer Program at King Khalid University in Abha, where I expect to continue learning advanced AI topics and work on a practical AI project under KAUST Academy guidance.',
+          'I am now actively attending the final AI Summer Programme at King Khalid University under KAUST Academy. The programme covers sequence models, attention and transformers, self-supervised learning, foundation and world models, generative modelling, reinforcement learning, Edge AI, TinyML, quantisation, model compression, and practical model-building labs and competitions.',
         ],
         highlights: [
           'Python',
@@ -261,7 +269,7 @@ export const localizedContent: Record<Language, DashboardContent> = {
           'Computer Vision',
           'DeepLearning.AI CNN preparation',
           'KAUST Academy AI Specialization',
-          'Stage 4 - King Khalid University, Abha',
+          'Final AI Summer Programme - In Progress',
         ],
         highlightsTitle: 'Highlights',
         courseImage: {
@@ -273,7 +281,7 @@ export const localizedContent: Record<Language, DashboardContent> = {
     },
     skills: {
       title: 'Skills & Tools',
-      description: 'A compact view of the tools, foundations, and practices that support my work.',
+      description: 'A compact view of the demonstrated tools, models, and engineering practices that support my work.',
       groups: [
         {
           title: 'Full-Stack',
@@ -291,23 +299,36 @@ export const localizedContent: Record<Language, DashboardContent> = {
           ],
         },
         {
-          title: 'Artificial Intelligence',
+          title: 'AI & Machine Learning',
           skills: [
-            'AI foundations',
-            'Neural networks',
-            'Deep learning fundamentals',
-            'Computer vision concepts',
-            'Applied AI problem-solving',
+            'Python',
+            'PyTorch',
+            'Machine learning',
+            'Deep learning',
+            'Model training',
+            'Data preprocessing',
+            'Precision, recall & F1 evaluation',
           ],
         },
         {
-          title: 'Machine Learning',
+          title: 'AI Models & Applications',
           skills: [
-            'Python',
-            'Machine learning fundamentals',
-            'Model training concepts',
-            'Data preprocessing',
-            'Model evaluation basics',
+            'Computer vision',
+            'CNNs',
+            'RNNs',
+            'Transformers',
+            'Token classification',
+            'Sequence labelling',
+          ],
+        },
+        {
+          title: 'Edge & Advanced AI',
+          skills: [
+            'INT8 quantisation',
+            'Model compression',
+            'Edge AI',
+            'Reinforcement learning',
+            'Generative AI',
           ],
         },
         {
@@ -347,33 +368,34 @@ export const localizedContent: Record<Language, DashboardContent> = {
           title: 'Artificial Intelligence Specialization',
           organization: 'KAUST Academy',
           period: '2025 - 2026',
-          status: 'Stage 4 upcoming / in progress',
+          status: 'Final AI Summer Programme - In Progress',
           logoSrc: kaustAcademyLogo,
           logoAlt: 'KAUST Academy logo',
           description:
-            'KAUST Academy has been one of the most important parts of my artificial intelligence learning journey. Through its multi-stage Artificial Intelligence Specialization, I progressed from foundational preparation into AI coursework, advanced learning, and selection into the final AI Summer Program.',
+            'KAUST Academy has been one of the most important parts of my artificial intelligence learning journey. Through its multi-stage Artificial Intelligence Specialisation, I progressed from foundational preparation into advanced applied learning and active attendance in the final AI Summer Programme.',
           details: [
             'The journey started with foundations such as Python and mathematics for AI, then moved into machine learning concepts, neural networks, PyTorch-style applied work, deep learning, convolutional neural networks, and computer vision. Each stage required learning quickly, applying the material, and competing for selection into the next stage.',
-            'During the program, I completed KAUST Academy Introduction to Artificial Intelligence and KAUST Academy Advanced Artificial Intelligence. These stages helped connect the theory of AI with practical model-building concepts and gave me a stronger reason to continue learning beyond surface-level AI tool usage.',
             'After completing the first three stages, I advanced to the final AI Summer Program, ranking among the top 100 students selected from 14,000+ applicants.',
-            'I was selected for Stage 4 of the KAUST Academy AI Summer Program at King Khalid University in Abha, where I expect to continue learning advanced AI topics and work on a practical AI project under KAUST Academy guidance.',
+            'I am actively attending the final programme hosted at King Khalid University under KAUST Academy, studying RNNs, LSTMs, GRUs, attention, transformers, image captioning, self-supervised and contrastive learning, SimCLR, BYOL, DINO, foundation models, and world models.',
+            'The programme also covers VAEs, VQ-VAEs, GANs, diffusion models, Stable Diffusion, normalising flows, flow matching, reinforcement learning, value-based methods, policy gradients, policy optimisation, and continuous control.',
+            'Edge AI, TinyML, quantisation, model compression, practical model-building labs, and competitions connect the theory to deployable systems and team delivery.',
           ],
           points: [
-            'Completed KAUST Academy Introduction to Artificial Intelligence.',
             'Completed KAUST Academy Advanced Artificial Intelligence.',
-            'Studied Python, mathematics for AI, machine learning foundations, neural networks, PyTorch-style applied work, deep learning, CNNs, and computer vision.',
-            'Advanced to the final AI Summer Program after completing the first three stages.',
-            'Selected for Stage 4 at King Khalid University in Abha, which remains upcoming/in progress until completed.',
+            'Ranked among the top 100 students selected from more than 14,000 applicants.',
+            'Actively attending the final AI Summer Programme at King Khalid University under KAUST Academy.',
+            'Studying modern sequence, transformer, self-supervised, generative, reinforcement-learning, and Edge AI methods.',
+            'Applying the material through practical model-building labs and competitions.',
           ],
         },
       ],
       certificatesTitle: 'Certificates & Training',
       certificates: [
         'Advanced Artificial Intelligence - KAUST Academy',
-        'Introduction to Artificial Intelligence - KAUST Academy',
         'Convolutional Neural Networks - DeepLearning.AI',
         'Fundamentals of Deep Learning - NVIDIA',
         'Linear Algebra for Machine Learning and Data Science - DeepLearning.AI',
+        'Introduction to Data Science in Python - University of Michigan',
       ],
     },
     projects: {
@@ -386,7 +408,7 @@ export const localizedContent: Record<Language, DashboardContent> = {
         {
           id: 'project-esas',
           name: 'ESAS - Experience Saudi As a Saudi',
-          status: 'Graduation Project',
+          status: 'Completed Graduation Project | Continuing Portfolio Development',
           role: 'Coordinator',
           featured: true,
           description:
@@ -417,24 +439,52 @@ export const localizedContent: Record<Language, DashboardContent> = {
           ],
         },
         {
-          name: 'Home AI Project',
-          status: 'Planned / Current Project',
+          name: 'OnKith — Privacy-Aware Edge AI',
+          status: 'KAUST Academy Team Project | Model Development Completed / Integration in Progress',
           description:
-            'Home AI is a privacy-focused AI project idea exploring how home assistant commands can be processed more safely by keeping speech recognition on-device and using a privacy gate to decide what should stay local versus what can be offloaded.',
+            'OnKith is a KAUST Academy team project focused on protecting sensitive text before it reaches cloud-based AI services. I developed and trained a compact TinyBERT-4 token-classification model that detects and masks personally identifiable and sensitive content.',
           details: [
-            'The project is connected to real-world privacy concerns around AI home assistants, especially the question of how much personal speech or context should leave the home.',
+            'The model-development work is complete, while Raspberry Pi 5 integration remains in progress with the deployment team.',
           ],
           points: [
-            'Explores on-device speech-to-text as a first privacy layer.',
-            'Considers a classifier or privacy gate for private versus non-private commands.',
-            'Focuses on deciding what should remain local and what can be safely offloaded.',
-            'Planned as an AI-focused project tied to practical privacy and edge AI concerns.',
+            'Developed and trained a compact TinyBERT-4 token-classification model.',
+            'Evaluated the model with precision, recall, and F1, achieving approximately 0.95 F1.',
+            'Produced an INT8-quantised model for lightweight edge inference.',
+            'Prepared the model, tokenizer, label mappings, configuration, and inference artefacts for Raspberry Pi 5 deployment.',
+            'Coordinated the expected inference and integration workflow with the deployment team.',
+            'Investigated pruning and knowledge distillation as possible future compression approaches.',
           ],
-          tags: ['AI', 'Privacy', 'Speech-to-Text', 'Edge AI', 'Research-Oriented Project'],
+          tags: [
+            'TinyBERT-4',
+            'Token Classification',
+            'Privacy',
+            'INT8 Quantisation',
+            'Edge AI',
+            'Raspberry Pi 5',
+          ],
+        },
+        {
+          name: 'KAUST Academy Image Inpainting Competition',
+          status: '3rd Place Overall | FID 12',
+          description:
+            'Achieved third place overall in the KAUST Academy image-inpainting competition with an FID score of 12.',
+          details: [
+            'The solution led the leaderboard until a late nine-hour deadline extension, after which two stronger submissions moved ahead. The final third-place result remains the main achievement.',
+          ],
+          points: [
+            'Finished 3rd place overall.',
+            'Achieved an FID score of 12.',
+            'Documented the MI-GAN fine-tuning approach in a public Kaggle notebook.',
+          ],
+          tags: ['Computer Vision', 'Image Inpainting', 'MI-GAN', 'PyTorch', 'Competition'],
+          link: {
+            label: 'View Competition Notebook',
+            href: links.kaggleInpainting,
+          },
         },
         {
           name: 'Personal Dashboard',
-          status: 'Current Project',
+          status: 'Deployed Portfolio Project',
           description:
             'This website is a public personal dashboard and portfolio built with React, TypeScript, Vite, and Tailwind CSS. It presents my background, education, projects, CV, and contact links in a clean static frontend-only site.',
           details: [
@@ -472,7 +522,17 @@ export const localizedContent: Record<Language, DashboardContent> = {
       description:
         'LinkedIn posts that highlight important milestones in my software engineering and AI journey.',
       viewButton: 'View on LinkedIn',
+      previousButton: 'Previous post',
+      nextButton: 'Next post',
       items: [
+        {
+          title: 'KAUST Academy AI Summer School Supporters & Investors',
+          description:
+            'A reflection on meeting supporters and investors of the KAUST Academy AI Summer School 2026 and discussing AI education, future careers, and student project ideas.',
+          embedUrl: links.embedSummerSchool,
+          postUrl: links.postSummerSchool,
+          iframeTitle: 'LinkedIn post about meeting KAUST Academy AI Summer School supporters and investors',
+        },
         {
           title: 'Graduation Project / ESAS',
           description:
@@ -536,8 +596,8 @@ export const localizedContent: Record<Language, DashboardContent> = {
       eyebrow: 'Personal Dashboard',
       title: 'مرحبًا، أنا يحيى الشريف.',
       intro:
-        'أنا مهندس وباحث في الذكاء الاصطناعي وطالب هندسة برمجيات في جامعة أم القرى، أركز على الذكاء الاصطناعي، وتطوير البرمجيات بشكل عملي، وبناء مشاريع تربط الأفكار التقنية باحتياجات المستخدمين الحقيقية.',
-      role: 'مهندس وباحث في الذكاء الاصطناعي | طالب هندسة برمجيات في جامعة أم القرى',
+        'أنا طالب هندسة برمجيات في جامعة أم القرى، أعمل في تطوير الذكاء الاصطناعي والبرمجيات بصورة عملية، مع التركيز على بناء مشاريع موثوقة تربط الأفكار التقنية باحتياجات المستخدمين الحقيقية.',
+      role: 'تطوير الذكاء الاصطناعي والبرمجيات | طالب هندسة برمجيات',
       profileName: 'يحيى الشريف',
       profileLocation: 'منطقة مكة المكرمة، المملكة العربية السعودية',
       profileAlt: 'يحيى الشريف',
@@ -555,7 +615,7 @@ export const localizedContent: Record<Language, DashboardContent> = {
       title: 'نبذة عني',
       description: 'نظرة أقرب على اهتماماتي، وطريقة تعلمي، وكيف أتعامل مع المشاريع التي أعمل عليها.',
       paragraphs: [
-        'أنا طالب هندسة برمجيات في جامعة أم القرى، ومشارك في تخصص الذكاء الاصطناعي في أكاديمية كاوست، وقد تأهلت إلى البرنامج الصيفي النهائي.',
+        'أنا طالب هندسة برمجيات في جامعة أم القرى، ومشارك في تخصص الذكاء الاصطناعي في أكاديمية كاوست، وأحضر حاليًا البرنامج الصيفي النهائي للذكاء الاصطناعي.',
         'أدرس هندسة البرمجيات في مكة المكرمة، وتقع اهتماماتي بين بناء الأنظمة البرمجية بطريقة صحيحة وفهم كيف يمكن استخدام الذكاء الاصطناعي بطرق عملية ومسؤولة. أستمتع بالانتقال من مرحلة الفكرة الأولى إلى المتطلبات، والتصميم، والتنفيذ، والاختبار، والتوثيق، والعرض، لأن هذه الرحلة الكاملة توضح كيف تتحول الفكرة إلى شيء يمكن للناس استخدامه فعلًا.',
         'أحب أيضًا البحث في المفاهيم وفهم كيف تعمل الأشياء من الداخل، خصوصًا في نماذج الذكاء الاصطناعي، وتعلم الآلة، والتعلم العميق، والرؤية الحاسوبية، والأدوات المستخدمة في بناء البرمجيات الحديثة. بالنسبة لي، أكثر المشاريع إثارة للاهتمام هي التي تجمع بين التعلم والبناء: فهم المشكلة، والتفكير في المستخدمين، واختبار الحل، وتحسينه حتى يمكن شرحه بوضوح للآخرين.',
       ],
@@ -600,10 +660,10 @@ export const localizedContent: Record<Language, DashboardContent> = {
         paragraphs: [
           'جاءت أول لمحة حقيقية لي في الذكاء الاصطناعي من خلال تجربة NVIDIA Fundamentals of Deep Learning في جامعة أم القرى. جعلتني هذه التجربة أرغب في تعلم ليس فقط كيفية استخدام أدوات الذكاء الاصطناعي، بل كيف تعمل أنظمة الذكاء الاصطناعي فعليًا.',
           'بدأت بهندسة الأوامر والطرق العملية لاستخدام الذكاء الاصطناعي، ثم تعمقت أكثر في الأساسيات: Python، والرياضيات، وتعلم الآلة، والشبكات العصبية، وتدريب النماذج.',
-          'أصبحت أكاديمية كاوست جزءًا مهمًا من هذه الرحلة. تخصص الذكاء الاصطناعي فيها هو برنامج تنافسي متعدد المراحل. ركزت المرحلة الأولى على الإعداد الأساسي مثل Python والرياضيات. وقدمت المرحلة الثانية تعلم الآلة، والعمل العملي في الذكاء الاصطناعي، وتطبيقات بأسلوب PyTorch. أما المرحلة الثالثة فركزت على الرؤية الحاسوبية وموضوعات مرتبطة بالشبكات العصبية الالتفافية CNN.',
-          'خلال هذه الرحلة، أكملت شهادات أكاديمية كاوست في Introduction to Artificial Intelligence وAdvanced Artificial Intelligence. وبعد إكمال المراحل الثلاث الأولى، تأهلت إلى البرنامج الصيفي النهائي، ضمن أفضل 100 طالب تم اختيارهم من بين أكثر من 14,000 متقدم.',
+          'أصبحت أكاديمية كاوست جزءًا مهمًا من هذه الرحلة. تخصص الذكاء الاصطناعي فيها برنامج تنافسي متعدد المراحل، وقد بنت مراحله الأولى أساسًا في Python والرياضيات وتعلم الآلة وPyTorch والشبكات العصبية وCNNs والرؤية الحاسوبية.',
+          'بعد إكمال المراحل الثلاث الأولى، تأهلت إلى البرنامج الصيفي النهائي للذكاء الاصطناعي ضمن أفضل 100 طالب تم اختيارهم من بين أكثر من 14,000 متقدم.',
           'بعد المرحلة الثانية، شعرت أنني بحاجة إلى تحسين أدائي العملي، خصوصًا في تطبيقات PyTorch والبرمجة. وقبل المرحلة الثالثة، درست مقرر Convolutional Neural Networks من DeepLearning.AI على Coursera، والذي يقدمه Andrew Ng، استعدادًا لموضوعات الرؤية الحاسوبية وCNN.',
-          'ساعدني هذا التحضير على زيادة ثقتي قبل المرحلة الثالثة. وخلال المرحلة الثالثة، ركزت بشكل كبير، ودرست باستمرار، وحسنت أدائي. تم اختياري للمرحلة الرابعة من برنامج أكاديمية كاوست الصيفي للذكاء الاصطناعي في جامعة الملك خالد في أبها، حيث أتوقع مواصلة تعلم موضوعات متقدمة في الذكاء الاصطناعي والعمل على مشروع عملي بإشراف أكاديمية كاوست.',
+          'أحضر حاليًا البرنامج الصيفي النهائي للذكاء الاصطناعي في جامعة الملك خالد تحت مظلة أكاديمية كاوست. يشمل البرنامج النماذج التسلسلية والانتباه والمحولات، والتعلم الذاتي، ونماذج الأساس والعالم، والنماذج التوليدية، والتعلم المعزز، والذكاء الاصطناعي الطرفي، وTinyML، والتكميم، وضغط النماذج، ومختبرات ومسابقات عملية لبناء النماذج.',
         ],
         highlights: [
           'Python',
@@ -615,7 +675,7 @@ export const localizedContent: Record<Language, DashboardContent> = {
           'الرؤية الحاسوبية',
           'التحضير لمقرر CNN من DeepLearning.AI',
           'تخصص الذكاء الاصطناعي في أكاديمية كاوست',
-          'المرحلة الرابعة - جامعة الملك خالد، أبها',
+          'البرنامج الصيفي النهائي للذكاء الاصطناعي - قيد التنفيذ',
         ],
         highlightsTitle: 'أبرز المحاور',
         courseImage: {
@@ -627,7 +687,7 @@ export const localizedContent: Record<Language, DashboardContent> = {
     },
     skills: {
       title: 'المهارات والأدوات',
-      description: 'نظرة مختصرة على الأدوات والأساسيات والممارسات التي تدعم عملي.',
+      description: 'نظرة مختصرة على الأدوات والنماذج والممارسات الهندسية التي أثبتها من خلال عملي.',
       groups: [
         {
           title: 'Full-Stack',
@@ -645,23 +705,36 @@ export const localizedContent: Record<Language, DashboardContent> = {
           ],
         },
         {
-          title: 'الذكاء الاصطناعي',
+          title: 'الذكاء الاصطناعي وتعلم الآلة',
           skills: [
-            'أساسيات الذكاء الاصطناعي',
-            'الشبكات العصبية',
-            'أساسيات التعلم العميق',
-            'مفاهيم الرؤية الحاسوبية',
-            'حل المشكلات بالذكاء الاصطناعي التطبيقي',
+            'Python',
+            'PyTorch',
+            'تعلم الآلة',
+            'التعلم العميق',
+            'تدريب النماذج',
+            'معالجة البيانات',
+            'التقييم بالدقة والاستدعاء وF1',
           ],
         },
         {
-          title: 'تعلم الآلة',
+          title: 'نماذج وتطبيقات الذكاء الاصطناعي',
           skills: [
-            'Python',
-            'أساسيات تعلم الآلة',
-            'مفاهيم تدريب النماذج',
-            'معالجة البيانات',
-            'أساسيات تقييم النماذج',
+            'الرؤية الحاسوبية',
+            'CNNs',
+            'RNNs',
+            'المحولات',
+            'تصنيف الرموز',
+            'وسم التسلسلات',
+          ],
+        },
+        {
+          title: 'الذكاء الاصطناعي الطرفي والمتقدم',
+          skills: [
+            'التكميم إلى INT8',
+            'ضغط النماذج',
+            'الذكاء الاصطناعي الطرفي',
+            'التعلم المعزز',
+            'الذكاء الاصطناعي التوليدي',
           ],
         },
         {
@@ -700,33 +773,34 @@ export const localizedContent: Record<Language, DashboardContent> = {
           title: 'Artificial Intelligence Specialization',
           organization: 'أكاديمية كاوست',
           period: '2025 - 2026',
-          status: 'المرحلة الرابعة قادمة / قيد التنفيذ',
+          status: 'البرنامج الصيفي النهائي للذكاء الاصطناعي - قيد التنفيذ',
           logoSrc: kaustAcademyLogo,
           logoAlt: 'شعار أكاديمية كاوست',
           description:
-            'كانت أكاديمية كاوست واحدة من أهم أجزاء رحلتي في تعلم الذكاء الاصطناعي. من خلال تخصص الذكاء الاصطناعي متعدد المراحل، انتقلت من الإعداد التأسيسي إلى مقررات الذكاء الاصطناعي، والتعلم المتقدم، والاختيار للبرنامج الصيفي النهائي للذكاء الاصطناعي.',
+            'كانت أكاديمية كاوست واحدة من أهم أجزاء رحلتي في تعلم الذكاء الاصطناعي. من خلال تخصص الذكاء الاصطناعي متعدد المراحل، انتقلت من الإعداد التأسيسي إلى التعلم التطبيقي المتقدم والحضور الفعلي للبرنامج الصيفي النهائي للذكاء الاصطناعي.',
           details: [
             'بدأت الرحلة بأساسيات مثل Python والرياضيات للذكاء الاصطناعي، ثم انتقلت إلى مفاهيم تعلم الآلة، والشبكات العصبية، والعمل التطبيقي بأسلوب PyTorch، والتعلم العميق، والشبكات العصبية الالتفافية، والرؤية الحاسوبية. كانت كل مرحلة تتطلب التعلم بسرعة، وتطبيق المادة، والمنافسة للانتقال إلى المرحلة التالية.',
-            'خلال البرنامج، أكملت KAUST Academy Introduction to Artificial Intelligence وKAUST Academy Advanced Artificial Intelligence. ساعدتني هذه المراحل على ربط نظرية الذكاء الاصطناعي بمفاهيم بناء النماذج عمليًا، وأعطتني دافعًا أقوى لمواصلة التعلم بعيدًا عن الاستخدام السطحي لأدوات الذكاء الاصطناعي.',
             'بعد إكمال المراحل الثلاث الأولى، تأهلت إلى البرنامج الصيفي النهائي للذكاء الاصطناعي، ضمن أفضل 100 طالب تم اختيارهم من بين أكثر من 14,000 متقدم.',
-            'تم اختياري للمرحلة الرابعة من برنامج أكاديمية كاوست الصيفي للذكاء الاصطناعي في جامعة الملك خالد في أبها، حيث أتوقع مواصلة تعلم موضوعات متقدمة في الذكاء الاصطناعي والعمل على مشروع عملي بإشراف أكاديمية كاوست.',
+            'أحضر حاليًا البرنامج النهائي المستضاف في جامعة الملك خالد تحت مظلة أكاديمية كاوست، وأدرس RNNs وLSTMs وGRUs والانتباه والمحولات وتعليق الصور والتعلم الذاتي والتبايني وSimCLR وBYOL وDINO ونماذج الأساس ونماذج العالم.',
+            'يشمل البرنامج أيضًا VAEs وVQ-VAEs وGANs ونماذج الانتشار وStable Diffusion والتدفقات الطبيعية ومواءمة التدفق، إضافة إلى التعلم المعزز وطرق القيمة وتدرجات السياسات وتحسينها والتحكم المستمر.',
+            'تربط موضوعات الذكاء الاصطناعي الطرفي وTinyML والتكميم وضغط النماذج والمختبرات والمسابقات العملية بين النظرية وبناء أنظمة قابلة للنشر والعمل الجماعي.',
           ],
           points: [
-            'أكملت KAUST Academy Introduction to Artificial Intelligence.',
             'أكملت KAUST Academy Advanced Artificial Intelligence.',
-            'درست Python، والرياضيات للذكاء الاصطناعي، وأساسيات تعلم الآلة، والشبكات العصبية، والعمل التطبيقي بأسلوب PyTorch، والتعلم العميق، وCNNs، والرؤية الحاسوبية.',
-            'تأهلت إلى البرنامج الصيفي النهائي بعد إكمال المراحل الثلاث الأولى.',
-            'تم اختياري للمرحلة الرابعة في جامعة الملك خالد في أبها، وهي لا تزال قادمة / قيد التنفيذ حتى اكتمالها.',
+            'صُنفت ضمن أفضل 100 طالب تم اختيارهم من بين أكثر من 14,000 متقدم.',
+            'أحضر حاليًا البرنامج الصيفي النهائي في جامعة الملك خالد تحت مظلة أكاديمية كاوست.',
+            'أدرس أساليب حديثة في النماذج التسلسلية والمحولات والتعلم الذاتي والتوليدي والمعزز والذكاء الاصطناعي الطرفي.',
+            'أطبق المادة من خلال مختبرات ومسابقات عملية لبناء النماذج.',
           ],
         },
       ],
       certificatesTitle: 'الشهادات والتدريب',
       certificates: [
         'Advanced Artificial Intelligence - KAUST Academy',
-        'Introduction to Artificial Intelligence - KAUST Academy',
         'Convolutional Neural Networks - DeepLearning.AI',
         'Fundamentals of Deep Learning - NVIDIA',
         'Linear Algebra for Machine Learning and Data Science - DeepLearning.AI',
+        'Introduction to Data Science in Python - University of Michigan',
       ],
     },
     projects: {
@@ -739,7 +813,7 @@ export const localizedContent: Record<Language, DashboardContent> = {
         {
           id: 'project-esas',
           name: 'ESAS - Experience Saudi As a Saudi',
-          status: 'مشروع تخرج',
+          status: 'مشروع تخرج مكتمل | مواصلة تطويره لملف الأعمال',
           role: 'منسق',
           featured: true,
           description:
@@ -770,24 +844,45 @@ export const localizedContent: Record<Language, DashboardContent> = {
           ],
         },
         {
-          name: 'Home AI Project',
-          status: 'مخطط / مشروع حالي',
+          name: 'OnKith — ذكاء اصطناعي طرفي واعٍ بالخصوصية',
+          status: 'مشروع جماعي في أكاديمية كاوست | اكتمل تطوير النموذج / التكامل قيد التنفيذ',
           description:
-            'Home AI هو مشروع ذكاء اصطناعي يركز على الخصوصية، ويستكشف كيف يمكن معالجة أوامر المساعدات المنزلية بشكل أكثر أمانًا من خلال إبقاء التعرف على الكلام داخل الجهاز، واستخدام بوابة خصوصية لتحديد ما يجب أن يبقى محليًا وما يمكن إرساله إلى السحابة.',
+            'OnKith مشروع جماعي في أكاديمية كاوست يركز على حماية النصوص الحساسة قبل وصولها إلى خدمات الذكاء الاصطناعي السحابية. طورت ودربت نموذج TinyBERT-4 مدمجًا لتصنيف الرموز واكتشاف المعلومات الشخصية والحساسة وإخفائها.',
           details: [
-            'يرتبط المشروع بمخاوف واقعية حول خصوصية مساعدات الذكاء الاصطناعي المنزلية، خصوصًا سؤال: ما مقدار الكلام أو السياق الشخصي الذي ينبغي أن يغادر المنزل؟',
+            'اكتمل عمل تطوير النموذج، بينما لا يزال تكامله مع Raspberry Pi 5 قيد التنفيذ بالتعاون مع فريق النشر.',
           ],
           points: [
-            'يستكشف التعرف على الكلام داخل الجهاز كطبقة أولى للخصوصية.',
-            'يدرس استخدام مصنف أو بوابة خصوصية للتمييز بين الأوامر الخاصة وغير الخاصة.',
-            'يركز على تحديد ما ينبغي أن يبقى محليًا وما يمكن إرساله بأمان.',
-            'مخطط كمشروع يركز على الذكاء الاصطناعي ويرتبط بمخاوف عملية في الخصوصية والذكاء الاصطناعي على الطرفية.',
+            'طورت ودربت نموذج TinyBERT-4 مدمجًا لتصنيف الرموز.',
+            'قيّمت النموذج باستخدام الدقة والاستدعاء وF1، وحقق قرابة 0.95 في مقياس F1.',
+            'أنتجت نسخة مكممة إلى INT8 للاستدلال الخفيف على الأجهزة الطرفية.',
+            'جهزت النموذج والمجزئ وخرائط التصنيفات والإعدادات وملفات الاستدلال للنشر على Raspberry Pi 5.',
+            'نسقت مسار الاستدلال والتكامل المتوقع مع فريق النشر.',
+            'بحثت التقليم وتقطير المعرفة كخيارات مستقبلية إضافية لضغط النموذج.',
           ],
-          tags: ['الذكاء الاصطناعي', 'الخصوصية', 'التعرف على الكلام', 'Edge AI', 'مشروع ذو توجه بحثي'],
+          tags: ['TinyBERT-4', 'تصنيف الرموز', 'الخصوصية', 'تكميم INT8', 'Edge AI', 'Raspberry Pi 5'],
+        },
+        {
+          name: 'مسابقة أكاديمية كاوست لترميم الصور',
+          status: 'المركز الثالث على مستوى المسابقة | FID 12',
+          description:
+            'حققت المركز الثالث على مستوى مسابقة أكاديمية كاوست لترميم الصور بدرجة FID بلغت 12.',
+          details: [
+            'تصدّر الحل لوحة النتائج حتى تمديد الموعد النهائي تسع ساعات في وقت متأخر، ثم تقدّم حلان أقوى. يبقى المركز الثالث النهائي هو الإنجاز الأبرز.',
+          ],
+          points: [
+            'حققت المركز الثالث على مستوى المسابقة.',
+            'حققت درجة FID مقدارها 12.',
+            'وثقت منهجية الضبط الدقيق لنموذج MI-GAN في دفتر Kaggle عام.',
+          ],
+          tags: ['الرؤية الحاسوبية', 'ترميم الصور', 'MI-GAN', 'PyTorch', 'مسابقة'],
+          link: {
+            label: 'عرض دفتر المسابقة',
+            href: links.kaggleInpainting,
+          },
         },
         {
           name: 'Personal Dashboard',
-          status: 'مشروع حالي',
+          status: 'مشروع ملف أعمال منشور',
           description:
             'هذا الموقع هو لوحة معلومات شخصية وملف أعمال عام مبني باستخدام React وTypeScript وVite وTailwind CSS. يعرض خلفيتي، وتعليمي، ومشاريعي، وسيرتي الذاتية، وروابط التواصل في موقع ثابت ونظيف يعمل بالواجهة الأمامية فقط.',
           details: [
@@ -823,7 +918,17 @@ export const localizedContent: Record<Language, DashboardContent> = {
       title: 'المنشورات',
       description: 'منشورات على LinkedIn تبرز محطات مهمة في رحلتي في هندسة البرمجيات والذكاء الاصطناعي.',
       viewButton: 'عرض على LinkedIn',
+      previousButton: 'المنشور السابق',
+      nextButton: 'المنشور التالي',
       items: [
+        {
+          title: 'لقاء داعمي ومستثمري البرنامج الصيفي للذكاء الاصطناعي',
+          description:
+            'تأملات حول لقاء داعمي ومستثمري برنامج أكاديمية كاوست الصيفي للذكاء الاصطناعي 2026، ومناقشة تعليم الذكاء الاصطناعي والمهن المستقبلية وأفكار مشاريع الطلاب.',
+          embedUrl: links.embedSummerSchool,
+          postUrl: links.postSummerSchool,
+          iframeTitle: 'LinkedIn post about meeting KAUST Academy AI Summer School supporters and investors',
+        },
         {
           title: 'مشروع التخرج / ESAS',
           description:

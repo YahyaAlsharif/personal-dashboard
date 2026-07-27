@@ -1,80 +1,78 @@
-# Yahya Alsharif Software Engineering Student
+# Yahya Alsharif
 
-Makkah Region, Saudi Arabia | yahya.alsharif567@gmail.com | LinkedIn
+## Software Engineering Student | AI and Software Development
 
-## Summary
+- Makkah Region, Saudi Arabia
+- +966 56 571 2351
+- yahya.alsharif567@gmail.com
+- https://www.linkedin.com/in/yahya-alsharif-204103304
+- https://github.com/YahyaAlsharif
 
-Software Engineering student skilled in artificial intelligence and software development, with a strong foundation in
-machine learning and practical software engineering. Pursuing a Bachelor’s degree in Computer Software Engineering
-at Umm Al-Qura University and an Artificial Intelligence specialization at KAUST Academy. Experienced in academic
-projects, AI models, software tools, and collaborative problem-solving, with a focus on developing practical software
-solutions.
+## Professional Summary
+
+Software Engineering student at Umm Al-Qura University (GPA 3.88/4.00) with an Artificial Intelligence specialisation at KAUST Academy. Experienced in machine learning, full-stack development, requirements engineering and project coordination, with a focus on building reliable, deployable software and AI solutions.
 
 ## Education
 
-### Bachelor of Computer Software Engineering 2023 – 2027 (Expected)
+### Umm Al-Qura University — BSc Software Engineering
 
-### Umm Al-Qura University Makkah, Saudi Arabia
+2023–Expected 2027 | Makkah, Saudi Arabia
 
-- Maintaining a strong academic record with a GPA of 3.88 / 4.00, demonstrating consistent academic excellence.
-- Working on ESAS – Experience Saudi As a Saudi, a graduation project focused on designing and developing a
-    software platform for authentic, locally curated tourism experiences in Saudi Arabia.
-- Completed academic projects and delivered technical presentations in software development, requirements
-    engineering, software testing, system analysis, algorithms, and data structures.
+- GPA: 3.88/4.00.
+- Coursework and academic projects in requirements engineering, software testing, system analysis, algorithms and data structures.
 
-### Artificial Intelligence Specialization 2025 – 2026
+### KAUST Academy — Artificial Intelligence Specialisation
 
-### KAUST Academy
+2025–2026
 
-- Selected for KAUST Academy’s multi-stage Artificial Intelligence specialization program, designed to build AI
-    knowledge through foundational learning, advanced coursework, and a summer program focused on real-
-    world experience.
-- Advanced to the final Summer Program after completing the first three stages, ranking among the top 100
-    students selected from 14,000+ applicants.
-- Focus areas: artificial intelligence foundations, machine learning, deep learning, convolutional neural networks,
-    problem-solving, and applied AI projects.
+- Advanced to the final Summer Programme, ranking among the top 100 students selected from more than 14,000 applicants.
+- Studied machine learning, deep learning, computer vision, CNN architectures, RNNs, attention, transformers and Edge AI.
 
-## Projects
+## Selected Projects
 
-### ESAS – Graduation Project
+### ESAS — Experience Saudi As a Saudi
 
-### Umm Al-Qura University Makkah, Saudi Arabia
+Graduation Project, Umm Al-Qura University | 2025–2026
 
-- Served as project coordinator, contributing to brainstorming, planning, requirements gathering, and
-    transforming the initial idea into a structured software engineering project.
-- Developed and documented the project’s software requirements, system workflows, use cases, system
-    diagrams, and Software Requirements Specification (SRS).
-- Supported the implementation of the system across backend and frontend components, including user flows,
-    provider and admin workflows, experience listings, booking-related features, and demo-ready functionality.
-- Showcased the project poster and live demo at the INJAZ 2026 Graduation Projects Exhibition, explaining the
-    system to instructors, reviewers, and visitors while answering questions about the project’s idea, design, and
-    implementation.
+- Coordinated the project team through brainstorming, planning and requirements gathering, converting an initial concept into a structured engineering project.
+- Documented software requirements, system workflows, use cases and system diagrams, and produced the Software Requirements Specification (SRS).
+- Implemented backend and frontend features for catalogue browsing, role-based user flows, provider and administrator workflows and booking.
+- Presented the poster and live demo at the INJAZ 2026 Graduation Projects Exhibition.
 
-## Certificates & Training
+### OnKith — Privacy-Aware Edge AI
 
-- **Advanced Artificial Intelligence Certificate** — KAUST Academy
-- **Convolutional Neural Networks** — DeepLearning.AI
-- **Fundamentals of Deep Learning** — NVIDIA
-- **Introduction to Artificial Intelligence** — KAUST Academy
-- **Linear Algebra for Machine Learning and Data Science** — DeepLearning.AI
-- **Introduction to Data Science in Python** — University of Michigan
-- **Data Collection and Processing with Python** — University of Michigan
+Team Project, KAUST Academy | 2026
 
+- Developed and trained a compact TinyBERT-4 token-classification model that detects and masks personally identifiable and sensitive spoken content before it reaches cloud-based AI services.
+- Optimised the model through INT8 quantisation for lightweight edge inference, achieving an F1 score of approximately 0.95 with precision and recall assessed.
+- Investigated pruning and knowledge distillation as further compression options.
+- Prepared the model, tokeniser, label mappings, configuration and inference artefacts for Raspberry Pi 5 (4 GB RAM) deployment.
+- Agreed the inference workflow and integration requirements with the deployment team under latency, memory and model-size constraints.
 
-## Skills
+### Personal Dashboard
 
-- **Programming Languages:** Python, Java.
-- **Artificial Intelligence:** AI foundations, deep learning fundamentals, neural networks, convolutional neural
-    networks, computer vision concepts, and applied AI problem-solving.
-- **Software Engineering:** Object-Oriented Programming, requirements engineering, software requirements
-    specification, system design, software architecture, software testing, documentation, and project coordination.
-- **Machine Learning:** Machine learning fundamentals, linear algebra for machine learning, model training
-    concepts, data preprocessing, and model evaluation basics.
-- **Tools & Technologies:** Git, GitHub, VS Code, Codex.
+Independent Project | 2026
+
+- Built and deployed a bilingual English/Arabic dashboard using React, TypeScript, Vite and Tailwind CSS, with responsive design, light and dark modes and localised content.
+- Implemented CV viewing and downloading, LinkedIn embeds, social-preview metadata, structured reusable content files and a GitHub Pages workflow.
+
+## Technical Skills
+
+- **Languages:** Python, Java, TypeScript, HTML, CSS.
+- **Frontend:** React, Vite, Tailwind CSS, responsive design.
+- **AI and Machine Learning:** PyTorch, deep learning, computer vision, CNNs, RNNs, transformers, token classification, model training, data preprocessing, evaluation, INT8 quantisation, model compression, Edge AI.
+- **Software Engineering:** Object-oriented programming, requirements engineering, SRS, system design, software architecture, testing, technical documentation, project coordination.
+- **Tools:** Git, GitHub, GitHub Pages, Docker, VS Code, Codex.
+
+## Certifications
+
+- **Advanced Artificial Intelligence** — KAUST Academy.
+- **Fundamentals of Deep Learning** — NVIDIA.
+- **Convolutional Neural Networks** — DeepLearning.AI.
+- **Linear Algebra for Machine Learning and Data Science** — DeepLearning.AI.
+- **Introduction to Data Science in Python** — University of Michigan.
 
 ## Languages
 
-- **Arabic** — Native
-- **English** — Professional Proficiency (IELTS Academic: Overall 8.0, CEFR C1)
-
-
+- **Arabic** — Native.
+- **English** — Professional Proficiency (IELTS Academic 8.0, CEFR C1).

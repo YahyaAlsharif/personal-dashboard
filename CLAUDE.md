@@ -16,7 +16,7 @@ The website should present Yahya in a professional, polished, and honest way:
 * Software Engineering and AI background.
 * KAUST Academy AI journey.
 * Education.
-* Projects such as ESAS and Home AI.
+* Projects such as ESAS and OnKith.
 * Skills and tools.
 * CV preview/download.
 * Contact links for LinkedIn and email.
@@ -204,7 +204,7 @@ For KAUST Academy:
 
 * Keep wording professional and accurate.
 * Mention completed stages only when supported by the provided content.
-* Mention Stage 4 as accepted/upcoming/in progress unless Yahya says it is completed.
+* Present the final AI Summer Programme as in progress unless Yahya says it is completed.
 * Do not overstate the summer program before completion.
 
 For ESAS:
@@ -213,10 +213,10 @@ For ESAS:
 * Mention Yahya’s official role as Coordinator when relevant.
 * Do not claim sole ownership.
 
-For Home AI:
+For OnKith:
 
 * Describe it as a privacy-focused AI project if included.
-* Mark it as planned/current unless Yahya says it is completed.
+* State that model development is complete while Raspberry Pi integration remains in progress unless Yahya says otherwise.
 
 ## Mandatory Plan-First Workflow
 
