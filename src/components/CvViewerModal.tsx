@@ -8,7 +8,6 @@ type CvViewerModalProps = {
   downloadLabel: string;
   closeLabel: string;
   closeAriaLabel: string;
-  isArabic: boolean;
   onClose: () => void;
 };
 
@@ -20,13 +19,10 @@ export function CvViewerModal({
   downloadLabel,
   closeLabel,
   closeAriaLabel,
-  isArabic,
   onClose,
 }: CvViewerModalProps) {
   const dialogRef = useRef<HTMLElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
-  const textDirection = isArabic ? 'rtl' : 'ltr';
-  const localizedClass = isArabic ? 'localized-text' : '';
 
   useEffect(() => {
     if (!isOpen) {
@@ -102,8 +98,7 @@ export function CvViewerModal({
           <div className="min-w-0">
             <h2
               id="cv-viewer-title"
-              dir={textDirection}
-              className={`text-base font-semibold text-[var(--color-heading)] sm:text-lg ${localizedClass}`}
+              className="text-base font-semibold text-[var(--color-heading)] sm:text-lg"
             >
               {title}
             </h2>
@@ -115,7 +110,7 @@ export function CvViewerModal({
               download={fileName}
               className="action-button inline-flex min-h-11 items-center justify-center rounded-lg border px-4 text-sm font-semibold leading-none transition"
             >
-              <span dir={isArabic ? 'auto' : undefined} className="localized-inline">
+              <span dir="auto" className="localized-inline">
                 {downloadLabel}
               </span>
             </a>
@@ -126,7 +121,7 @@ export function CvViewerModal({
               onClick={onClose}
               className="inline-flex min-h-11 items-center justify-center rounded-lg border border-[var(--color-border)] bg-[var(--color-button)] px-4 text-sm font-semibold leading-none text-[var(--color-button-text)] transition hover:border-[var(--color-border-strong)] hover:bg-[var(--color-button-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
             >
-              <span dir={isArabic ? 'auto' : undefined} className="localized-inline">
+              <span dir="auto" className="localized-inline">
                 {closeLabel}
               </span>
             </button>

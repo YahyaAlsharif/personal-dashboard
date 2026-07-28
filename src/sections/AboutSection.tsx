@@ -5,10 +5,8 @@ import { useLanguage } from '../context/useLanguage';
 import { localizedContent } from '../data/content';
 
 export function AboutSection() {
-  const { language, isArabic } = useLanguage();
+  const { language } = useLanguage();
   const { about, skills } = localizedContent[language];
-  const textDirection = isArabic ? 'rtl' : 'ltr';
-  const localizedClass = isArabic ? 'localized-text' : '';
   const softwareEngineeringStory = about.softwareEngineering;
   const artificialIntelligenceStory = about.artificialIntelligence;
 
@@ -19,7 +17,6 @@ export function AboutSection() {
           eyebrow={about.eyebrow}
           title={about.title}
           description={about.description}
-          isArabic={isArabic}
         />
 
         <div className="w-full space-y-5 text-base leading-8 text-[var(--color-muted)] sm:text-lg">
@@ -28,8 +25,7 @@ export function AboutSection() {
               as="p"
               key={paragraph}
               delay={index * 80}
-              dir={textDirection}
-              className={`prose-justify ${localizedClass}`}
+              className="prose-justify"
             >
               {paragraph}
             </Reveal>
@@ -43,7 +39,7 @@ export function AboutSection() {
               href={link.href}
               className="action-button rounded-lg border px-4 py-2.5 text-sm font-semibold transition"
             >
-              <span dir={isArabic ? 'auto' : undefined} className="localized-inline">
+              <span dir="auto" className="localized-inline">
                 {link.label}
               </span>
             </a>
@@ -58,8 +54,7 @@ export function AboutSection() {
             <div>
               <Reveal
                 as="h3"
-                dir={textDirection}
-                className={`text-2xl font-semibold text-[var(--color-heading)] sm:text-3xl ${localizedClass}`}
+                className="text-2xl font-semibold text-[var(--color-heading)] sm:text-3xl"
               >
                 {softwareEngineeringStory.title}
               </Reveal>
@@ -69,8 +64,7 @@ export function AboutSection() {
                     as="p"
                     key={paragraph}
                     delay={index * 70}
-                    dir={textDirection}
-                    className={`prose-justify ${localizedClass}`}
+                    className="prose-justify"
                   >
                     {paragraph}
                   </Reveal>
@@ -87,16 +81,11 @@ export function AboutSection() {
                   revealDelay={index * 80}
                 >
                   <h4
-                    dir={textDirection}
-                    className={`text-sm font-semibold uppercase text-[var(--color-muted)] ${localizedClass}`}
+                    className="text-sm font-semibold uppercase text-[var(--color-muted)]"
                   >
                     {sidebar.title}
                   </h4>
-                  <div
-                    className={`mt-4 flex flex-wrap gap-2 ${
-                      isArabic ? 'localized-chip-list' : ''
-                    }`}
-                  >
+                  <div className="mt-4 flex flex-wrap gap-2">
                     {sidebar.items.map((item) => (
                       sidebar.href ? (
                         <a
@@ -105,7 +94,7 @@ export function AboutSection() {
                           aria-label={about.sidebarLinkLabel(item)}
                           className="action-button rounded-md border px-3 py-1.5 text-xs font-semibold transition"
                         >
-                          <span dir={isArabic ? 'auto' : undefined} className="localized-inline">
+                          <span dir="auto" className="localized-inline">
                             {item}
                           </span>
                         </a>
@@ -113,7 +102,7 @@ export function AboutSection() {
                         <span
                           key={item}
                           dir="auto"
-                          className={`rounded-md bg-[var(--color-chip)] px-3 py-1.5 text-xs font-medium text-[var(--color-chip-text)] ${localizedClass}`}
+                          className="localized-inline rounded-md bg-[var(--color-chip)] px-3 py-1.5 text-xs font-medium text-[var(--color-chip-text)]"
                         >
                           {item}
                         </span>
@@ -134,8 +123,7 @@ export function AboutSection() {
             <div>
               <Reveal
                 as="h3"
-                dir={textDirection}
-                className={`text-2xl font-semibold text-[var(--color-heading)] sm:text-3xl ${localizedClass}`}
+                className="text-2xl font-semibold text-[var(--color-heading)] sm:text-3xl"
               >
                 {artificialIntelligenceStory.title}
               </Reveal>
@@ -145,8 +133,7 @@ export function AboutSection() {
                     as="p"
                     key={paragraph}
                     delay={index * 70}
-                    dir={textDirection}
-                    className={`prose-justify ${localizedClass}`}
+                    className="prose-justify"
                   >
                     {paragraph}
                   </Reveal>
@@ -157,21 +144,16 @@ export function AboutSection() {
             <aside>
               <DashboardCard as="div" className="p-5">
                 <h4
-                  dir={textDirection}
-                  className={`text-sm font-semibold uppercase text-[var(--color-muted)] ${localizedClass}`}
+                  className="text-sm font-semibold uppercase text-[var(--color-muted)]"
                 >
                   {artificialIntelligenceStory.highlightsTitle}
                 </h4>
-                <div
-                  className={`mt-4 flex flex-wrap gap-2 ${
-                    isArabic ? 'localized-chip-list' : ''
-                  }`}
-                >
+                <div className="mt-4 flex flex-wrap gap-2">
                   {artificialIntelligenceStory.highlights?.map((highlight) => (
                     <span
                       key={highlight}
                       dir="auto"
-                      className={`rounded-md bg-[var(--color-chip)] px-3 py-1.5 text-xs font-medium text-[var(--color-chip-text)] ${localizedClass}`}
+                      className="localized-inline rounded-md bg-[var(--color-chip)] px-3 py-1.5 text-xs font-medium text-[var(--color-chip-text)]"
                     >
                       {highlight}
                     </span>
@@ -186,18 +168,14 @@ export function AboutSection() {
         <div className="mt-14 border-t border-[var(--color-border)] pt-8">
           <Reveal
             as="h3"
-            dir={textDirection}
-            className={`text-lg font-semibold text-[var(--color-heading)] ${localizedClass}`}
+            className="text-lg font-semibold text-[var(--color-heading)]"
           >
             {skills.title}
           </Reveal>
           <Reveal
             as="p"
             delay={80}
-            dir={textDirection}
-            className={`mt-2 text-sm leading-6 text-[var(--color-muted)] ${
-              isArabic ? 'w-full max-w-none' : 'max-w-3xl'
-            } ${localizedClass}`}
+            className="me-auto mt-2 max-w-3xl text-sm leading-6 text-[var(--color-muted)]"
           >
             {skills.description}
           </Reveal>
@@ -208,33 +186,26 @@ export function AboutSection() {
                 key={group.title}
                 delay={(index % 5) * 70}
                 className={[
-                  'pl-0',
-                  index % 2 === 1 ? 'md:border-l md:border-[var(--color-border)] md:pl-4' : '',
+                  'ps-0',
+                  index % 2 === 1 ? 'md:border-s md:border-[var(--color-border)] md:ps-4' : '',
                   index % 3 !== 0
-                    ? 'xl:border-l xl:border-[var(--color-border)] xl:pl-4'
-                    : 'xl:border-l-0 xl:pl-0',
-                  isArabic ? 'localized-skill-column' : '',
-                  localizedClass,
+                    ? 'xl:border-s xl:border-[var(--color-border)] xl:ps-4'
+                    : 'xl:border-s-0 xl:ps-0',
                 ]
                   .filter(Boolean)
                   .join(' ')}
               >
                 <h3
-                  dir={textDirection}
-                  className={`text-sm font-semibold text-[var(--color-heading)] ${localizedClass}`}
+                  className="text-sm font-semibold text-[var(--color-heading)]"
                 >
                   {group.title}
                 </h3>
-                <div
-                  className={`mt-4 flex flex-wrap gap-2 ${
-                    isArabic ? 'localized-chip-list' : ''
-                  }`}
-                >
+                <div className="mt-4 flex flex-wrap gap-2">
                   {group.skills.map((skill) => (
                     <span
                       key={skill}
                       dir="auto"
-                      className={`skill-chip rounded-md bg-[var(--color-chip)] px-3 py-1 text-xs font-medium leading-snug text-[var(--color-chip-text)] ${localizedClass}`}
+                      className="localized-inline skill-chip rounded-md bg-[var(--color-chip)] px-3 py-1 text-xs font-medium leading-snug text-[var(--color-chip-text)]"
                     >
                       {skill}
                     </span>

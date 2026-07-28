@@ -4,10 +4,8 @@ import { useLanguage } from '../context/useLanguage';
 import { localizedContent } from '../data/content';
 
 export function EducationSection() {
-  const { language, isArabic } = useLanguage();
+  const { language } = useLanguage();
   const { education } = localizedContent[language];
-  const textDirection = isArabic ? 'rtl' : 'ltr';
-  const localizedClass = isArabic ? 'localized-text' : '';
 
   return (
     <section id="education" className="scroll-mt-36 py-14 xl:scroll-mt-24">
@@ -16,7 +14,6 @@ export function EducationSection() {
           eyebrow={education.eyebrow}
           title={education.title}
           description={education.description}
-          isArabic={isArabic}
         />
 
         <div className="flex w-full flex-col gap-5">
@@ -33,34 +30,28 @@ export function EducationSection() {
                   </div>
                   <div className="min-w-0">
                     <h3
-                      dir={textDirection}
-                      className={`text-xl font-semibold text-[var(--color-heading)] ${localizedClass}`}
+                      className="text-xl font-semibold text-[var(--color-heading)]"
                     >
                       {item.title}
                     </h3>
                     <p
-                      dir={textDirection}
-                      className={`mt-1 text-sm font-medium text-[var(--color-muted)] ${localizedClass}`}
+                      className="mt-1 text-sm font-medium text-[var(--color-muted)]"
                     >
                       {item.organization}
                     </p>
                   </div>
                 </div>
-                <div
-                  className={`flex flex-wrap gap-2 sm:justify-end ${
-                    isArabic ? 'localized-chip-list' : ''
-                  }`}
-                >
+                <div className="flex flex-wrap gap-2 sm:justify-end">
                   <span
                     dir="auto"
-                    className="rounded-md bg-[var(--color-chip)] px-3 py-1 text-xs font-semibold text-[var(--color-chip-text)]"
+                    className="localized-inline rounded-md bg-[var(--color-chip)] px-3 py-1 text-xs font-semibold text-[var(--color-chip-text)]"
                   >
                     {item.period}
                   </span>
                   {item.status ? (
                     <span
                       dir="auto"
-                      className="rounded-md bg-[var(--color-accent-soft)] px-3 py-1 text-xs font-semibold text-[var(--color-accent-strong)]"
+                      className="localized-inline rounded-md bg-[var(--color-accent-soft)] px-3 py-1 text-xs font-semibold text-[var(--color-accent-strong)]"
                     >
                       {item.status}
                     </span>
@@ -68,23 +59,20 @@ export function EducationSection() {
                 </div>
               </div>
               <p
-                dir={textDirection}
-                className={`prose-justify mt-5 text-base leading-7 text-[var(--color-muted)] ${localizedClass}`}
+                className="prose-justify mt-5 text-base leading-7 text-[var(--color-muted)]"
               >
                 {item.description}
               </p>
               {item.details?.map((detail) => (
                 <p
                   key={detail}
-                  dir={textDirection}
-                  className={`prose-justify mt-4 text-base leading-7 text-[var(--color-muted)] ${localizedClass}`}
+                  className="prose-justify mt-4 text-base leading-7 text-[var(--color-muted)]"
                 >
                   {detail}
                 </p>
               ))}
               <ul
-                dir={textDirection}
-                className={`mt-5 space-y-3 text-sm leading-6 text-[var(--color-muted)] ${localizedClass}`}
+                className="mt-5 space-y-3 text-sm leading-6 text-[var(--color-muted)]"
               >
                 {item.points.map((point) => (
                   <li key={point} className="flex gap-3">
@@ -102,19 +90,16 @@ export function EducationSection() {
 
         <DashboardCard as="div" className="mt-5" revealDelay={120}>
           <h3
-            dir={textDirection}
-            className={`text-lg font-semibold text-[var(--color-heading)] ${localizedClass}`}
+            className="text-lg font-semibold text-[var(--color-heading)]"
           >
             {education.certificatesTitle}
           </h3>
-          <div
-            className={`mt-4 flex flex-wrap gap-2 ${isArabic ? 'localized-chip-list' : ''}`}
-          >
+          <div className="mt-4 flex flex-wrap gap-2">
             {education.certificates.map((certificate) => (
               <span
                 key={certificate}
                 dir="auto"
-                className={`rounded-md bg-[var(--color-chip)] px-3 py-2 text-sm font-medium text-[var(--color-chip-text)] ${localizedClass}`}
+                className="localized-inline rounded-md bg-[var(--color-chip)] px-3 py-2 text-sm font-medium text-[var(--color-chip-text)]"
               >
                 {certificate}
               </span>

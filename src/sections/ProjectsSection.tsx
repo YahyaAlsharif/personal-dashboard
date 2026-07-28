@@ -5,12 +5,10 @@ import { useLanguage } from '../context/useLanguage';
 import { localizedContent } from '../data/content';
 
 export function ProjectsSection() {
-  const { language, isArabic } = useLanguage();
+  const { language } = useLanguage();
   const { projects, externalLinkLabel } = localizedContent[language];
   const featuredProjects = projects.items.filter((project) => project.featured);
   const supportingProjects = projects.items.filter((project) => !project.featured);
-  const textDirection = isArabic ? 'rtl' : 'ltr';
-  const localizedClass = isArabic ? 'localized-text' : '';
 
   return (
     <section id="projects" className="scroll-mt-36 py-14 xl:scroll-mt-24">
@@ -19,7 +17,6 @@ export function ProjectsSection() {
           eyebrow={projects.eyebrow}
           title={projects.title}
           description={projects.description}
-          isArabic={isArabic}
         />
 
         <div className="flex flex-col gap-5">
@@ -32,35 +29,31 @@ export function ProjectsSection() {
             >
               <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
                 <div className="min-w-0">
-                  <div
-                    className={`flex flex-wrap gap-2 ${isArabic ? 'localized-chip-list' : ''}`}
-                  >
+                  <div className="flex flex-wrap gap-2">
                     <span
                       dir="auto"
-                      className="rounded-md bg-[var(--color-accent-soft)] px-3 py-1 text-xs font-semibold text-[var(--color-accent-strong)]"
+                      className="localized-inline rounded-md bg-[var(--color-accent-soft)] px-3 py-1 text-xs font-semibold text-[var(--color-accent-strong)]"
                     >
                       {project.status}
                     </span>
                     {project.role ? (
                       <span
                         dir="auto"
-                        className="rounded-md bg-[var(--color-chip)] px-3 py-1 text-xs font-semibold text-[var(--color-chip-text)]"
+                        className="localized-inline rounded-md bg-[var(--color-chip)] px-3 py-1 text-xs font-semibold text-[var(--color-chip-text)]"
                       >
                         {projects.roleLabel}: {project.role}
                       </span>
                     ) : null}
                   </div>
                   <h3
-                    dir={textDirection}
-                    className={`mt-4 text-2xl font-semibold text-[var(--color-heading)] ${localizedClass}`}
+                    className="mt-4 text-2xl font-semibold text-[var(--color-heading)]"
                   >
                     {project.name}
                   </h3>
                 </div>
               </div>
               <p
-                dir={textDirection}
-                className={`prose-justify mt-4 text-sm leading-6 text-[var(--color-muted)] ${localizedClass}`}
+                className="prose-justify mt-4 text-sm leading-6 text-[var(--color-muted)]"
               >
                 {project.description}
               </p>
@@ -77,8 +70,7 @@ export function ProjectsSection() {
                 </figure>
               ) : null}
               <ul
-                dir={textDirection}
-                className={`mt-5 space-y-3 text-sm leading-6 text-[var(--color-muted)] ${localizedClass}`}
+                className="mt-5 space-y-3 text-sm leading-6 text-[var(--color-muted)]"
               >
                 {project.points.map((point) => (
                   <li key={point} className="flex gap-3">
@@ -90,23 +82,19 @@ export function ProjectsSection() {
                   </li>
                 ))}
               </ul>
-              <div
-                className={`mt-auto flex flex-wrap gap-2 pt-6 ${
-                  isArabic ? 'localized-chip-list' : ''
-                }`}
-              >
+              <div className="mt-auto flex flex-wrap gap-2 pt-6">
                 {project.tags.map((tag) => (
                   <span
                     key={tag}
                     dir="auto"
-                    className={`rounded-md bg-[var(--color-chip)] px-2.5 py-1 text-xs font-medium text-[var(--color-chip-text)] ${localizedClass}`}
+                    className="localized-inline rounded-md bg-[var(--color-chip)] px-2.5 py-1 text-xs font-medium text-[var(--color-chip-text)]"
                   >
                     {tag}
                   </span>
                 ))}
               </div>
               {project.links?.length ? (
-                <div className={`flex flex-wrap gap-3 pt-5 ${isArabic ? 'localized-actions' : ''}`}>
+                <div className="flex flex-wrap gap-3 pt-5">
                   {project.links.map((link) => (
                     <ExternalLink
                       key={link.href}
@@ -114,7 +102,7 @@ export function ProjectsSection() {
                       newTabLabel={externalLinkLabel}
                       className="action-button rounded-lg border px-5 py-3 text-sm font-semibold transition"
                     >
-                      <span dir={isArabic ? 'auto' : undefined} className="localized-inline">
+                      <span dir="auto" className="localized-inline">
                         {link.label}
                       </span>
                     </ExternalLink>
@@ -132,33 +120,29 @@ export function ProjectsSection() {
                 className="flex h-full scroll-mt-40 flex-col xl:scroll-mt-28"
                 revealDelay={index * 90}
               >
-                <div
-                  className={`flex flex-wrap gap-2 ${isArabic ? 'localized-chip-list' : ''}`}
-                >
+                <div className="flex flex-wrap gap-2">
                   <span
                     dir="auto"
-                    className="rounded-md bg-[var(--color-accent-soft)] px-3 py-1 text-xs font-semibold text-[var(--color-accent-strong)]"
+                    className="localized-inline rounded-md bg-[var(--color-accent-soft)] px-3 py-1 text-xs font-semibold text-[var(--color-accent-strong)]"
                   >
                     {project.status}
                   </span>
                   {project.role ? (
                     <span
                       dir="auto"
-                      className="rounded-md bg-[var(--color-chip)] px-3 py-1 text-xs font-semibold text-[var(--color-chip-text)]"
+                      className="localized-inline rounded-md bg-[var(--color-chip)] px-3 py-1 text-xs font-semibold text-[var(--color-chip-text)]"
                     >
                       {projects.roleLabel}: {project.role}
                     </span>
                   ) : null}
                 </div>
                 <h3
-                  dir={textDirection}
-                  className={`mt-5 text-xl font-semibold text-[var(--color-heading)] ${localizedClass}`}
+                  className="mt-5 text-xl font-semibold text-[var(--color-heading)]"
                 >
                   {project.name}
                 </h3>
                 <p
-                  dir={textDirection}
-                  className={`mt-4 text-sm leading-6 text-[var(--color-muted)] ${localizedClass}`}
+                  className="mt-4 text-sm leading-6 text-[var(--color-muted)]"
                 >
                   {project.description}
                 </p>
@@ -175,8 +159,7 @@ export function ProjectsSection() {
                   </figure>
                 ) : null}
                 <ul
-                  dir={textDirection}
-                  className={`mt-5 space-y-3 text-sm leading-6 text-[var(--color-muted)] ${localizedClass}`}
+                  className="mt-5 space-y-3 text-sm leading-6 text-[var(--color-muted)]"
                 >
                   {project.points.map((point) => (
                     <li key={point} className="flex gap-3">
@@ -188,23 +171,19 @@ export function ProjectsSection() {
                     </li>
                   ))}
                 </ul>
-                <div
-                  className={`mt-auto flex flex-wrap gap-2 pt-6 ${
-                    isArabic ? 'localized-chip-list' : ''
-                  }`}
-                >
+                <div className="mt-auto flex flex-wrap gap-2 pt-6">
                   {project.tags.map((tag) => (
                     <span
                       key={tag}
                       dir="auto"
-                      className={`rounded-md bg-[var(--color-chip)] px-2.5 py-1 text-xs font-medium text-[var(--color-chip-text)] ${localizedClass}`}
+                      className="localized-inline rounded-md bg-[var(--color-chip)] px-2.5 py-1 text-xs font-medium text-[var(--color-chip-text)]"
                     >
                       {tag}
                     </span>
                   ))}
                 </div>
                 {project.links?.length ? (
-                  <div className={`flex flex-wrap gap-3 pt-5 ${isArabic ? 'localized-actions' : ''}`}>
+                  <div className="flex flex-wrap gap-3 pt-5">
                     {project.links.map((link) => (
                       <ExternalLink
                         key={link.href}
@@ -212,7 +191,7 @@ export function ProjectsSection() {
                         newTabLabel={externalLinkLabel}
                         className="action-button rounded-lg border px-5 py-3 text-sm font-semibold transition"
                       >
-                        <span dir={isArabic ? 'auto' : undefined} className="localized-inline">
+                        <span dir="auto" className="localized-inline">
                           {link.label}
                         </span>
                       </ExternalLink>

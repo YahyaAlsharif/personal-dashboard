@@ -82,7 +82,7 @@ function Dashboard() {
                   href={link.href}
                   className="rounded-sm py-1 transition hover:text-[var(--color-heading)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
                 >
-                  <span dir={language === 'ar' ? 'auto' : undefined} className="localized-inline">
+                  <span dir="auto" className="localized-inline">
                     {link.label}
                   </span>
                 </a>
@@ -152,7 +152,7 @@ function Dashboard() {
                 onClick={() => setIsMenuOpen(false)}
                 className="rounded-md px-4 py-3 text-sm font-semibold text-[var(--color-body)] transition hover:bg-[var(--color-button-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
               >
-                <span dir={language === 'ar' ? 'auto' : undefined} className="localized-inline">
+                <span dir="auto" className="localized-inline">
                   {link.label}
                 </span>
               </a>

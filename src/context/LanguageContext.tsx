@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useLayoutEffect, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 
 import { LanguageContext, type Language } from './language';
@@ -12,8 +12,9 @@ const getInitialLanguage = (): Language => {
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguage] = useState<Language>(getInitialLanguage);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     document.documentElement.lang = language;
+    document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
     localStorage.setItem('language', language);
   }, [language]);
 

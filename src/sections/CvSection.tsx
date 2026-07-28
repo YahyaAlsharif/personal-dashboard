@@ -10,10 +10,8 @@ import { localizedContent } from '../data/content';
 export function CvSection() {
   const [isCvViewerOpen, setIsCvViewerOpen] = useState(false);
   const viewCvButtonRef = useRef<HTMLButtonElement>(null);
-  const { language, isArabic } = useLanguage();
+  const { language } = useLanguage();
   const { cv, externalLinkLabel } = localizedContent[language];
-  const textDirection = isArabic ? 'rtl' : 'ltr';
-  const localizedClass = isArabic ? 'localized-text' : '';
 
   const closeCvViewer = () => {
     setIsCvViewerOpen(false);
@@ -30,7 +28,6 @@ export function CvSection() {
             eyebrow={cv.eyebrow}
             title={cv.title}
             description={cv.description}
-            isArabic={isArabic}
           />
 
           <DashboardCard
@@ -40,27 +37,23 @@ export function CvSection() {
           >
             <div>
               <h3
-                dir={textDirection}
-                className={`text-xl font-semibold text-[var(--color-heading)] ${localizedClass}`}
+                className="text-xl font-semibold text-[var(--color-heading)]"
               >
                 {cv.cardTitle}
               </h3>
               <p
-                dir={textDirection}
-                className={`mt-3 max-w-2xl text-base leading-7 text-[var(--color-muted)] ${localizedClass}`}
+                className="mt-3 max-w-2xl text-base leading-7 text-[var(--color-muted)]"
               >
                 {cv.cardText}
               </p>
             </div>
-            <div
-              className={`flex flex-wrap gap-3 ${isArabic ? 'localized-actions' : ''}`}
-            >
+            <div className="flex flex-wrap gap-3">
               <ExternalLink
                 href={cv.href}
                 newTabLabel={externalLinkLabel}
                 className="action-button rounded-lg border px-5 py-3 text-sm font-semibold transition sm:hidden"
               >
-                <span dir={isArabic ? 'auto' : undefined} className="localized-inline">
+                <span dir="auto" className="localized-inline">
                   {cv.viewButton}
                 </span>
               </ExternalLink>
@@ -70,7 +63,7 @@ export function CvSection() {
                 onClick={() => setIsCvViewerOpen(true)}
                 className="action-button hidden rounded-lg border px-5 py-3 text-sm font-semibold transition sm:inline-flex"
               >
-                <span dir={isArabic ? 'auto' : undefined} className="localized-inline">
+                <span dir="auto" className="localized-inline">
                   {cv.viewButton}
                 </span>
               </button>
@@ -79,7 +72,7 @@ export function CvSection() {
                 download={cv.fileName}
                 className="action-button rounded-lg border px-5 py-3 text-sm font-semibold transition"
               >
-                <span dir={isArabic ? 'auto' : undefined} className="localized-inline">
+                <span dir="auto" className="localized-inline">
                   {cv.downloadButton}
                 </span>
               </a>
@@ -96,7 +89,6 @@ export function CvSection() {
         downloadLabel={cv.downloadButton}
         closeLabel={cv.closeButton}
         closeAriaLabel={cv.closeAriaLabel}
-        isArabic={isArabic}
         onClose={closeCvViewer}
       />
     </>

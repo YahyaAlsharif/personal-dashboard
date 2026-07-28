@@ -16,8 +16,8 @@ export function LanguageToggle({ language, onChange }: LanguageToggleProps) {
     >
       <span
         aria-hidden="true"
-        className={`absolute left-1 top-1 h-[calc(100%-0.5rem)] w-[calc(50%-0.25rem)] rounded-full bg-[var(--color-accent)] transition-transform duration-300 ease-out motion-reduce:transition-none ${
-          isArabic ? 'translate-x-full' : 'translate-x-0'
+        className={`absolute start-1 top-1 h-[calc(100%-0.5rem)] w-[calc(50%-0.25rem)] rounded-full bg-[var(--color-accent)] transition-transform duration-300 ease-out motion-reduce:transition-none ${
+          isArabic ? '-translate-x-full' : 'translate-x-0'
         }`}
       />
       <button
