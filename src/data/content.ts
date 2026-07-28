@@ -5,6 +5,7 @@ import type { Language } from '../context/language';
 export type LocalizedLink = {
   label: string;
   href: string;
+  external?: boolean;
 };
 
 export type Sidebar = {
@@ -20,10 +21,6 @@ export type Story = {
   sidebars?: Sidebar[];
   highlightsTitle?: string;
   highlights?: string[];
-  courseImage?: {
-    alt: string;
-    caption: string;
-  };
 };
 
 export type SkillGroup = {
@@ -50,10 +47,13 @@ export type Project = {
   role?: string;
   featured?: boolean;
   description: string;
-  details?: string[];
   points: string[];
   tags: string[];
-  link?: LocalizedLink;
+  image?: {
+    src: string;
+    alt: string;
+  };
+  links?: LocalizedLink[];
 };
 
 export type Post = {
@@ -75,6 +75,13 @@ export type ContactOption = {
 export type DashboardContent = {
   header: {
     brand: string;
+    homeLabel: string;
+    navigationLabel: string;
+    nav: LocalizedLink[];
+    menu: {
+      open: string;
+      close: string;
+    };
     theme: {
       light: string;
       dark: string;
@@ -85,8 +92,8 @@ export type DashboardContent = {
   hero: {
     eyebrow: string;
     title: string;
+    proof: string;
     intro: string;
-    role: string;
     profileName: string;
     profileLocation: string;
     profileAlt: string;
@@ -143,6 +150,7 @@ export type DashboardContent = {
     viewButton: string;
     previousButton: string;
     nextButton: string;
+    positionLabel: (current: number, total: number) => string;
     items: Post[];
   };
   contact: {
@@ -151,15 +159,20 @@ export type DashboardContent = {
     description: string;
     options: ContactOption[];
   };
+  externalLinkLabel: string;
   backToTop: string;
 };
 
 const cvFileName = 'yahya_alsharif_cv.pdf';
 const cvHref = `${import.meta.env.BASE_URL}cv/${cvFileName}`;
+const esasHomeHref = `${import.meta.env.BASE_URL}projects/esas-home.webp`;
+const esasSrsHref = `${import.meta.env.BASE_URL}projects/esas-srs.pdf`;
 
 const links = {
   linkedin: 'https://www.linkedin.com/in/yahya-alsharif-204103304',
   github: 'https://github.com/YahyaAlsharif',
+  personalDashboard: 'https://github.com/YahyaAlsharif/personal-dashboard',
+  onKith: 'https://onkith.online/',
   email: 'yahya.alsharif567@gmail.com',
   kaggleInpainting:
     'https://www.kaggle.com/code/ghostylicious/mi-gan-inpainting-comp-03',
@@ -174,10 +187,25 @@ const links = {
     'https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7439279422131589120?collapsed=1',
 };
 
+// TODO: Confirm which ESAS stack components were web versus mobile before tightening the stack wording.
+
 export const localizedContent: Record<Language, DashboardContent> = {
   en: {
     header: {
       brand: 'Yahya Alsharif',
+      homeLabel: 'Yahya Alsharif home',
+      navigationLabel: 'Primary navigation',
+      nav: [
+        { label: 'About', href: '#about' },
+        { label: 'Education', href: '#education' },
+        { label: 'Projects', href: '#projects' },
+        { label: 'CV', href: '#cv' },
+        { label: 'Contact', href: '#contact' },
+      ],
+      menu: {
+        open: 'Open navigation menu',
+        close: 'Close navigation menu',
+      },
       theme: {
         light: 'Light',
         dark: 'Dark',
@@ -186,21 +214,20 @@ export const localizedContent: Record<Language, DashboardContent> = {
       },
     },
     hero: {
-      eyebrow: 'Personal Dashboard',
+      eyebrow: 'AI & Software Development | Software Engineering Student',
       title: "Hi, I'm Yahya Alsharif.",
+      proof:
+        'KAUST Academy AI Specialisation — top 100 of 14,000+ applicants · 3rd place, image-inpainting competition (FID 12)',
       intro:
-        "I'm a Software Engineering student at Umm Al-Qura University working across artificial intelligence and practical software development, with a focus on building reliable projects that connect technical ideas with real user needs.",
-      role: 'AI & Software Development | Software Engineering Student',
+        'I build reliable AI and software projects that turn technical ideas into practical, user-centred solutions.',
       profileName: 'Yahya Alsharif',
       profileLocation: 'Makkah Region, Saudi Arabia',
       profileAlt: 'Yahya Alsharif',
       links: [
-        { label: 'About Me', href: '#about' },
-        { label: 'Education', href: '#education' },
+        { label: 'View CV', href: '#cv' },
         { label: 'Projects', href: '#projects' },
-        { label: 'CV', href: '#cv' },
-        { label: 'Posts', href: '#posts' },
-        { label: 'Contact', href: '#contact' },
+        { label: 'GitHub', href: links.github, external: true },
+        { label: 'LinkedIn', href: links.linkedin, external: true },
       ],
     },
     about: {
@@ -210,8 +237,8 @@ export const localizedContent: Record<Language, DashboardContent> = {
         'A closer look at my interests, learning style, and how I approach the projects I build.',
       paragraphs: [
         'I am a Software Engineering student at Umm Al-Qura University and a KAUST Academy AI Specialisation participant currently attending the final AI Summer Programme.',
-        'I study software engineering in Makkah, and my interests sit between building software systems properly and understanding how artificial intelligence can be used in practical, responsible ways. I enjoy moving from the early idea stage into requirements, design, implementation, testing, documentation, and presentation, because that full process shows how an idea becomes something people can actually use.',
-        'I also like researching concepts and learning how things work under the surface, especially in AI models, machine learning, deep learning, computer vision, and the tools used to build modern software. For me, the most interesting projects combine learning with building: understanding the problem, thinking about users, testing the solution, and improving it until it can be explained clearly to others.',
+        'My interests connect disciplined software engineering with practical, responsible AI. I enjoy following ideas through requirements, design, implementation, testing, documentation, and presentation until they become useful systems.',
+        'I learn by researching how models and software work beneath the surface, then building, testing, and refining solutions that address real user needs and can be explained clearly.',
       ],
       jumpLinks: [
         { label: 'Software Engineering', href: '#about-software-engineering' },
@@ -221,9 +248,8 @@ export const localizedContent: Record<Language, DashboardContent> = {
         id: 'about-software-engineering',
         title: 'Software Engineering',
         paragraphs: [
-          "I started studying for my Bachelor's degree in Software Engineering at Umm Al-Qura University in 2023. Since then, I have been building a foundation in requirements engineering, software design, software architecture, documentation, Java and object-oriented programming, software testing, system analysis, algorithms, and data structures.",
-          "When I was in my third year of my bachelor's degree, I got the chance to attend NVIDIA's Deep Learning workshop and earn the NVIDIA Fundamentals of Deep Learning certificate. The workshop was led by an instructor from the university, and it gave me my first real glimpse of how artificial intelligence works in practice, beyond only using AI tools from the outside.",
-          'I applied these software engineering skills in ESAS - Experience Saudi As a Saudi, our graduation project focused on authentic Saudi tourism experiences. My work included requirements gathering, understanding tourism and user needs, SRS documentation, workflows, implementation support, testing and demo readiness, and presenting the project clearly.',
+          "Since starting my Software Engineering bachelor's degree in 2023, I have built foundations in requirements, architecture, Java and object-oriented programming, testing, system analysis, algorithms, and data structures.",
+          'I value the complete engineering lifecycle: clarify the problem, document requirements and workflows, design and build the system, test its behaviour, and present the result clearly to users and reviewers.',
         ],
         sidebars: [
           {
@@ -252,12 +278,9 @@ export const localizedContent: Record<Language, DashboardContent> = {
         id: 'about-artificial-intelligence',
         title: 'Artificial Intelligence',
         paragraphs: [
-          'My first real glimpse into AI came through the NVIDIA Fundamentals of Deep Learning experience at Umm Al-Qura University. It made me want to learn not only how to use AI tools, but how AI systems actually work.',
-          'I started with prompt engineering and practical ways to use AI, then moved deeper into the foundations: Python, mathematics, machine learning, neural networks, and model training.',
-          'KAUST Academy became a major part of that journey. Its Artificial Intelligence Specialisation is a competitive multi-stage programme. The earlier stages developed foundations in Python, mathematics, machine learning, PyTorch, neural networks, CNNs, and computer vision.',
-          'After completing the first three stages, I advanced to the final AI Summer Programme, ranking among the top 100 students selected from more than 14,000 applicants.',
-          'After Stage 2, I felt I needed to improve my practical performance, especially with applied PyTorch and coding work. Before Stage 3, I studied Convolutional Neural Networks through DeepLearning.AI on Coursera, taught by Andrew Ng, to prepare for computer vision and CNN topics.',
-          'I am now actively attending the final AI Summer Programme at King Khalid University under KAUST Academy. The programme covers sequence models, attention and transformers, self-supervised learning, foundation and world models, generative modelling, reinforcement learning, Edge AI, TinyML, quantisation, model compression, and practical model-building labs and competitions.',
+          'My first practical view of AI came in my third year through a university-led NVIDIA Fundamentals of Deep Learning workshop. It motivated me to understand how AI systems work, not only use them.',
+          'I progressed from prompt engineering into Python, mathematics, machine learning, neural networks, PyTorch, and model training.',
+          'After Stage 2, I strengthened my applied PyTorch and computer-vision skills through Andrew Ng’s DeepLearning.AI Convolutional Neural Networks course before Stage 3.',
         ],
         highlights: [
           'Python',
@@ -272,10 +295,6 @@ export const localizedContent: Record<Language, DashboardContent> = {
           'Final AI Summer Programme - In Progress',
         ],
         highlightsTitle: 'Highlights',
-        courseImage: {
-          alt: 'DeepLearning.AI Convolutional Neural Networks course screenshot from Coursera',
-          caption: 'Convolutional Neural Networks preparation through DeepLearning.AI on Coursera.',
-        },
       },
       sidebarLinkLabel: (item) => `View ${item} in the projects section`,
     },
@@ -333,7 +352,7 @@ export const localizedContent: Record<Language, DashboardContent> = {
         },
         {
           title: 'Tools',
-          skills: ['Git', 'GitHub', 'VS Code', 'Docker', 'Codex'],
+          skills: ['Git', 'GitHub', 'VS Code', 'Docker'],
         },
       ],
     },
@@ -351,17 +370,14 @@ export const localizedContent: Record<Language, DashboardContent> = {
           logoSrc: uquLogo,
           logoAlt: 'Umm Al-Qura University logo',
           description:
-            'I am studying for a Bachelor of Computer Software Engineering at Umm Al-Qura University. Since starting in 2023, I have been building a foundation in how software systems are planned, designed, implemented, tested, documented, and presented.',
+            'I am studying for a Bachelor of Computer Software Engineering at Umm Al-Qura University, building a foundation in planning, designing, implementing, testing, documenting, and presenting software systems.',
           details: [
-            'My coursework and academic projects have helped me practice requirements engineering, software design, software architecture, software testing, system analysis, web development, algorithms, data structures, Java, and object-oriented programming. These were not only theory-based topics; several courses required submitted projects, reports, diagrams, testing work, and presentations.',
-            'Through university work, I became more comfortable turning an idea into a structured software plan: understanding the problem, identifying users and requirements, writing use cases, preparing diagrams, documenting system behavior, and thinking about how the system should be tested before it is presented.',
-            'This foundation became especially important in ESAS - Experience Saudi As a Saudi, my graduation project. ESAS gave me a chance to apply requirements gathering, SRS documentation, workflow planning, backend/frontend implementation support, testing, demo preparation, and project presentation in a larger project context.',
+            'Coursework and submitted projects cover requirements engineering, architecture, testing, system analysis, web development, algorithms, data structures, Java, and object-oriented programming, supported by reports, diagrams, test work, and presentations.',
           ],
           points: [
-            'Built foundations in requirements engineering, software design, software architecture, testing, system analysis, algorithms, data structures, Java, and web development.',
-            'Completed academic work and submitted projects in software design, software testing, requirements engineering, system analysis, and web development.',
-            'Practiced preparing documentation, use cases, diagrams, workflows, and testing plans.',
-            'Applied these skills in ESAS, including requirements gathering, SRS preparation, workflow planning, implementation support, testing, demo readiness, and presentation.',
+            'Turn ideas into structured plans by identifying users, requirements, use cases, workflows, and test needs.',
+            'Apply software design, architecture, testing, system analysis, algorithms, data structures, Java, and web-development foundations.',
+            'Produce documentation, diagrams, testing plans, working demonstrations, and technical presentations.',
           ],
         },
         {
@@ -372,20 +388,15 @@ export const localizedContent: Record<Language, DashboardContent> = {
           logoSrc: kaustAcademyLogo,
           logoAlt: 'KAUST Academy logo',
           description:
-            'KAUST Academy has been one of the most important parts of my artificial intelligence learning journey. Through its multi-stage Artificial Intelligence Specialisation, I progressed from foundational preparation into advanced applied learning and active attendance in the final AI Summer Programme.',
+            'Through KAUST Academy’s competitive multi-stage Artificial Intelligence Specialisation, I progressed from foundational preparation to advanced applied learning and the final AI Summer Programme.',
           details: [
-            'The journey started with foundations such as Python and mathematics for AI, then moved into machine learning concepts, neural networks, PyTorch-style applied work, deep learning, convolutional neural networks, and computer vision. Each stage required learning quickly, applying the material, and competing for selection into the next stage.',
             'After completing the first three stages, I advanced to the final AI Summer Program, ranking among the top 100 students selected from 14,000+ applicants.',
-            'I am actively attending the final programme hosted at King Khalid University under KAUST Academy, studying RNNs, LSTMs, GRUs, attention, transformers, image captioning, self-supervised and contrastive learning, SimCLR, BYOL, DINO, foundation models, and world models.',
-            'The programme also covers VAEs, VQ-VAEs, GANs, diffusion models, Stable Diffusion, normalising flows, flow matching, reinforcement learning, value-based methods, policy gradients, policy optimisation, and continuous control.',
-            'Edge AI, TinyML, quantisation, model compression, practical model-building labs, and competitions connect the theory to deployable systems and team delivery.',
+            'The programme spans sequence and transformer models, self-supervised learning, foundation and world models, generative modelling, reinforcement learning, Edge AI, TinyML, quantisation, and model compression.',
           ],
           points: [
             'Completed KAUST Academy Advanced Artificial Intelligence.',
-            'Ranked among the top 100 students selected from more than 14,000 applicants.',
             'Actively attending the final AI Summer Programme at King Khalid University under KAUST Academy.',
-            'Studying modern sequence, transformer, self-supervised, generative, reinforcement-learning, and Edge AI methods.',
-            'Applying the material through practical model-building labs and competitions.',
+            'Apply the material through practical model-building labs and competitions.',
           ],
         },
       ],
@@ -406,53 +417,16 @@ export const localizedContent: Record<Language, DashboardContent> = {
       roleLabel: 'Role',
       items: [
         {
-          id: 'project-esas',
-          name: 'ESAS - Experience Saudi As a Saudi',
-          status: 'Completed Graduation Project | Continuing Portfolio Development',
-          role: 'Coordinator',
-          featured: true,
-          description:
-            'ESAS - Experience Saudi As a Saudi is a graduation project focused on presenting authentic, locally curated tourism experiences in Saudi Arabia. The project began as an idea about making local experiences easier to discover, then developed into a structured software engineering project with requirements, workflows, documentation, system design, prototype development, and a functional demo.',
-          details: [
-            'As project coordinator, I helped shape the idea, organize the direction of the project, connect the requirements and documentation work with implementation needs, and support the team in preparing the system for presentation.',
-            'A major part of my contribution was thinking through what tourists and visitors might need when discovering authentic local experiences: how experiences should be listed, how providers could submit them, how admins could review them, and how users could browse, save, and interact with the platform. This work fed into requirements gathering, use cases, workflows, diagrams, and the Software Requirements Specification.',
-            'I also supported the implementation direction across backend and frontend areas, including user flows, provider and admin workflows, experience listings, booking-related features, demo-ready behavior, and documentation alignment. The goal was not only to build screens, but to make the demo understandable, stable, and connected to the project requirements.',
-            'The project was showcased at the INJAZ 2026 Graduation Projects Exhibition, where I helped present the poster and live demo, explain the idea and system design, and answer questions from instructors, reviewers, and visitors.',
-            'After academic submission, I continued refining ESAS as a personal/public project by improving demo stability, polishing the frontend, aligning documentation, and preparing the project for stronger portfolio presentation and future feature expansion.',
-          ],
-          points: [
-            'Served as project coordinator, helping organize the idea, direction, requirements, documentation, and demo preparation.',
-            'Contributed to requirements gathering by thinking through tourism/user needs, provider workflows, admin review flows, and traveler interactions.',
-            'Helped prepare SRS documentation, use cases, workflows, diagrams, and system behavior descriptions.',
-            'Supported backend/frontend implementation direction, including user flows, provider/admin workflows, experience listings, booking-related features, and demo-ready functionality.',
-            'Helped test and stabilize the demo for presentation.',
-            'Presented the project poster and live demo at the INJAZ 2026 Graduation Projects Exhibition.',
-            'Continued refining the project after academic submission for portfolio quality and future feature expansion.',
-          ],
-          tags: [
-            'Software Engineering',
-            'Graduation Project',
-            'Requirements Engineering',
-            'Documentation',
-            'Backend / Frontend',
-            'Project Coordination',
-          ],
-        },
-        {
           name: 'OnKith — Privacy-Aware Edge AI',
           status: 'KAUST Academy Team Project | Model Development Completed / Integration in Progress',
+          featured: true,
           description:
-            'OnKith is a KAUST Academy team project focused on protecting sensitive text before it reaches cloud-based AI services. I developed and trained a compact TinyBERT-4 token-classification model that detects and masks personally identifiable and sensitive content.',
-          details: [
-            'The model-development work is complete, while Raspberry Pi 5 integration remains in progress with the deployment team.',
-          ],
+            'OnKith is a KAUST Academy team project that protects sensitive text before it reaches cloud AI services. I developed and trained a compact TinyBERT-4 token-classification model to detect and mask personally identifiable and sensitive content.',
           points: [
             'Developed and trained a compact TinyBERT-4 token-classification model.',
-            'Evaluated the model with precision, recall, and F1, achieving approximately 0.95 F1.',
-            'Produced an INT8-quantised model for lightweight edge inference.',
-            'Prepared the model, tokenizer, label mappings, configuration, and inference artefacts for Raspberry Pi 5 deployment.',
-            'Coordinated the expected inference and integration workflow with the deployment team.',
-            'Investigated pruning and knowledge distillation as possible future compression approaches.',
+            'Evaluated precision, recall, and F1, achieving approximately 0.95 F1.',
+            'Produced an INT8-quantised model and prepared deployment artefacts for Raspberry Pi 5.',
+            'Coordinated the inference workflow and investigated pruning and knowledge distillation as future compression options.',
           ],
           tags: [
             'TinyBERT-4',
@@ -462,34 +436,60 @@ export const localizedContent: Record<Language, DashboardContent> = {
             'Edge AI',
             'Raspberry Pi 5',
           ],
+          links: [{ label: 'Visit OnKith', href: links.onKith }],
+        },
+        {
+          id: 'project-esas',
+          name: 'ESAS - Experience Saudi As a Saudi',
+          status: 'Completed Graduation Project | Continuing Portfolio Development',
+          role: 'Coordinator',
+          featured: true,
+          description:
+            'ESAS is a graduation project for discovering authentic, locally curated Saudi tourism experiences. Built with Spring Boot, PostgreSQL, Docker, and Flutter, it grew from an initial concept into a documented system and functional demonstration.',
+          points: [
+            'Led coordination across brainstorming, planning, requirements gathering, documentation, and demo preparation.',
+            'Wrote the SRS and designed use cases, workflows, system diagrams, provider submissions, administrator reviews, and traveller interactions.',
+            'Built and tested catalogue, booking, and role-based features across the implementation, then stabilised the demonstration.',
+            'Presented the poster and live demo at INJAZ 2026 and continued refining the project after academic submission.',
+          ],
+          tags: [
+            'Software Engineering',
+            'Graduation Project',
+            'Requirements Engineering',
+            'Documentation',
+            'Project Coordination',
+            'Spring Boot',
+            'PostgreSQL',
+            'Docker',
+            'Flutter',
+          ],
+          image: {
+            src: esasHomeHref,
+            alt: 'ESAS homepage showing authentic Saudi tourism experiences and search controls',
+          },
+          links: [{ label: 'View SRS (114 pages)', href: esasSrsHref }],
         },
         {
           name: 'KAUST Academy Image Inpainting Competition',
           status: '3rd Place Overall | FID 12',
           description:
             'Achieved third place overall in the KAUST Academy image-inpainting competition with an FID score of 12.',
-          details: [
-            'The solution led the leaderboard until a late nine-hour deadline extension, after which two stronger submissions moved ahead. The final third-place result remains the main achievement.',
-          ],
           points: [
             'Finished 3rd place overall.',
             'Achieved an FID score of 12.',
             'Documented the MI-GAN fine-tuning approach in a public Kaggle notebook.',
           ],
           tags: ['Computer Vision', 'Image Inpainting', 'MI-GAN', 'PyTorch', 'Competition'],
-          link: {
+          links: [{
             label: 'View Competition Notebook',
             href: links.kaggleInpainting,
-          },
+          }],
         },
         {
           name: 'Personal Dashboard',
           status: 'Deployed Portfolio Project',
           description:
             'This website is a public personal dashboard and portfolio built with React, TypeScript, Vite, and Tailwind CSS. It presents my background, education, projects, CV, and contact links in a clean static frontend-only site.',
-          details: [
-            'This project keeps my content organized in local data files and includes responsive layout behavior, light/dark mode, a CV viewer, anchor navigation, and scroll reveal animations without adding a backend.',
-          ],
           points: [
             'Frontend-only and deployable as a static website.',
             'Uses structured content files for profile, education, projects, skills, and contact details.',
@@ -497,6 +497,7 @@ export const localizedContent: Record<Language, DashboardContent> = {
             'Built to stay simple, public-safe, and easy to maintain.',
           ],
           tags: ['React', 'TypeScript', 'Vite', 'Tailwind CSS', 'Static Website', 'Portfolio'],
+          links: [{ label: 'View Repository', href: links.personalDashboard }],
         },
       ],
     },
@@ -517,13 +518,14 @@ export const localizedContent: Record<Language, DashboardContent> = {
       href: cvHref,
     },
     posts: {
-      eyebrow: 'POSTS',
+      eyebrow: 'Posts',
       title: 'Posts',
       description:
         'LinkedIn posts that highlight important milestones in my software engineering and AI journey.',
       viewButton: 'View on LinkedIn',
       previousButton: 'Previous post',
       nextButton: 'Next post',
+      positionLabel: (current, total) => `Post ${current} of ${total}`,
       items: [
         {
           title: 'KAUST Academy AI Summer School Supporters & Investors',
@@ -580,11 +582,25 @@ export const localizedContent: Record<Language, DashboardContent> = {
         },
       ],
     },
+    externalLinkLabel: '(opens in a new tab)',
     backToTop: 'Back to Top',
   },
   ar: {
     header: {
       brand: 'يحيى الشريف',
+      homeLabel: 'الصفحة الرئيسية ليحيى الشريف',
+      navigationLabel: 'التنقل الرئيسي',
+      nav: [
+        { label: 'نبذة عني', href: '#about' },
+        { label: 'التعليم', href: '#education' },
+        { label: 'المشاريع', href: '#projects' },
+        { label: 'السيرة الذاتية', href: '#cv' },
+        { label: 'التواصل', href: '#contact' },
+      ],
+      menu: {
+        open: 'فتح قائمة التنقل',
+        close: 'إغلاق قائمة التنقل',
+      },
       theme: {
         light: 'فاتح',
         dark: 'داكن',
@@ -593,31 +609,30 @@ export const localizedContent: Record<Language, DashboardContent> = {
       },
     },
     hero: {
-      eyebrow: 'Personal Dashboard',
+      eyebrow: 'تطوير الذكاء الاصطناعي والبرمجيات | طالب هندسة برمجيات',
       title: 'مرحبًا، أنا يحيى الشريف.',
+      proof:
+        'تخصص الذكاء الاصطناعي في أكاديمية كاوست — ضمن أفضل 100 من أكثر من 14,000 متقدم · المركز الثالث في مسابقة ترميم الصور (FID 12)',
       intro:
-        'أنا طالب هندسة برمجيات في جامعة أم القرى، أعمل في تطوير الذكاء الاصطناعي والبرمجيات بصورة عملية، مع التركيز على بناء مشاريع موثوقة تربط الأفكار التقنية باحتياجات المستخدمين الحقيقية.',
-      role: 'تطوير الذكاء الاصطناعي والبرمجيات | طالب هندسة برمجيات',
+        'أبني مشاريع موثوقة في الذكاء الاصطناعي والبرمجيات تحول الأفكار التقنية إلى حلول عملية تتمحور حول المستخدم.',
       profileName: 'يحيى الشريف',
       profileLocation: 'منطقة مكة المكرمة، المملكة العربية السعودية',
       profileAlt: 'يحيى الشريف',
       links: [
-        { label: 'نبذة عني', href: '#about' },
-        { label: 'التعليم', href: '#education' },
+        { label: 'عرض السيرة الذاتية', href: '#cv' },
         { label: 'المشاريع', href: '#projects' },
-        { label: 'السيرة الذاتية', href: '#cv' },
-        { label: 'المنشورات', href: '#posts' },
-        { label: 'التواصل', href: '#contact' },
+        { label: 'GitHub', href: links.github, external: true },
+        { label: 'لينكدإن', href: links.linkedin, external: true },
       ],
     },
     about: {
-      eyebrow: 'About',
+      eyebrow: 'نبذة',
       title: 'نبذة عني',
       description: 'نظرة أقرب على اهتماماتي، وطريقة تعلمي، وكيف أتعامل مع المشاريع التي أعمل عليها.',
       paragraphs: [
         'أنا طالب هندسة برمجيات في جامعة أم القرى، ومشارك في تخصص الذكاء الاصطناعي في أكاديمية كاوست، وأحضر حاليًا البرنامج الصيفي النهائي للذكاء الاصطناعي.',
-        'أدرس هندسة البرمجيات في مكة المكرمة، وتقع اهتماماتي بين بناء الأنظمة البرمجية بطريقة صحيحة وفهم كيف يمكن استخدام الذكاء الاصطناعي بطرق عملية ومسؤولة. أستمتع بالانتقال من مرحلة الفكرة الأولى إلى المتطلبات، والتصميم، والتنفيذ، والاختبار، والتوثيق، والعرض، لأن هذه الرحلة الكاملة توضح كيف تتحول الفكرة إلى شيء يمكن للناس استخدامه فعلًا.',
-        'أحب أيضًا البحث في المفاهيم وفهم كيف تعمل الأشياء من الداخل، خصوصًا في نماذج الذكاء الاصطناعي، وتعلم الآلة، والتعلم العميق، والرؤية الحاسوبية، والأدوات المستخدمة في بناء البرمجيات الحديثة. بالنسبة لي، أكثر المشاريع إثارة للاهتمام هي التي تجمع بين التعلم والبناء: فهم المشكلة، والتفكير في المستخدمين، واختبار الحل، وتحسينه حتى يمكن شرحه بوضوح للآخرين.',
+        'تربط اهتماماتي بين هندسة البرمجيات المنضبطة والذكاء الاصطناعي العملي والمسؤول. أستمتع بمتابعة الفكرة من المتطلبات والتصميم إلى التنفيذ والاختبار والتوثيق والعرض حتى تصبح نظامًا مفيدًا.',
+        'أتعلم بالبحث في كيفية عمل النماذج والبرمجيات من الداخل، ثم أبني الحلول وأختبرها وأحسنها لتلبي احتياجات المستخدمين ويمكن شرحها بوضوح.',
       ],
       jumpLinks: [
         { label: 'هندسة البرمجيات', href: '#about-software-engineering' },
@@ -627,9 +642,8 @@ export const localizedContent: Record<Language, DashboardContent> = {
         id: 'about-software-engineering',
         title: 'هندسة البرمجيات',
         paragraphs: [
-          'بدأت دراسة درجة البكالوريوس في هندسة البرمجيات في جامعة أم القرى عام 2023. ومنذ ذلك الوقت، أعمل على بناء أساس قوي في هندسة المتطلبات، وتصميم البرمجيات، ومعمارية البرمجيات، والتوثيق، ولغة Java والبرمجة كائنية التوجه، واختبار البرمجيات، وتحليل الأنظمة، والخوارزميات، وهياكل البيانات.',
-          'عندما كنت في سنتي الثالثة من مرحلة البكالوريوس، أتيحت لي فرصة حضور ورشة NVIDIA في أساسيات التعلم العميق والحصول على شهادة NVIDIA Fundamentals of Deep Learning. قاد الورشة أحد المدربين من الجامعة، وكانت أول لمحة حقيقية لي عن كيفية عمل الذكاء الاصطناعي بشكل عملي، بعيدًا عن مجرد استخدام أدوات الذكاء الاصطناعي من الخارج.',
-          'طبقت هذه المهارات في مشروع ESAS - Experience Saudi As a Saudi، وهو مشروع تخرجنا الذي يركز على تجارب سياحية سعودية أصيلة. شمل عملي جمع المتطلبات، وفهم احتياجات السياحة والمستخدمين، وتوثيق SRS، وإعداد مسارات العمل، ودعم التنفيذ، والاختبار وتجهيز العرض التجريبي، وتقديم المشروع بوضوح.',
+          'منذ بدء بكالوريوس هندسة البرمجيات عام 2023، بنيت أساسًا في المتطلبات والمعمارية وJava والبرمجة كائنية التوجه والاختبار وتحليل الأنظمة والخوارزميات وهياكل البيانات.',
+          'أقدر دورة التطوير الكاملة: توضيح المشكلة، وتوثيق المتطلبات ومسارات العمل، وتصميم النظام وبناءه، واختبار سلوكه، ثم عرض النتيجة بوضوح للمستخدمين والمراجعين.',
         ],
         sidebars: [
           {
@@ -658,12 +672,9 @@ export const localizedContent: Record<Language, DashboardContent> = {
         id: 'about-artificial-intelligence',
         title: 'الذكاء الاصطناعي',
         paragraphs: [
-          'جاءت أول لمحة حقيقية لي في الذكاء الاصطناعي من خلال تجربة NVIDIA Fundamentals of Deep Learning في جامعة أم القرى. جعلتني هذه التجربة أرغب في تعلم ليس فقط كيفية استخدام أدوات الذكاء الاصطناعي، بل كيف تعمل أنظمة الذكاء الاصطناعي فعليًا.',
-          'بدأت بهندسة الأوامر والطرق العملية لاستخدام الذكاء الاصطناعي، ثم تعمقت أكثر في الأساسيات: Python، والرياضيات، وتعلم الآلة، والشبكات العصبية، وتدريب النماذج.',
-          'أصبحت أكاديمية كاوست جزءًا مهمًا من هذه الرحلة. تخصص الذكاء الاصطناعي فيها برنامج تنافسي متعدد المراحل، وقد بنت مراحله الأولى أساسًا في Python والرياضيات وتعلم الآلة وPyTorch والشبكات العصبية وCNNs والرؤية الحاسوبية.',
-          'بعد إكمال المراحل الثلاث الأولى، تأهلت إلى البرنامج الصيفي النهائي للذكاء الاصطناعي ضمن أفضل 100 طالب تم اختيارهم من بين أكثر من 14,000 متقدم.',
-          'بعد المرحلة الثانية، شعرت أنني بحاجة إلى تحسين أدائي العملي، خصوصًا في تطبيقات PyTorch والبرمجة. وقبل المرحلة الثالثة، درست مقرر Convolutional Neural Networks من DeepLearning.AI على Coursera، والذي يقدمه Andrew Ng، استعدادًا لموضوعات الرؤية الحاسوبية وCNN.',
-          'أحضر حاليًا البرنامج الصيفي النهائي للذكاء الاصطناعي في جامعة الملك خالد تحت مظلة أكاديمية كاوست. يشمل البرنامج النماذج التسلسلية والانتباه والمحولات، والتعلم الذاتي، ونماذج الأساس والعالم، والنماذج التوليدية، والتعلم المعزز، والذكاء الاصطناعي الطرفي، وTinyML، والتكميم، وضغط النماذج، ومختبرات ومسابقات عملية لبناء النماذج.',
+          'جاءت أول تجربة عملية لي في الذكاء الاصطناعي خلال سنتي الثالثة عبر ورشة جامعية لشهادة NVIDIA Fundamentals of Deep Learning، ودفعتني إلى فهم كيفية عمل الأنظمة لا مجرد استخدامها.',
+          'انتقلت من هندسة الأوامر إلى Python والرياضيات وتعلم الآلة والشبكات العصبية وPyTorch وتدريب النماذج.',
+          'بعد المرحلة الثانية، عززت مهاراتي التطبيقية في PyTorch والرؤية الحاسوبية بدراسة مقرر Andrew Ng في الشبكات العصبية الالتفافية من DeepLearning.AI قبل المرحلة الثالثة.',
         ],
         highlights: [
           'Python',
@@ -678,10 +689,6 @@ export const localizedContent: Record<Language, DashboardContent> = {
           'البرنامج الصيفي النهائي للذكاء الاصطناعي - قيد التنفيذ',
         ],
         highlightsTitle: 'أبرز المحاور',
-        courseImage: {
-          alt: 'لقطة شاشة لمقرر Convolutional Neural Networks من DeepLearning.AI على Coursera',
-          caption: 'التحضير لموضوعات الشبكات العصبية الالتفافية من خلال مقرر DeepLearning.AI على Coursera.',
-        },
       },
       sidebarLinkLabel: (item) => `عرض ${item} في قسم المشاريع`,
     },
@@ -690,7 +697,7 @@ export const localizedContent: Record<Language, DashboardContent> = {
       description: 'نظرة مختصرة على الأدوات والنماذج والممارسات الهندسية التي أثبتها من خلال عملي.',
       groups: [
         {
-          title: 'Full-Stack',
+          title: 'التطوير المتكامل',
           skills: ['React', 'Tailwind CSS', 'Flutter', 'Java', 'Spring Boot', 'PostgreSQL'],
         },
         {
@@ -739,57 +746,49 @@ export const localizedContent: Record<Language, DashboardContent> = {
         },
         {
           title: 'الأدوات',
-          skills: ['Git', 'GitHub', 'VS Code', 'Docker', 'Codex'],
+          skills: ['Git', 'GitHub', 'VS Code', 'Docker'],
         },
       ],
     },
     education: {
-      eyebrow: 'Education',
+      eyebrow: 'التعليم',
       title: 'التعليم',
       description: 'دراستي في هندسة البرمجيات إلى جانب رحلة مركزة في الذكاء الاصطناعي من خلال أكاديمية كاوست.',
       items: [
         {
-          title: 'Bachelor of Computer Software Engineering',
+          title: 'بكالوريوس هندسة البرمجيات الحاسوبية',
           organization: 'جامعة أم القرى',
           period: '2023 - 2027 متوقع',
           status: 'قيد الدراسة',
           logoSrc: uquLogo,
           logoAlt: 'شعار جامعة أم القرى',
           description:
-            'أدرس درجة البكالوريوس في هندسة البرمجيات الحاسوبية في جامعة أم القرى. ومنذ بدايتي في عام 2023، أعمل على بناء أساس في كيفية تخطيط الأنظمة البرمجية، وتصميمها، وتنفيذها، واختبارها، وتوثيقها، وعرضها.',
+            'أدرس بكالوريوس هندسة البرمجيات الحاسوبية في جامعة أم القرى، وأبني أساسًا في تخطيط الأنظمة وتصميمها وتنفيذها واختبارها وتوثيقها وعرضها.',
           details: [
-            'ساعدتني المقررات والمشاريع الأكاديمية على ممارسة هندسة المتطلبات، وتصميم البرمجيات، ومعمارية البرمجيات، واختبار البرمجيات، وتحليل الأنظمة، وتطوير الويب، والخوارزميات، وهياكل البيانات، وJava، والبرمجة كائنية التوجه. لم تكن هذه الموضوعات نظرية فقط؛ فقد تطلبت عدة مقررات مشاريع مسلمة، وتقارير، ومخططات، وأعمال اختبار، وعروض تقديمية.',
-            'من خلال العمل الجامعي، أصبحت أكثر قدرة على تحويل الفكرة إلى خطة برمجية منظمة: فهم المشكلة، وتحديد المستخدمين والمتطلبات، وكتابة حالات الاستخدام، وإعداد المخططات، وتوثيق سلوك النظام، والتفكير في كيفية اختبار النظام قبل عرضه.',
-            'أصبح هذا الأساس مهمًا بشكل خاص في ESAS - Experience Saudi As a Saudi، مشروع تخرجي. منحني ESAS فرصة لتطبيق جمع المتطلبات، وتوثيق SRS، وتخطيط مسارات العمل، ودعم تنفيذ الواجهة الخلفية والأمامية، والاختبار، وتجهيز العرض التجريبي، وتقديم المشروع ضمن سياق مشروع أكبر.',
+            'تشمل المقررات والمشاريع هندسة المتطلبات والمعمارية والاختبار وتحليل الأنظمة وتطوير الويب والخوارزميات وهياكل البيانات وJava والبرمجة كائنية التوجه، مدعومة بتقارير ومخططات وأعمال اختبار وعروض.',
           ],
           points: [
-            'بنيت أساسًا في هندسة المتطلبات، وتصميم البرمجيات، ومعمارية البرمجيات، والاختبار، وتحليل الأنظمة، والخوارزميات، وهياكل البيانات، وJava، وتطوير الويب.',
-            'أنجزت أعمالًا أكاديمية ومشاريع مسلمة في تصميم البرمجيات، واختبار البرمجيات، وهندسة المتطلبات، وتحليل الأنظمة، وتطوير الويب.',
-            'مارست إعداد التوثيق، وحالات الاستخدام، والمخططات، ومسارات العمل، وخطط الاختبار.',
-            'طبقت هذه المهارات في ESAS، بما في ذلك جمع المتطلبات، وإعداد SRS، وتخطيط مسارات العمل، ودعم التنفيذ، وتجهيز العرض التجريبي، وتقديم المشروع.',
+            'أحول الأفكار إلى خطط منظمة تحدد المستخدمين والمتطلبات وحالات الاستخدام ومسارات العمل واحتياجات الاختبار.',
+            'أطبق أسس التصميم والمعمارية والاختبار وتحليل الأنظمة والخوارزميات وهياكل البيانات وJava وتطوير الويب.',
+            'أنتج التوثيق والمخططات وخطط الاختبار والعروض التجريبية والتقديمات التقنية.',
           ],
         },
         {
-          title: 'Artificial Intelligence Specialization',
+          title: 'تخصص الذكاء الاصطناعي',
           organization: 'أكاديمية كاوست',
           period: '2025 - 2026',
           status: 'البرنامج الصيفي النهائي للذكاء الاصطناعي - قيد التنفيذ',
           logoSrc: kaustAcademyLogo,
           logoAlt: 'شعار أكاديمية كاوست',
           description:
-            'كانت أكاديمية كاوست واحدة من أهم أجزاء رحلتي في تعلم الذكاء الاصطناعي. من خلال تخصص الذكاء الاصطناعي متعدد المراحل، انتقلت من الإعداد التأسيسي إلى التعلم التطبيقي المتقدم والحضور الفعلي للبرنامج الصيفي النهائي للذكاء الاصطناعي.',
+            'انتقلت عبر تخصص الذكاء الاصطناعي التنافسي متعدد المراحل في أكاديمية كاوست من الإعداد التأسيسي إلى التعلم التطبيقي المتقدم والبرنامج الصيفي النهائي.',
           details: [
-            'بدأت الرحلة بأساسيات مثل Python والرياضيات للذكاء الاصطناعي، ثم انتقلت إلى مفاهيم تعلم الآلة، والشبكات العصبية، والعمل التطبيقي بأسلوب PyTorch، والتعلم العميق، والشبكات العصبية الالتفافية، والرؤية الحاسوبية. كانت كل مرحلة تتطلب التعلم بسرعة، وتطبيق المادة، والمنافسة للانتقال إلى المرحلة التالية.',
             'بعد إكمال المراحل الثلاث الأولى، تأهلت إلى البرنامج الصيفي النهائي للذكاء الاصطناعي، ضمن أفضل 100 طالب تم اختيارهم من بين أكثر من 14,000 متقدم.',
-            'أحضر حاليًا البرنامج النهائي المستضاف في جامعة الملك خالد تحت مظلة أكاديمية كاوست، وأدرس RNNs وLSTMs وGRUs والانتباه والمحولات وتعليق الصور والتعلم الذاتي والتبايني وSimCLR وBYOL وDINO ونماذج الأساس ونماذج العالم.',
-            'يشمل البرنامج أيضًا VAEs وVQ-VAEs وGANs ونماذج الانتشار وStable Diffusion والتدفقات الطبيعية ومواءمة التدفق، إضافة إلى التعلم المعزز وطرق القيمة وتدرجات السياسات وتحسينها والتحكم المستمر.',
-            'تربط موضوعات الذكاء الاصطناعي الطرفي وTinyML والتكميم وضغط النماذج والمختبرات والمسابقات العملية بين النظرية وبناء أنظمة قابلة للنشر والعمل الجماعي.',
+            'يشمل البرنامج النماذج التسلسلية والمحولات والتعلم الذاتي ونماذج الأساس والعالم والنمذجة التوليدية والتعلم المعزز والذكاء الاصطناعي الطرفي وTinyML والتكميم وضغط النماذج.',
           ],
           points: [
             'أكملت KAUST Academy Advanced Artificial Intelligence.',
-            'صُنفت ضمن أفضل 100 طالب تم اختيارهم من بين أكثر من 14,000 متقدم.',
             'أحضر حاليًا البرنامج الصيفي النهائي في جامعة الملك خالد تحت مظلة أكاديمية كاوست.',
-            'أدرس أساليب حديثة في النماذج التسلسلية والمحولات والتعلم الذاتي والتوليدي والمعزز والذكاء الاصطناعي الطرفي.',
             'أطبق المادة من خلال مختبرات ومسابقات عملية لبناء النماذج.',
           ],
         },
@@ -804,12 +803,27 @@ export const localizedContent: Record<Language, DashboardContent> = {
       ],
     },
     projects: {
-      eyebrow: 'Projects',
+      eyebrow: 'المشاريع',
       title: 'المشاريع',
       description:
         'الأعمال التي تعكس ممارستي لهندسة البرمجيات، واتجاهي في الذكاء الاصطناعي، وتطوير ملفي الشخصي العام.',
       roleLabel: 'الدور',
       items: [
+        {
+          name: 'OnKith — ذكاء اصطناعي طرفي واعٍ بالخصوصية',
+          status: 'مشروع جماعي في أكاديمية كاوست | اكتمل تطوير النموذج / التكامل قيد التنفيذ',
+          featured: true,
+          description:
+            'OnKith مشروع جماعي في أكاديمية كاوست يحمي النصوص الحساسة قبل وصولها إلى خدمات الذكاء الاصطناعي السحابية. طورت ودربت نموذج TinyBERT-4 مدمجًا لتصنيف الرموز واكتشاف المعلومات الشخصية والحساسة وإخفائها.',
+          points: [
+            'طورت ودربت نموذج TinyBERT-4 مدمجًا لتصنيف الرموز.',
+            'قيّمت الدقة والاستدعاء وF1، وحقق النموذج قرابة 0.95 في مقياس F1.',
+            'أنتجت نموذجًا مكممًا إلى INT8 وجهزت ملفات النشر على Raspberry Pi 5.',
+            'نسقت مسار الاستدلال وبحثت التقليم وتقطير المعرفة كخيارات مستقبلية لضغط النموذج.',
+          ],
+          tags: ['TinyBERT-4', 'تصنيف الرموز', 'الخصوصية', 'تكميم INT8', 'Edge AI', 'Raspberry Pi 5'],
+          links: [{ label: 'زيارة OnKith', href: links.onKith }],
+        },
         {
           id: 'project-esas',
           name: 'ESAS - Experience Saudi As a Saudi',
@@ -817,77 +831,51 @@ export const localizedContent: Record<Language, DashboardContent> = {
           role: 'منسق',
           featured: true,
           description:
-            'ESAS - Experience Saudi As a Saudi هو مشروع تخرج يركز على عرض تجارب سياحية أصيلة ومنتقاة محليًا في المملكة العربية السعودية. بدأ المشروع كفكرة حول تسهيل اكتشاف التجارب المحلية، ثم تطور إلى مشروع هندسة برمجيات منظم يتضمن المتطلبات، ومسارات العمل، والتوثيق، وتصميم النظام، وتطوير النموذج الأولي، وعرضًا تجريبيًا وظيفيًا.',
-          details: [
-            'بصفتي منسق المشروع، ساعدت في تشكيل الفكرة، وتنظيم اتجاه المشروع، وربط أعمال المتطلبات والتوثيق باحتياجات التنفيذ، ودعم الفريق في تجهيز النظام للعرض.',
-            'كان جزء مهم من مساهمتي هو التفكير فيما قد يحتاجه السياح والزوار عند اكتشاف تجارب محلية أصيلة: كيف ينبغي عرض التجارب، وكيف يمكن لمقدمي الخدمات إرسالها، وكيف يمكن للمشرفين مراجعتها، وكيف يمكن للمستخدمين التصفح والحفظ والتفاعل مع المنصة. انعكس هذا العمل على جمع المتطلبات، وحالات الاستخدام، ومسارات العمل، والمخططات، ووثيقة مواصفات متطلبات البرمجيات.',
-            'دعمت أيضًا اتجاه التنفيذ في جوانب الواجهة الخلفية والأمامية، بما في ذلك تدفقات المستخدمين، ومسارات مقدمي الخدمات والمشرفين، وقوائم التجارب، والميزات المرتبطة بالحجز، والسلوك المناسب للعرض التجريبي، ومواءمة التوثيق. لم يكن الهدف بناء الشاشات فقط، بل جعل العرض التجريبي مفهومًا ومستقرًا ومرتبطًا بمتطلبات المشروع.',
-            'عُرض المشروع في معرض INJAZ 2026 لمشاريع التخرج، حيث ساعدت في تقديم الملصق والعرض التجريبي المباشر، وشرح الفكرة وتصميم النظام، والإجابة عن أسئلة أعضاء هيئة التدريس والمراجعين والزوار.',
-            'بعد التسليم الأكاديمي، واصلت تحسين ESAS كمشروع شخصي/عام من خلال تحسين استقرار العرض التجريبي، وصقل الواجهة الأمامية، ومواءمة التوثيق، وتجهيز المشروع لعرض أقوى في ملفي الشخصي وتوسيع الميزات مستقبلًا.',
-          ],
+            'ESAS مشروع تخرج لاكتشاف تجارب سياحية سعودية أصيلة ومنتقاة محليًا. بُني باستخدام Spring Boot وPostgreSQL وDocker وFlutter، وتطور من فكرة أولية إلى نظام موثق وعرض تجريبي وظيفي.',
           points: [
-            'عملت بصفتي منسق المشروع، وساعدت في تنظيم الفكرة، والاتجاه، والمتطلبات، والتوثيق، وتجهيز العرض التجريبي.',
-            'ساهمت في جمع المتطلبات من خلال التفكير في احتياجات السياحة والمستخدمين، ومسارات مقدمي الخدمات، وتدفقات مراجعة المشرفين، وتفاعلات المسافرين.',
-            'ساعدت في إعداد توثيق SRS، وحالات الاستخدام، ومسارات العمل، والمخططات، ووصف سلوك النظام.',
-            'دعمت اتجاه تنفيذ الواجهة الخلفية والأمامية، بما في ذلك تدفقات المستخدمين، ومسارات مقدمي الخدمات والمشرفين، وقوائم التجارب، والميزات المرتبطة بالحجز، والوظائف الجاهزة للعرض التجريبي.',
-            'ساعدت في اختبار العرض التجريبي واستقراره قبل التقديم.',
-            'قدمت ملصق المشروع والعرض التجريبي المباشر في معرض INJAZ 2026 لمشاريع التخرج.',
-            'واصلت تحسين المشروع بعد التسليم الأكاديمي لرفع جودته كجزء من ملفي الشخصي وتوسيع ميزاته مستقبلًا.',
+            'قدت التنسيق بين العصف الذهني والتخطيط وجمع المتطلبات والتوثيق وتجهيز العرض التجريبي.',
+            'كتبت وثيقة متطلبات البرمجيات وصممت حالات الاستخدام ومسارات العمل ومخططات النظام وتدفقات مقدمي الخدمات والمشرفين والمسافرين.',
+            'بنيت واختبرت ميزات الكتالوج والحجز والصلاحيات ضمن التنفيذ، ثم حسنت استقرار العرض التجريبي.',
+            'قدمت الملصق والعرض المباشر في معرض INJAZ 2026 وواصلت تحسين المشروع بعد التسليم الأكاديمي.',
           ],
           tags: [
             'هندسة البرمجيات',
             'مشروع تخرج',
             'هندسة المتطلبات',
             'التوثيق',
-            'Backend / Frontend',
             'تنسيق المشاريع',
+            'Spring Boot',
+            'PostgreSQL',
+            'Docker',
+            'Flutter',
           ],
-        },
-        {
-          name: 'OnKith — ذكاء اصطناعي طرفي واعٍ بالخصوصية',
-          status: 'مشروع جماعي في أكاديمية كاوست | اكتمل تطوير النموذج / التكامل قيد التنفيذ',
-          description:
-            'OnKith مشروع جماعي في أكاديمية كاوست يركز على حماية النصوص الحساسة قبل وصولها إلى خدمات الذكاء الاصطناعي السحابية. طورت ودربت نموذج TinyBERT-4 مدمجًا لتصنيف الرموز واكتشاف المعلومات الشخصية والحساسة وإخفائها.',
-          details: [
-            'اكتمل عمل تطوير النموذج، بينما لا يزال تكامله مع Raspberry Pi 5 قيد التنفيذ بالتعاون مع فريق النشر.',
-          ],
-          points: [
-            'طورت ودربت نموذج TinyBERT-4 مدمجًا لتصنيف الرموز.',
-            'قيّمت النموذج باستخدام الدقة والاستدعاء وF1، وحقق قرابة 0.95 في مقياس F1.',
-            'أنتجت نسخة مكممة إلى INT8 للاستدلال الخفيف على الأجهزة الطرفية.',
-            'جهزت النموذج والمجزئ وخرائط التصنيفات والإعدادات وملفات الاستدلال للنشر على Raspberry Pi 5.',
-            'نسقت مسار الاستدلال والتكامل المتوقع مع فريق النشر.',
-            'بحثت التقليم وتقطير المعرفة كخيارات مستقبلية إضافية لضغط النموذج.',
-          ],
-          tags: ['TinyBERT-4', 'تصنيف الرموز', 'الخصوصية', 'تكميم INT8', 'Edge AI', 'Raspberry Pi 5'],
+          image: {
+            src: esasHomeHref,
+            alt: 'الصفحة الرئيسية لمنصة ESAS تعرض تجارب سياحية سعودية أصيلة وخيارات البحث',
+          },
+          links: [{ label: 'عرض وثيقة متطلبات البرمجيات (114 صفحة)', href: esasSrsHref }],
         },
         {
           name: 'مسابقة أكاديمية كاوست لترميم الصور',
           status: 'المركز الثالث على مستوى المسابقة | FID 12',
           description:
             'حققت المركز الثالث على مستوى مسابقة أكاديمية كاوست لترميم الصور بدرجة FID بلغت 12.',
-          details: [
-            'تصدّر الحل لوحة النتائج حتى تمديد الموعد النهائي تسع ساعات في وقت متأخر، ثم تقدّم حلان أقوى. يبقى المركز الثالث النهائي هو الإنجاز الأبرز.',
-          ],
           points: [
             'حققت المركز الثالث على مستوى المسابقة.',
             'حققت درجة FID مقدارها 12.',
             'وثقت منهجية الضبط الدقيق لنموذج MI-GAN في دفتر Kaggle عام.',
           ],
           tags: ['الرؤية الحاسوبية', 'ترميم الصور', 'MI-GAN', 'PyTorch', 'مسابقة'],
-          link: {
+          links: [{
             label: 'عرض دفتر المسابقة',
             href: links.kaggleInpainting,
-          },
+          }],
         },
         {
           name: 'Personal Dashboard',
           status: 'مشروع ملف أعمال منشور',
           description:
             'هذا الموقع هو لوحة معلومات شخصية وملف أعمال عام مبني باستخدام React وTypeScript وVite وTailwind CSS. يعرض خلفيتي، وتعليمي، ومشاريعي، وسيرتي الذاتية، وروابط التواصل في موقع ثابت ونظيف يعمل بالواجهة الأمامية فقط.',
-          details: [
-            'يحافظ هذا المشروع على تنظيم المحتوى في ملفات بيانات محلية، ويتضمن تصميمًا متجاوبًا، ووضعًا فاتحًا/داكنًا، وعارضًا للسيرة الذاتية، وتنقلًا عبر الأقسام، وحركات ظهور عند التمرير دون إضافة واجهة خلفية.',
-          ],
           points: [
             'يعمل بالواجهة الأمامية فقط ويمكن نشره كموقع ثابت.',
             'يستخدم ملفات محتوى منظمة للملف الشخصي، والتعليم، والمشاريع، والمهارات، وروابط التواصل.',
@@ -895,11 +883,12 @@ export const localizedContent: Record<Language, DashboardContent> = {
             'بُني ليبقى بسيطًا، وآمنًا للنشر العام، وسهل الصيانة.',
           ],
           tags: ['React', 'TypeScript', 'Vite', 'Tailwind CSS', 'موقع ثابت', 'ملف أعمال'],
+          links: [{ label: 'عرض المستودع', href: links.personalDashboard }],
         },
       ],
     },
     cv: {
-      eyebrow: 'CV',
+      eyebrow: 'السيرة الذاتية',
       title: 'السيرة الذاتية',
       description: 'رابط مباشر للاطلاع الكامل على ملفي، وتعليمي، وشهاداتي، ومشاريعي، ومهاراتي.',
       cardTitle: 'السيرة الذاتية ليحيى الشريف - هندسة البرمجيات والذكاء الاصطناعي',
@@ -914,12 +903,13 @@ export const localizedContent: Record<Language, DashboardContent> = {
       href: cvHref,
     },
     posts: {
-      eyebrow: 'POSTS',
+      eyebrow: 'المنشورات',
       title: 'المنشورات',
       description: 'منشورات على LinkedIn تبرز محطات مهمة في رحلتي في هندسة البرمجيات والذكاء الاصطناعي.',
       viewButton: 'عرض على LinkedIn',
       previousButton: 'المنشور السابق',
       nextButton: 'المنشور التالي',
+      positionLabel: (current, total) => `المنشور ${current} من ${total}`,
       items: [
         {
           title: 'لقاء داعمي ومستثمري البرنامج الصيفي للذكاء الاصطناعي',
@@ -927,7 +917,7 @@ export const localizedContent: Record<Language, DashboardContent> = {
             'تأملات حول لقاء داعمي ومستثمري برنامج أكاديمية كاوست الصيفي للذكاء الاصطناعي 2026، ومناقشة تعليم الذكاء الاصطناعي والمهن المستقبلية وأفكار مشاريع الطلاب.',
           embedUrl: links.embedSummerSchool,
           postUrl: links.postSummerSchool,
-          iframeTitle: 'LinkedIn post about meeting KAUST Academy AI Summer School supporters and investors',
+          iframeTitle: 'منشور LinkedIn عن لقاء داعمي ومستثمري البرنامج الصيفي للذكاء الاصطناعي',
         },
         {
           title: 'مشروع التخرج / ESAS',
@@ -935,7 +925,7 @@ export const localizedContent: Record<Language, DashboardContent> = {
             'منشور مهم على LinkedIn حول ESAS، مشروع تخرجي الذي يركز على تجارب سياحية أصيلة ومنتقاة محليًا في المملكة العربية السعودية.',
           embedUrl: links.embedEsas,
           postUrl: links.postEsas,
-          iframeTitle: 'LinkedIn post about Graduation Project and ESAS',
+          iframeTitle: 'منشور LinkedIn عن مشروع التخرج ESAS',
         },
         {
           title: 'أكاديمية كاوست: من المرحلة الثالثة إلى المرحلة الرابعة',
@@ -943,12 +933,12 @@ export const localizedContent: Record<Language, DashboardContent> = {
             'منشور مهم على LinkedIn حول إكمال المرحلة الثالثة من أكاديمية كاوست والقبول في المرحلة الرابعة من رحلة الذكاء الاصطناعي.',
           embedUrl: links.embedKaust,
           postUrl: links.postKaust,
-          iframeTitle: 'LinkedIn post about KAUST Academy Stage 3 and Stage 4',
+          iframeTitle: 'منشور LinkedIn عن الانتقال من المرحلة الثالثة إلى الرابعة في أكاديمية كاوست',
         },
       ],
     },
     contact: {
-      eyebrow: 'Contact',
+      eyebrow: 'التواصل',
       title: 'التواصل',
       description:
         'للتعاون، أو الفرص، أو التواصل المهني، تعد LinkedIn والبريد الإلكتروني وGitHub أفضل الطرق للوصول إليّ.',
@@ -976,6 +966,7 @@ export const localizedContent: Record<Language, DashboardContent> = {
         },
       ],
     },
+    externalLinkLabel: '(يفتح في علامة تبويب جديدة)',
     backToTop: 'العودة إلى الأعلى',
   },
 };

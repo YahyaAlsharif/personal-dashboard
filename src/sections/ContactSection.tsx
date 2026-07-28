@@ -1,16 +1,17 @@
 import { DashboardCard } from '../components/DashboardCard';
+import { ExternalLink } from '../components/ExternalLink';
 import { SectionHeading } from '../components/SectionHeading';
 import { useLanguage } from '../context/useLanguage';
 import { localizedContent } from '../data/content';
 
 export function ContactSection() {
   const { language, isArabic } = useLanguage();
-  const { contact } = localizedContent[language];
+  const { contact, externalLinkLabel } = localizedContent[language];
   const textDirection = isArabic ? 'rtl' : 'ltr';
   const localizedClass = isArabic ? 'localized-text' : '';
 
   return (
-    <section id="contact" className="scroll-mt-24 py-14">
+    <section id="contact" className="scroll-mt-36 py-14 xl:scroll-mt-24">
       <div className="page-container">
         <SectionHeading
           eyebrow={contact.eyebrow}
@@ -42,16 +43,26 @@ export function ContactSection() {
               <div
                 className={`mt-auto flex pt-5 ${isArabic ? 'localized-actions' : ''}`}
               >
-                <a
-                  href={option.href}
-                  target={option.external ? '_blank' : undefined}
-                  rel={option.external ? 'noreferrer' : undefined}
-                  className="action-button inline-flex rounded-lg border px-5 py-3 text-sm font-semibold transition"
-                >
+                {option.external ? (
+                  <ExternalLink
+                    href={option.href}
+                    newTabLabel={externalLinkLabel}
+                    className="action-button inline-flex rounded-lg border px-5 py-3 text-sm font-semibold transition"
+                  >
+                    <span dir={isArabic ? 'auto' : undefined} className="localized-inline">
+                      {option.buttonText}
+                    </span>
+                  </ExternalLink>
+                ) : (
+                  <a
+                    href={option.href}
+                    className="action-button inline-flex rounded-lg border px-5 py-3 text-sm font-semibold transition"
+                  >
                   <span dir={isArabic ? 'auto' : undefined} className="localized-inline">
                     {option.buttonText}
                   </span>
-                </a>
+                  </a>
+                )}
               </div>
             </DashboardCard>
           ))}

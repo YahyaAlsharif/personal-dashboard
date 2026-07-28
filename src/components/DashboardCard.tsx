@@ -19,7 +19,7 @@ export function DashboardCard({
     <Reveal
       as={Component}
       delay={revealDelay}
-      className={`rounded-lg border border-[var(--color-border)] bg-[var(--color-card)] p-6 shadow-sm shadow-black/5 backdrop-blur ${className}`}
+      className={`dashboard-card rounded-lg border border-[var(--color-border)] bg-[var(--color-card)] p-6 shadow-[var(--shadow-card)] ${className}`}
       {...props}
     >
       {children}

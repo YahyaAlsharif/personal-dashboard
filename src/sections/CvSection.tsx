@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 
 import { CvViewerModal } from '../components/CvViewerModal';
 import { DashboardCard } from '../components/DashboardCard';
+import { ExternalLink } from '../components/ExternalLink';
 import { SectionHeading } from '../components/SectionHeading';
 import { useLanguage } from '../context/useLanguage';
 import { localizedContent } from '../data/content';
@@ -10,7 +11,7 @@ export function CvSection() {
   const [isCvViewerOpen, setIsCvViewerOpen] = useState(false);
   const viewCvButtonRef = useRef<HTMLButtonElement>(null);
   const { language, isArabic } = useLanguage();
-  const { cv } = localizedContent[language];
+  const { cv, externalLinkLabel } = localizedContent[language];
   const textDirection = isArabic ? 'rtl' : 'ltr';
   const localizedClass = isArabic ? 'localized-text' : '';
 
@@ -23,7 +24,7 @@ export function CvSection() {
 
   return (
     <>
-      <section id="cv" className="scroll-mt-24 py-14">
+      <section id="cv" className="scroll-mt-36 py-14 xl:scroll-mt-24">
         <div className="page-container">
           <SectionHeading
             eyebrow={cv.eyebrow}
@@ -54,11 +55,20 @@ export function CvSection() {
             <div
               className={`flex flex-wrap gap-3 ${isArabic ? 'localized-actions' : ''}`}
             >
+              <ExternalLink
+                href={cv.href}
+                newTabLabel={externalLinkLabel}
+                className="action-button rounded-lg border px-5 py-3 text-sm font-semibold transition sm:hidden"
+              >
+                <span dir={isArabic ? 'auto' : undefined} className="localized-inline">
+                  {cv.viewButton}
+                </span>
+              </ExternalLink>
               <button
                 ref={viewCvButtonRef}
                 type="button"
                 onClick={() => setIsCvViewerOpen(true)}
-                className="action-button rounded-lg border px-5 py-3 text-sm font-semibold transition"
+                className="action-button hidden rounded-lg border px-5 py-3 text-sm font-semibold transition sm:inline-flex"
               >
                 <span dir={isArabic ? 'auto' : undefined} className="localized-inline">
                   {cv.viewButton}

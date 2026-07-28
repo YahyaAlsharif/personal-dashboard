@@ -1,6 +1,3 @@
-import { Fragment } from 'react';
-
-import cnnCourseImage from '../assets/learning/cnn-course.png';
 import { DashboardCard } from '../components/DashboardCard';
 import { Reveal } from '../components/Reveal';
 import { SectionHeading } from '../components/SectionHeading';
@@ -16,7 +13,7 @@ export function AboutSection() {
   const artificialIntelligenceStory = about.artificialIntelligence;
 
   return (
-    <section id="about" className="scroll-mt-24 py-16">
+    <section id="about" className="scroll-mt-36 py-16 xl:scroll-mt-24">
       <div className="page-container">
         <SectionHeading
           eyebrow={about.eyebrow}
@@ -55,7 +52,7 @@ export function AboutSection() {
 
         <div
           id={softwareEngineeringStory.id}
-          className="mt-14 scroll-mt-28 border-t border-[var(--color-border)] pt-10"
+          className="mt-14 scroll-mt-40 border-t border-[var(--color-border)] pt-10 xl:scroll-mt-28"
         >
           <div className="grid gap-8 lg:grid-cols-[minmax(0,0.72fr)_minmax(17rem,0.28fr)]">
             <div>
@@ -131,7 +128,7 @@ export function AboutSection() {
 
         <div
           id={artificialIntelligenceStory.id}
-          className="mt-14 scroll-mt-28 border-t border-[var(--color-border)] pt-10"
+          className="mt-14 scroll-mt-40 border-t border-[var(--color-border)] pt-10 xl:scroll-mt-28"
         >
           <div className="grid gap-8 lg:grid-cols-[minmax(0,0.72fr)_minmax(17rem,0.28fr)]">
             <div>
@@ -144,35 +141,15 @@ export function AboutSection() {
               </Reveal>
               <div className="mt-6 max-w-4xl space-y-5 text-base leading-8 text-[var(--color-muted)]">
                 {artificialIntelligenceStory.paragraphs.map((paragraph, index) => (
-                  <Fragment key={paragraph}>
-                    <Reveal
-                      as="p"
-                      delay={index * 70}
-                      dir={textDirection}
-                      className={`prose-justify ${localizedClass}`}
-                    >
-                      {paragraph}
-                    </Reveal>
-                    {index === 4 ? (
-                      <Reveal
-                        as="figure"
-                        delay={80}
-                        className="rounded-lg border border-[var(--color-border)] bg-[var(--color-card-strong)] p-3 shadow-sm shadow-black/5"
-                      >
-                        <img
-                          src={cnnCourseImage}
-                          alt={artificialIntelligenceStory.courseImage?.alt ?? ''}
-                          className="w-full rounded-md border border-[var(--color-border)] object-contain"
-                        />
-                        <figcaption
-                          dir={textDirection}
-                          className={`mt-3 text-sm leading-6 text-[var(--color-muted)] ${localizedClass}`}
-                        >
-                          {artificialIntelligenceStory.courseImage?.caption}
-                        </figcaption>
-                      </Reveal>
-                    ) : null}
-                  </Fragment>
+                  <Reveal
+                    as="p"
+                    key={paragraph}
+                    delay={index * 70}
+                    dir={textDirection}
+                    className={`prose-justify ${localizedClass}`}
+                  >
+                    {paragraph}
+                  </Reveal>
                 ))}
               </div>
             </div>
@@ -224,7 +201,7 @@ export function AboutSection() {
           >
             {skills.description}
           </Reveal>
-          <div className="mt-5 grid gap-y-6 md:grid-cols-2 md:gap-x-4 xl:grid-cols-5">
+          <div className="mt-5 grid gap-y-6 md:grid-cols-2 md:gap-x-4 xl:grid-cols-3">
             {skills.groups.map((group, index) => (
               <Reveal
                 as="div"
@@ -233,7 +210,9 @@ export function AboutSection() {
                 className={[
                   'pl-0',
                   index % 2 === 1 ? 'md:border-l md:border-[var(--color-border)] md:pl-4' : '',
-                  index > 0 ? 'xl:border-l xl:border-[var(--color-border)] xl:pl-4' : '',
+                  index % 3 !== 0
+                    ? 'xl:border-l xl:border-[var(--color-border)] xl:pl-4'
+                    : 'xl:border-l-0 xl:pl-0',
                   isArabic ? 'localized-skill-column' : '',
                   localizedClass,
                 ]

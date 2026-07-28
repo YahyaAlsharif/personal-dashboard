@@ -1,18 +1,19 @@
 import { DashboardCard } from '../components/DashboardCard';
+import { ExternalLink } from '../components/ExternalLink';
 import { SectionHeading } from '../components/SectionHeading';
 import { useLanguage } from '../context/useLanguage';
 import { localizedContent } from '../data/content';
 
 export function ProjectsSection() {
   const { language, isArabic } = useLanguage();
-  const { projects } = localizedContent[language];
+  const { projects, externalLinkLabel } = localizedContent[language];
   const featuredProjects = projects.items.filter((project) => project.featured);
   const supportingProjects = projects.items.filter((project) => !project.featured);
   const textDirection = isArabic ? 'rtl' : 'ltr';
   const localizedClass = isArabic ? 'localized-text' : '';
 
   return (
-    <section id="projects" className="scroll-mt-24 py-14">
+    <section id="projects" className="scroll-mt-36 py-14 xl:scroll-mt-24">
       <div className="page-container">
         <SectionHeading
           eyebrow={projects.eyebrow}
@@ -26,7 +27,7 @@ export function ProjectsSection() {
             <DashboardCard
               key={project.name}
               id={project.id}
-              className="flex scroll-mt-28 flex-col"
+              className="flex scroll-mt-40 flex-col xl:scroll-mt-28"
               revealDelay={index * 90}
             >
               <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
@@ -40,7 +41,7 @@ export function ProjectsSection() {
                     >
                       {project.status}
                     </span>
-                  {project.role ? (
+                    {project.role ? (
                       <span
                         dir="auto"
                         className="rounded-md bg-[var(--color-chip)] px-3 py-1 text-xs font-semibold text-[var(--color-chip-text)]"
@@ -63,15 +64,18 @@ export function ProjectsSection() {
               >
                 {project.description}
               </p>
-              {project.details?.map((detail) => (
-                <p
-                  key={detail}
-                  dir={textDirection}
-                  className={`prose-justify mt-4 text-sm leading-6 text-[var(--color-muted)] ${localizedClass}`}
-                >
-                  {detail}
-                </p>
-              ))}
+              {project.image ? (
+                <figure className="mt-6 overflow-hidden rounded-lg border border-[var(--color-border)] bg-[var(--color-card-strong)] p-2 shadow-sm">
+                  <img
+                    src={project.image.src}
+                    alt={project.image.alt}
+                    loading="lazy"
+                    width="1600"
+                    height="552"
+                    className="h-auto w-full rounded-md object-cover"
+                  />
+                </figure>
+              ) : null}
               <ul
                 dir={textDirection}
                 className={`mt-5 space-y-3 text-sm leading-6 text-[var(--color-muted)] ${localizedClass}`}
@@ -101,18 +105,20 @@ export function ProjectsSection() {
                   </span>
                 ))}
               </div>
-              {project.link ? (
-                <div className={`flex pt-5 ${isArabic ? 'localized-actions' : ''}`}>
-                  <a
-                    href={project.link.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="action-button rounded-lg border px-5 py-3 text-sm font-semibold transition"
-                  >
-                    <span dir={isArabic ? 'auto' : undefined} className="localized-inline">
-                      {project.link.label}
-                    </span>
-                  </a>
+              {project.links?.length ? (
+                <div className={`flex flex-wrap gap-3 pt-5 ${isArabic ? 'localized-actions' : ''}`}>
+                  {project.links.map((link) => (
+                    <ExternalLink
+                      key={link.href}
+                      href={link.href}
+                      newTabLabel={externalLinkLabel}
+                      className="action-button rounded-lg border px-5 py-3 text-sm font-semibold transition"
+                    >
+                      <span dir={isArabic ? 'auto' : undefined} className="localized-inline">
+                        {link.label}
+                      </span>
+                    </ExternalLink>
+                  ))}
                 </div>
               ) : null}
             </DashboardCard>
@@ -123,7 +129,7 @@ export function ProjectsSection() {
               <DashboardCard
                 key={project.name}
                 id={project.id}
-                className="flex h-full scroll-mt-28 flex-col"
+                className="flex h-full scroll-mt-40 flex-col xl:scroll-mt-28"
                 revealDelay={index * 90}
               >
                 <div
@@ -156,15 +162,18 @@ export function ProjectsSection() {
                 >
                   {project.description}
                 </p>
-                {project.details?.map((detail) => (
-                  <p
-                    key={detail}
-                    dir={textDirection}
-                    className={`mt-4 text-sm leading-6 text-[var(--color-muted)] ${localizedClass}`}
-                  >
-                    {detail}
-                  </p>
-                ))}
+                {project.image ? (
+                  <figure className="mt-6 overflow-hidden rounded-lg border border-[var(--color-border)] bg-[var(--color-card-strong)] p-2 shadow-sm">
+                    <img
+                      src={project.image.src}
+                      alt={project.image.alt}
+                      loading="lazy"
+                      width="1600"
+                      height="552"
+                      className="h-auto w-full rounded-md object-cover"
+                    />
+                  </figure>
+                ) : null}
                 <ul
                   dir={textDirection}
                   className={`mt-5 space-y-3 text-sm leading-6 text-[var(--color-muted)] ${localizedClass}`}
@@ -194,18 +203,20 @@ export function ProjectsSection() {
                     </span>
                   ))}
                 </div>
-                {project.link ? (
-                  <div className={`flex pt-5 ${isArabic ? 'localized-actions' : ''}`}>
-                    <a
-                      href={project.link.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="action-button rounded-lg border px-5 py-3 text-sm font-semibold transition"
-                    >
-                      <span dir={isArabic ? 'auto' : undefined} className="localized-inline">
-                        {project.link.label}
-                      </span>
-                    </a>
+                {project.links?.length ? (
+                  <div className={`flex flex-wrap gap-3 pt-5 ${isArabic ? 'localized-actions' : ''}`}>
+                    {project.links.map((link) => (
+                      <ExternalLink
+                        key={link.href}
+                        href={link.href}
+                        newTabLabel={externalLinkLabel}
+                        className="action-button rounded-lg border px-5 py-3 text-sm font-semibold transition"
+                      >
+                        <span dir={isArabic ? 'auto' : undefined} className="localized-inline">
+                          {link.label}
+                        </span>
+                      </ExternalLink>
+                    ))}
                   </div>
                 ) : null}
               </DashboardCard>

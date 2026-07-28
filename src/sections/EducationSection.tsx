@@ -10,7 +10,7 @@ export function EducationSection() {
   const localizedClass = isArabic ? 'localized-text' : '';
 
   return (
-    <section id="education" className="scroll-mt-24 py-14">
+    <section id="education" className="scroll-mt-36 py-14 xl:scroll-mt-24">
       <div className="page-container">
         <SectionHeading
           eyebrow={education.eyebrow}
