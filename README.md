@@ -65,9 +65,10 @@ src/
   styles/      global Tailwind and theme styles
 public/
   cv/          public CV PDF for the website
-docs/
-  *.md         content references and planning notes
 ```
+
+Local content references and planning notes live in an untracked `docs/`
+folder, which is intentionally kept out of the public repository.
 
 ## Deployment
 
@@ -84,3 +85,13 @@ kind.
 This was built as a personal learning project. It is not maintained as
 production software, and the results reported here are specific to the setup
 described above.
+
+The MIT License covers the source code. Media assets are not covered by it and
+keep their own terms:
+
+- The hero background video is *Nighttime View of Grand Mosque in Mecca* by
+  Mohammad Kheir, from [Pexels](https://www.pexels.com/video/nighttime-view-of-grand-mosque-in-mecca-35743721/),
+  used under the [Pexels License](https://www.pexels.com/license/). Attribution
+  is not required by that licence; it is given here voluntarily.
+- Personal material such as the profile photo, CV, and project documents remains
+  the property of Yahya Alsharif and is not licensed for reuse.

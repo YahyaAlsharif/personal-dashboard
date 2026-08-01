@@ -16,6 +16,9 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
+# Local planning and content notes (kept out of the public repository)
+docs/
+
 # Editor and OS files
 *.swp
 *.swo
