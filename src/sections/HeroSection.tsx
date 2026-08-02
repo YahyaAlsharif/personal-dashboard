@@ -85,7 +85,7 @@ export function HeroSection() {
           <Reveal
             as="p"
             delay={140}
-            className="me-auto mt-5 max-w-3xl text-lg font-semibold leading-8 text-[var(--color-heading)] sm:text-xl"
+            className="me-auto mt-5 max-w-3xl text-balance text-lg font-semibold leading-8 text-[var(--color-heading)] sm:text-xl"
           >
             {hero.proof}
           </Reveal>

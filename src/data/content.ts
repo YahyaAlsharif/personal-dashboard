@@ -172,8 +172,13 @@ const links = {
   linkedin: 'https://www.linkedin.com/in/yahya-alsharif-204103304',
   github: 'https://github.com/YahyaAlsharif',
   personalDashboard: 'https://github.com/YahyaAlsharif/personal-dashboard',
+  flappyBird: 'https://github.com/YahyaAlsharif/flappy_bird_challenge',
+  edgeAiProject: 'https://github.com/YahyaAlsharif/edge_ai_project',
   onKith: 'https://onkith.online/',
+  onKithLinkedIn: 'https://www.linkedin.com/company/onkith/',
+  onKithPublic: 'https://github.com/YahyaAlsharif/OnKith_Public',
   email: 'yahya.alsharif567@gmail.com',
+  kaggleInpaintingRepository: 'https://github.com/YahyaAlsharif/Kaggle_inpainting_comp',
   kaggleInpainting:
     'https://www.kaggle.com/code/ghostylicious/mi-gan-inpainting-comp-03',
   postSummerSchool: 'https://www.linkedin.com/feed/update/urn:li:share:7479585722992226305',
@@ -186,8 +191,6 @@ const links = {
   embedKaust:
     'https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7439279422131589120?collapsed=1',
 };
-
-// TODO: Confirm which ESAS stack components were web versus mobile before tightening the stack wording.
 
 export const localizedContent: Record<Language, DashboardContent> = {
   en: {
@@ -217,7 +220,7 @@ export const localizedContent: Record<Language, DashboardContent> = {
       eyebrow: 'AI & Software Development | Software Engineering Student',
       title: "Hi, I'm Yahya Alsharif.",
       proof:
-        'KAUST Academy AI Specialisation — top 100 of 14,000+ applicants · 3rd place, image-inpainting competition (FID 12)',
+        'KAUST Academy AI Specialisation, top 100 of 14,000+ applicants · Software Engineering Student @ UQU, 3.89 / 4',
       intro:
         'I build reliable AI and software projects that turn technical ideas into practical, user-centred solutions.',
       profileName: 'Yahya Alsharif',
@@ -326,7 +329,7 @@ export const localizedContent: Record<Language, DashboardContent> = {
             'Deep learning',
             'Model training',
             'Data preprocessing',
-            'Precision, recall & F1 evaluation',
+            'Model evaluation & benchmarking',
           ],
         },
         {
@@ -348,6 +351,8 @@ export const localizedContent: Record<Language, DashboardContent> = {
             'Edge AI',
             'Reinforcement learning',
             'Generative AI',
+            'TensorFlow Lite',
+            'ONNX Runtime',
           ],
         },
         {
@@ -417,26 +422,33 @@ export const localizedContent: Record<Language, DashboardContent> = {
       roleLabel: 'Role',
       items: [
         {
-          name: 'OnKith — Privacy-Aware Edge AI',
-          status: 'KAUST Academy Team Project | Model Development Completed / Integration in Progress',
+          name: 'OnKith: Privacy-Aware Edge AI',
+          status: 'KAUST Academy Team Project | Model Evaluation Published',
           featured: true,
           description:
-            'OnKith is a KAUST Academy team project that protects sensitive text before it reaches cloud AI services. I developed and trained a compact TinyBERT-4 token-classification model to detect and mask personally identifiable and sensitive content.',
+            'OnKith is a privacy-first voice assistant that transcribes speech and strips personally identifiable information entirely on-device. I own the PII span-detection model: base model selection, training, evaluation, and INT8 quantisation for a Raspberry Pi 5 target.',
           points: [
-            'Developed and trained a compact TinyBERT-4 token-classification model.',
-            'Evaluated precision, recall, and F1, achieving approximately 0.95 F1.',
-            'Produced an INT8-quantised model and prepared deployment artefacts for Raspberry Pi 5.',
-            'Coordinated the inference workflow and investigated pruning and knowledge distillation as future compression options.',
+            'Fine-tuned TinyBERT-4 for 67-label BIO token classification over 33 entity types, reaching 0.9565 entity-level micro-F1 on a 40,908-row held-out split never used for training or model selection.',
+            'Produced an INT8 ONNX variant: 74.8% smaller (54.5 MB to 13.7 MB) and 47% lower median CPU latency, for 0.7 points of entity F1.',
+            'Evaluated three alternatives before committing: a BiLSTM tagger, a larger off-the-shelf ONNX PII model, and TinyBERT-6. Published the rejection criteria for each.',
+            'Probed the headline metric rather than trusting it: with the address and sentence held fixed and only the domain varying, the model detected common mail providers but missed reserved and uncommon domains, showing part of the 0.99 EMAIL score is memorisation.',
+            'Published the full evaluation as a public repository, including a notebook with committed outputs, per-type metrics, baselines, and limitations.',
           ],
           tags: [
-            'TinyBERT-4',
+            'TinyBERT',
             'Token Classification',
             'Privacy',
+            'ONNX Runtime',
             'INT8 Quantisation',
+            'Model Evaluation',
             'Edge AI',
             'Raspberry Pi 5',
           ],
-          links: [{ label: 'Visit OnKith', href: links.onKith }],
+          links: [
+            { label: 'Visit OnKith', href: links.onKith },
+            { label: 'View Evaluation Repository', href: links.onKithPublic },
+            { label: 'OnKith on LinkedIn', href: links.onKithLinkedIn },
+          ],
         },
         {
           id: 'project-esas',
@@ -471,19 +483,73 @@ export const localizedContent: Record<Language, DashboardContent> = {
         },
         {
           name: 'KAUST Academy Image Inpainting Competition',
-          status: '3rd Place Overall | FID 12',
+          status: '3rd Place Overall | Official FID 12',
           description:
-            'Achieved third place overall in the KAUST Academy image-inpainting competition with an FID score of 12.',
+            'An end-to-end image inpainting system for a KAUST Academy Kaggle competition. No mask files were provided with the test set, so the missing rectangles had to be recovered from the pixels before any model could run. This made mask recovery, data selection, inpainting and submission encoding all part of the solution.',
           points: [
-            'Finished 3rd place overall.',
-            'Achieved an FID score of 12.',
-            'Documented the MI-GAN fine-tuning approach in a public Kaggle notebook.',
+            '3rd place overall with an official FID of 12 across 8,000 reconstructed test images.',
+            'Built a deterministic rectangle detector that scores candidate regions on edge contrast, threshold stability and geometry rather than thresholding black pixels. It resolved 8,000/8,000 masks, flagged 533 as uncertain, and ran at a median 19 ms per image.',
+            'Fine-tuned a pretrained MI-GAN 256 generator for three epochs on 4,405 YuNet-filtered face images, with hole, visible-region, boundary and LPIPS perceptual losses.',
+            'Gated model selection on output validity, byte-exact visible-pixel preservation, reconstruction error, output diversity and inference speed, with automatic fallback to the pretrained checkpoint if any gate failed.',
+            'Built and rejected four alternatives: a rewritten heuristic detector, two learned detectors, and a diffusion pipeline. None cleared the adoption criteria.',
           ],
-          tags: ['Computer Vision', 'Image Inpainting', 'MI-GAN', 'PyTorch', 'Competition'],
-          links: [{
-            label: 'View Competition Notebook',
-            href: links.kaggleInpainting,
-          }],
+          tags: [
+            'Computer Vision',
+            'Image Inpainting',
+            'MI-GAN',
+            'PyTorch',
+            'GAN Fine-Tuning',
+            'Clean-FID',
+            'Competition',
+          ],
+          links: [
+            { label: 'View Repository', href: links.kaggleInpaintingRepository },
+            { label: 'View Kaggle Notebook', href: links.kaggleInpainting },
+          ],
+        },
+        {
+          name: 'Deep Reinforcement Learning: Flappy Bird Agent',
+          status: 'Personal Project | KAUST Academy RL Weeks',
+          description:
+            'A Dueling Double DQN with Prioritized Experience Replay that learns Flappy Bird from a 12-feature state vector. Trained entirely on CPU across two phases, with an evaluation protocol designed so that a single lucky episode cannot win.',
+          points: [
+            'Implemented a Dueling Double DQN with Prioritized Experience Replay (89,347 parameters), trained on CPU. The bottleneck is environment simulation throughput, not gradient computation.',
+            'Diagnosed instability in the first training run from its own evaluation history, where the mean score collapsed from 861 to 396 between consecutive checkpoints.',
+            'Rebuilt the training procedure: hard target-network resyncs replaced with Polyak averaging, and exploration decay scaled to the training budget instead of a fixed step count.',
+            'Designed a checkpoint-selection rule that ranks on worst-seed score before mean score, plus a one-time holdout on unseen seeds never used for selection.',
+            'Best single episode: 5,120 pipes. Five-seed unseen holdout mean: 400. I report them together because the peak is not the average.',
+          ],
+          tags: [
+            'Reinforcement Learning',
+            'Deep Q-Network',
+            'PyTorch',
+            'Gymnasium',
+            'CPU Training',
+            'Evaluation Design',
+          ],
+          links: [{ label: 'View Repository', href: links.flappyBird }],
+        },
+        {
+          name: 'XIAO IMU Gesture Recognition: TinyML',
+          status: 'KAUST Academy Summer School, Week 1 | Coursework Project',
+          description:
+            'An end-to-end TinyML pipeline running on a Seeed XIAO nRF52840 Sense: capture labelled IMU gesture windows over serial, train a small 1D CNN, convert to TensorFlow Lite, and run inference directly on the microcontroller with no phone or laptop in the loop.',
+          points: [
+            'Built two capture sketches: motion-triggered for active gestures and continuous for the idle class, which a threshold can never record.',
+            'Trained a 1D CNN over 119-sample, six-axis windows at ~100 Hz with a stratified held-out split and balanced class weights.',
+            'Deployed via TensorFlow Lite Micro in a 48 KB tensor arena, keeping normalisation byte-identical between training and firmware. A mismatch here is the most common silent failure in this kind of project.',
+            'Added confidence thresholding and a last-non-idle-gesture state so a small model stays usable when a gesture straddles two windows.',
+          ],
+          tags: [
+            'TinyML',
+            'Edge AI',
+            'TensorFlow Lite Micro',
+            'Embedded C++',
+            '1D CNN',
+            'XIAO nRF52840',
+            'BLE',
+          ],
+          links: [{ label: 'View Repository', href: links.edgeAiProject }],
         },
         {
           name: 'Personal Dashboard',
@@ -612,7 +678,7 @@ export const localizedContent: Record<Language, DashboardContent> = {
       eyebrow: 'تطوير الذكاء الاصطناعي والبرمجيات | طالب هندسة برمجيات',
       title: 'مرحبًا، أنا يحيى الشريف.',
       proof:
-        'تخصص الذكاء الاصطناعي في أكاديمية كاوست — ضمن أفضل 100 من أكثر من 14,000 متقدم · المركز الثالث في مسابقة ترميم الصور (FID 12)',
+        'تخصص الذكاء الاصطناعي في أكاديمية كاوست، ضمن أفضل 100 من أكثر من 14,000 متقدم · طالب هندسة برمجيات في جامعة أم القرى، بمعدل 3.89 من 4',
       intro:
         'أبني مشاريع موثوقة في الذكاء الاصطناعي والبرمجيات تحول الأفكار التقنية إلى حلول عملية تتمحور حول المستخدم.',
       profileName: 'يحيى الشريف',
@@ -720,7 +786,7 @@ export const localizedContent: Record<Language, DashboardContent> = {
             'التعلم العميق',
             'تدريب النماذج',
             'معالجة البيانات',
-            'التقييم بالدقة والاستدعاء وF1',
+            'تقييم النماذج وقياس الأداء المعياري',
           ],
         },
         {
@@ -742,6 +808,8 @@ export const localizedContent: Record<Language, DashboardContent> = {
             'الذكاء الاصطناعي الطرفي',
             'التعلم المعزز',
             'الذكاء الاصطناعي التوليدي',
+            'TensorFlow Lite',
+            'ONNX Runtime',
           ],
         },
         {
@@ -810,19 +878,33 @@ export const localizedContent: Record<Language, DashboardContent> = {
       roleLabel: 'الدور',
       items: [
         {
-          name: 'OnKith — ذكاء اصطناعي طرفي واعٍ بالخصوصية',
-          status: 'مشروع جماعي في أكاديمية كاوست | اكتمل تطوير النموذج / التكامل قيد التنفيذ',
+          name: 'OnKith: ذكاء اصطناعي طرفي واعٍ بالخصوصية',
+          status: 'مشروع جماعي في أكاديمية كاوست | نُشر تقييم النموذج',
           featured: true,
           description:
-            'OnKith مشروع جماعي في أكاديمية كاوست يحمي النصوص الحساسة قبل وصولها إلى خدمات الذكاء الاصطناعي السحابية. طورت ودربت نموذج TinyBERT-4 مدمجًا لتصنيف الرموز واكتشاف المعلومات الشخصية والحساسة وإخفائها.',
+            'OnKith مساعد صوتي يعطي الأولوية للخصوصية؛ ينسخ الكلام ويزيل معلومات التعريف الشخصية بالكامل على الجهاز. أتولى مسؤولية نموذج اكتشاف نطاقات المعلومات الشخصية: اختيار النموذج الأساسي، وتدريبه، وتقييمه، وتكميمه إلى INT8 لاستهداف Raspberry Pi 5.',
           points: [
-            'طورت ودربت نموذج TinyBERT-4 مدمجًا لتصنيف الرموز.',
-            'قيّمت الدقة والاستدعاء وF1، وحقق النموذج قرابة 0.95 في مقياس F1.',
-            'أنتجت نموذجًا مكممًا إلى INT8 وجهزت ملفات النشر على Raspberry Pi 5.',
-            'نسقت مسار الاستدلال وبحثت التقليم وتقطير المعرفة كخيارات مستقبلية لضغط النموذج.',
+            'ضبطت TinyBERT-4 دقيقًا لتصنيف الرموز وفق مخطط BIO ذي 67 تصنيفًا يغطي 33 نوعًا من الكيانات، محققًا 0.9565 entity-level micro-F1 على جزء بيانات محتجز يضم 40,908 صفًا لم يُستخدم قط في التدريب أو اختيار النموذج.',
+            'أنتجت نسخة ONNX مكممة إلى INT8: أصغر بنسبة 74.8% (من 54.5 MB إلى 13.7 MB)، وبزمن استجابة وسيط على CPU أقل بنسبة 47%، مقابل 0.7 نقطة من F1 على مستوى الكيان.',
+            'قيّمت ثلاثة بدائل قبل اعتماد النموذج: واسم BiLSTM، ونموذج ONNX أكبر وجاهز للاستخدام لاكتشاف المعلومات الشخصية، وTinyBERT-6. كما نشرت معايير رفض كل منها.',
+            'اختبرت المقياس الرئيسي بدلًا من الوثوق به: مع تثبيت عنوان البريد والجملة وتغيير النطاق فقط، اكتشف النموذج مزودي البريد الشائعين لكنه أخفق مع النطاقات المحجوزة وغير الشائعة، ما يبيّن أن جزءًا من نتيجة EMAIL البالغة 0.99 ناتج عن الحفظ.',
+            'نشرت التقييم الكامل في مستودع عام، ويشمل دفترًا يتضمن المخرجات المحفوظة في المستودع، ومقاييس لكل نوع، وخطوط الأساس، والقيود.',
           ],
-          tags: ['TinyBERT-4', 'تصنيف الرموز', 'الخصوصية', 'تكميم INT8', 'Edge AI', 'Raspberry Pi 5'],
-          links: [{ label: 'زيارة OnKith', href: links.onKith }],
+          tags: [
+            'TinyBERT',
+            'تصنيف الرموز',
+            'الخصوصية',
+            'ONNX Runtime',
+            'تكميم INT8',
+            'تقييم النماذج',
+            'الذكاء الاصطناعي الطرفي',
+            'Raspberry Pi 5',
+          ],
+          links: [
+            { label: 'زيارة OnKith', href: links.onKith },
+            { label: 'عرض مستودع التقييم', href: links.onKithPublic },
+            { label: 'OnKith على LinkedIn', href: links.onKithLinkedIn },
+          ],
         },
         {
           id: 'project-esas',
@@ -857,19 +939,73 @@ export const localizedContent: Record<Language, DashboardContent> = {
         },
         {
           name: 'مسابقة أكاديمية كاوست لترميم الصور',
-          status: 'المركز الثالث على مستوى المسابقة | FID 12',
+          status: 'المركز الثالث إجمالًا | درجة FID الرسمية: 12',
           description:
-            'حققت المركز الثالث على مستوى مسابقة أكاديمية كاوست لترميم الصور بدرجة FID بلغت 12.',
+            'نظام متكامل لترميم الصور لمسابقة Kaggle تابعة لأكاديمية كاوست. لم تتضمن مجموعة الاختبار ملفات أقنعة، لذلك كان لا بد من استعادة المستطيلات المفقودة من وحدات البكسل قبل تشغيل أي نموذج، مما جعل استعادة الأقنعة، واختيار البيانات، وترميم الصور، وترميز ملف التسليم جميعها أجزاءً من الحل.',
           points: [
-            'حققت المركز الثالث على مستوى المسابقة.',
-            'حققت درجة FID مقدارها 12.',
-            'وثقت منهجية الضبط الدقيق لنموذج MI-GAN في دفتر Kaggle عام.',
+            'المركز الثالث إجمالًا بدرجة FID رسمية قدرها 12 عبر 8,000 صورة اختبار أُعيد بناؤها.',
+            'بنيت كاشف مستطيلات حتميًا يقيّم المناطق المرشحة بناءً على تباين الحواف، وثبات العتبة، والهندسة بدلًا من تطبيق عتبة على وحدات البكسل السوداء. حُددت أقنعة 8,000/8,000 صورة، وصُنفت 533 حالة على أنها غير مؤكدة، بوسيط 19 ms لكل صورة.',
+            'ضبطت مولد MI-GAN 256 مدربًا مسبقًا لثلاث حقب على 4,405 صورة وجه مرشحة باستخدام YuNet، مع دوال خسارة للمنطقة المفقودة، والمنطقة المرئية، والحدود، والإدراك LPIPS.',
+            'اشترطت لاختيار النموذج صلاحية المخرجات، والحفاظ المطابق على مستوى البايت لوحدات البكسل المرئية، وخطأ إعادة البناء، وتنوع المخرجات، وسرعة الاستدلال، مع الرجوع تلقائيًا إلى نقطة التحقق المدربة مسبقًا إذا أخفق أي شرط.',
+            'بنيت ورفضت أربعة بدائل: كاشفًا إرشاديًا معاد كتابته، وكاشفين متعلمين، ومسار انتشار. ولم يستوفِ أي منها معايير الاعتماد.',
           ],
-          tags: ['الرؤية الحاسوبية', 'ترميم الصور', 'MI-GAN', 'PyTorch', 'مسابقة'],
-          links: [{
-            label: 'عرض دفتر المسابقة',
-            href: links.kaggleInpainting,
-          }],
+          tags: [
+            'الرؤية الحاسوبية',
+            'ترميم الصور',
+            'MI-GAN',
+            'PyTorch',
+            'الضبط الدقيق لنماذج GAN',
+            'Clean-FID',
+            'مسابقة',
+          ],
+          links: [
+            { label: 'عرض المستودع', href: links.kaggleInpaintingRepository },
+            { label: 'عرض دفتر Kaggle', href: links.kaggleInpainting },
+          ],
+        },
+        {
+          name: 'التعلم المعزز العميق: وكيل Flappy Bird',
+          status: 'مشروع شخصي | أسابيع التعلم المعزز في أكاديمية كاوست',
+          description:
+            'نموذج Dueling Double DQN مزود بـ Prioritized Experience Replay يتعلم لعبة Flappy Bird من متجه حالة مكوّن من 12 ميزة. دُرّب بالكامل على CPU على مرحلتين، مع بروتوكول تقييم مصمم بحيث لا يمكن لحلقة واحدة محظوظة أن تحسم النتيجة.',
+          points: [
+            'نفذت Dueling Double DQN مع Prioritized Experience Replay بإجمالي 89,347 معاملًا، ودربته على CPU. كان عنق الزجاجة هو معدل محاكاة البيئة، لا حساب التدرجات.',
+            'شخّصت عدم الاستقرار في جولة التدريب الأولى من سجل تقييمها نفسه، إذ انخفض متوسط النقاط من 861 إلى 396 بين نقطتي تحقق متتاليتين.',
+            'أعدت بناء إجراء التدريب: استبدلت إعادة المزامنة الصلبة للشبكة الهدف بمتوسط Polyak، ومواءمت اضمحلال الاستكشاف مع ميزانية التدريب بدلًا من عدد خطوات ثابت.',
+            'صممت قاعدة لاختيار نقاط التحقق ترتب النتائج حسب أسوأ نتيجة عبر البذور قبل المتوسط، مع اختبار محتجز يُجرى مرة واحدة على بذور غير مرئية لم تُستخدم قط في الاختيار.',
+            'أفضل حلقة منفردة: 5,120 أنبوبًا. متوسط الاختبار المحتجز على خمس بذور غير مرئية: 400. أورد النتيجتين معًا لأن القمة ليست المتوسط.',
+          ],
+          tags: [
+            'التعلم المعزز',
+            'شبكات Q العميقة',
+            'PyTorch',
+            'Gymnasium',
+            'التدريب على CPU',
+            'تصميم التقييم',
+          ],
+          links: [{ label: 'عرض المستودع', href: links.flappyBird }],
+        },
+        {
+          name: 'التعرف على الإيماءات باستخدام IMU على XIAO: TinyML',
+          status: 'المدرسة الصيفية لأكاديمية كاوست، الأسبوع الأول | مشروع مقرر',
+          description:
+            'مسار TinyML متكامل يعمل على Seeed XIAO nRF52840 Sense: يلتقط نوافذ إيماءات معنونة من وحدة IMU عبر المنفذ التسلسلي، ويدرب شبكة CNN أحادية الأبعاد صغيرة، ويحولها إلى TensorFlow Lite، ثم يشغل الاستدلال مباشرة على المتحكم الدقيق من دون هاتف أو حاسوب محمول في الحلقة.',
+          points: [
+            'بنيت مخططين للالتقاط: أحدهما يُفعّل بالحركة للإيماءات النشطة، والآخر مستمر لفئة الخمول التي لا يمكن لأي عتبة تسجيلها.',
+            'دربت شبكة CNN أحادية الأبعاد على نوافذ من 119 عينة وستة محاور بتردد يقارب 100 Hz، مع تقسيم محتجز طبقي وأوزان فئات متوازنة.',
+            'نشرت النموذج عبر TensorFlow Lite Micro ضمن مساحة tensor arena بسعة 48 KB، مع إبقاء التطبيع متطابقًا على مستوى البايت بين التدريب والبرمجيات الثابتة. فالاختلاف هنا هو أكثر حالات الفشل الصامت شيوعًا في هذا النوع من المشاريع.',
+            'أضفت حدًا للثقة وحالةً لآخر إيماءة غير خاملة كي يبقى النموذج الصغير قابلًا للاستخدام عندما تمتد الإيماءة عبر نافذتين.',
+          ],
+          tags: [
+            'TinyML',
+            'الذكاء الاصطناعي الطرفي',
+            'TensorFlow Lite Micro',
+            'Embedded C++',
+            'شبكة CNN أحادية الأبعاد',
+            'XIAO nRF52840',
+            'BLE',
+          ],
+          links: [{ label: 'عرض المستودع', href: links.edgeAiProject }],
         },
         {
           name: 'Personal Dashboard',

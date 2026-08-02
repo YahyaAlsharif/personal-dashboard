@@ -27,7 +27,7 @@ export function ProjectsSection() {
               className="flex scroll-mt-40 flex-col xl:scroll-mt-28"
               revealDelay={index * 90}
             >
-              <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+              <div className="flex w-full max-w-4xl self-center flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
                 <div className="min-w-0">
                   <div className="flex flex-wrap gap-2">
                     <span
@@ -53,7 +53,7 @@ export function ProjectsSection() {
                 </div>
               </div>
               <p
-                className="prose-justify mt-4 text-sm leading-6 text-[var(--color-muted)]"
+                className="prose-justify mt-4 w-full max-w-4xl self-center text-sm leading-6 text-[var(--color-muted)]"
               >
                 {project.description}
               </p>
@@ -70,7 +70,7 @@ export function ProjectsSection() {
                 </figure>
               ) : null}
               <ul
-                className="mt-5 space-y-3 text-sm leading-6 text-[var(--color-muted)]"
+                className="mt-5 w-full max-w-4xl self-center space-y-3 text-sm leading-6 text-[var(--color-muted)]"
               >
                 {project.points.map((point) => (
                   <li key={point} className="flex gap-3">
@@ -82,7 +82,7 @@ export function ProjectsSection() {
                   </li>
                 ))}
               </ul>
-              <div className="mt-auto flex flex-wrap gap-2 pt-6">
+              <div className="mt-auto flex w-full max-w-4xl self-center flex-wrap gap-2 pt-6">
                 {project.tags.map((tag) => (
                   <span
                     key={tag}
@@ -94,7 +94,7 @@ export function ProjectsSection() {
                 ))}
               </div>
               {project.links?.length ? (
-                <div className="flex flex-wrap gap-3 pt-5">
+                <div className="flex w-full max-w-4xl self-center flex-wrap gap-3 pt-5">
                   {project.links.map((link) => (
                     <ExternalLink
                       key={link.href}

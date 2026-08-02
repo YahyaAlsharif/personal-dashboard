@@ -77,7 +77,7 @@ as Cloudflare Pages, Netlify, or Vercel.
 
 ## License
 
-Released under the [MIT License](LICENSE) — you're free to use, modify, and
+Released under the [MIT License](LICENSE). You are free to use, modify, and
 distribute this code, including commercially, provided the copyright notice and
 licence text are retained. The code is provided as is, without warranty of any
 kind.
