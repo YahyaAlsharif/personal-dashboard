@@ -163,11 +163,18 @@ const links = {
   onKithLinkedIn: 'https://www.linkedin.com/company/onkith/',
   onKithPublic: 'https://github.com/YahyaAlsharif/OnKith_Public',
   email: 'yahya.alsharif567@gmail.com',
+  kaggleCellSegmentationRepository:
+    'https://github.com/YahyaAlsharif/kaust-cell-instance-segmentation',
+  kaggleCellSegmentation:
+    'https://www.kaggle.com/code/ghostylicious/3rd-place-object-centric-convnext-unet-distance',
   kaggleInpaintingRepository: 'https://github.com/YahyaAlsharif/Kaggle_inpainting_comp',
   kaggleInpainting: 'https://www.kaggle.com/code/ghostylicious/mi-gan-inpainting-comp-03',
+  postLatest: 'https://www.linkedin.com/feed/update/urn:li:ugcPost:7491964300434030592',
   postSummerSchool: 'https://www.linkedin.com/feed/update/urn:li:share:7479585722992226305',
   postEsas: 'https://www.linkedin.com/feed/update/urn:li:ugcPost:7470469804227932160',
   postKaust: 'https://www.linkedin.com/feed/update/urn:li:ugcPost:7439279422131589120',
+  embedLatest:
+    'https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7491964300434030592?collapsed=1',
   embedSummerSchool:
     'https://www.linkedin.com/embed/feed/update/urn:li:share:7479585722992226305?collapsed=1',
   embedEsas:
@@ -204,7 +211,7 @@ export const localizedContent: Record<Language, DashboardContent> = {
     hero: {
       title: "Hi, I'm Yahya Alsharif.",
       proof:
-        'Software Engineering student at Umm Al-Qura University and a KAUST Academy AI intern, selected among the top 100 of more than 14,000 applicants.',
+        'Software Engineering student at Umm Al-Qura University who completed a KAUST Academy AI internship after being selected among the top 100 of more than 14,000 applicants.',
       intro:
         'I take AI models end to end, from data and label design through training and evaluation to quantisation and measured deployment on the hardware they will actually run on.',
       profileAlt: 'Yahya Alsharif',
@@ -283,14 +290,13 @@ export const localizedContent: Record<Language, DashboardContent> = {
           organization: 'KAUST Academy',
           period: 'Jun 2026 to Aug 2026',
           location: 'King Khalid University, Abha',
-          focus: 'Model owner on OnKith, on-device privacy filtering for a voice assistant',
+          focus: 'Model-side developer during an eight-week AI Specialisation internship',
           points: [
-            'Owned the privacy model for the full eight weeks: dataset and label design, training, evaluation, optimisation and deployment packaging.',
-            'Shipped a TinyBERT masker, then replaced it with DeBERTa-v3-xsmall once evaluation exposed rare-label weakness. Out-of-distribution typed F1 rose from 0.46 to 0.62 and private-character recall from 0.32 to 0.84.',
-            'Benchmarked the INT8 production model on the target Raspberry Pi 5: 0.945 typed F1 at 53 ms median latency, and 98.4% prediction agreement with the workstation build.',
-            'Traced an apparent quantisation collapse to a decoding defect in the production path and covered the fix with regression tests.',
+            "Owned dataset selection, label design, training, evaluation, optimisation and deployment packaging for the team's privacy model.",
+            'Trained through lectures, hands-on labs and project work across computer vision and generative models, reinforcement learning, and NLP with transformers, LLM fine-tuning, speech, agents and RAG.',
+            'Applied inference optimisation and Edge AI material to a team project mentored by KAUST faculty and researchers.',
           ],
-          tags: ['Token classification', 'DeBERTa', 'ONNX Runtime', 'INT8', 'Raspberry Pi 5'],
+          tags: ['Computer vision', 'Generative models', 'Reinforcement learning', 'NLP', 'Edge AI'],
           links: [{ label: 'Read the full project', href: '#project-onkith' }],
         },
         {
@@ -305,8 +311,18 @@ export const localizedContent: Record<Language, DashboardContent> = {
           ],
           tags: ['Computer vision', 'Instance segmentation', 'MI-GAN', 'PyTorch'],
           links: [
+            {
+              label: 'Cell segmentation repository',
+              href: links.kaggleCellSegmentationRepository,
+              external: true,
+            },
+            {
+              label: 'Cell segmentation Kaggle notebook',
+              href: links.kaggleCellSegmentation,
+              external: true,
+            },
             { label: 'Inpainting repository', href: links.kaggleInpaintingRepository, external: true },
-            { label: 'Kaggle notebook', href: links.kaggleInpainting, external: true },
+            { label: 'Inpainting Kaggle notebook', href: links.kaggleInpainting, external: true },
           ],
         },
       ],
@@ -319,17 +335,17 @@ export const localizedContent: Record<Language, DashboardContent> = {
         {
           id: 'project-onkith',
           name: 'OnKith: Privacy-Aware Edge AI',
-          status: 'KAUST Academy capstone | Model evaluation published',
+          status: 'KAUST Academy team project | Model evaluation published',
           featured: true,
           description:
-            'OnKith is a privacy-first voice assistant that transcribes speech and strips personally identifiable information entirely on-device. I owned the PII detection model: base model selection, data and label design, training, evaluation and INT8 quantisation for a Raspberry Pi 5 target.',
+            'OnKith is a KAUST Academy team project building a privacy-first voice assistant that transcribes speech and strips personally identifiable information entirely on-device. I owned the PII detection model from the first baseline through production evaluation on Raspberry Pi 5.',
           points: [
-            'Fine-tuned TinyBERT-4 for BIO token classification over 33 entity types, reaching 0.957 entity-level F1 on a 40,908-row held-out split never used for training or model selection, then cut the artefact from 54.5 MB to 13.7 MB with INT8 ONNX for 0.3 points of token F1.',
-            'Probed the headline metric rather than trusting it: holding the address and sentence fixed and varying only the domain showed the model recognising common mail providers and missing uncommon ones, so part of a 0.99 EMAIL score was memorisation.',
-            'Rebuilt the model on DeBERTa-v3-xsmall over a 31-entity ontology after the evaluation exposed dataset imbalance, raising out-of-distribution typed F1 from 0.46 to 0.62 and private-character recall from 0.32 to 0.84.',
-            'Benchmarked the whole pipeline on the target device, including an end-to-end audio benchmark that attributes each failure to the stage that caused it, and published the evaluation as a public repository with committed notebook outputs and limitations.',
+            'Moved the privacy component from binary classification to token-level masking, built a BiLSTM tagger baseline, then prepared aligned BIO spans over 147,366 OpenPII rows and fine-tuned TinyBERT-4 to 0.973 token-level micro-F1 and 0.957 entity-level F1 on a 40,908-row held-out split.',
+            'Probed generalisation by varying email domains, traced weaknesses to dataset imbalance and rare-label failure, and redesigned the Model V2 data and evaluation strategy around a maintained 31-entity privacy ontology.',
+            'Retrained Model V2 on DeBERTa-v3-xsmall and exported FP32 and INT8 ONNX artefacts, raising out-of-distribution typed F1 from 0.46 to 0.62 and private-character recall from 0.32 to 0.84.',
+            'Diagnosed an apparent INT8 collapse as a SentencePiece token-grouping defect in the production decoder, fixed it under regression tests, and benchmarked the final Raspberry Pi 5 system at 0.945 typed F1 and 53 ms median latency with 98.4% workstation agreement.',
           ],
-          tags: ['Privacy', 'Token classification', 'ONNX Runtime', 'INT8', 'Edge AI'],
+          tags: ['Privacy', 'BiLSTM', 'TinyBERT', 'DeBERTa', 'ONNX Runtime', 'INT8', 'Raspberry Pi 5'],
           links: [
             { label: 'Visit OnKith', href: links.onKith, external: true },
             { label: 'Evaluation repository', href: links.onKithPublic, external: true },
@@ -416,15 +432,14 @@ export const localizedContent: Record<Language, DashboardContent> = {
         {
           title: 'Artificial Intelligence Specialisation',
           organization: 'KAUST Academy',
-          period: 'Nov 2025 to Aug 2026',
+          period: 'Nov 2025 to Jun 2026',
           status: 'Completed',
           logoSrc: kaustAcademyLogo,
           logoAlt: 'KAUST Academy logo',
           description:
-            'A competitive multi-stage specialisation, completed through to the final eight-week AI Summer Programme at King Khalid University.',
+            'A competitive multi-stage specialisation covering introductory and advanced artificial intelligence before qualification for the separate 2026 Summer Internship.',
           points: [
-            'Selected among the top 100 students from more than 14,000 applicants and advanced through every stage.',
-            'Three tracks across the summer programme: computer vision and generative models, reinforcement learning, and natural language processing.',
+            'Selected among the top 100 students from more than 14,000 applicants and passed every stage to qualify for the internship.',
           ],
         },
       ],
@@ -455,6 +470,13 @@ export const localizedContent: Record<Language, DashboardContent> = {
       nextButton: 'Next post',
       positionLabel: (current, total) => `Post ${current} of ${total}`,
       items: [
+        {
+          title: 'Latest LinkedIn post',
+          description: 'My latest professional update on LinkedIn.',
+          embedUrl: links.embedLatest,
+          postUrl: links.postLatest,
+          iframeTitle: 'Latest LinkedIn post by Yahya Alsharif',
+        },
         {
           title: 'KAUST Academy AI Summer School supporters and investors',
           description:
@@ -539,7 +561,7 @@ export const localizedContent: Record<Language, DashboardContent> = {
     hero: {
       title: 'مرحبًا، أنا يحيى الشريف.',
       proof:
-        'طالب هندسة برمجيات في جامعة أم القرى، ومتدرب في الذكاء الاصطناعي لدى أكاديمية كاوست، ضمن أفضل 100 من أكثر من 14,000 متقدم.',
+        'طالب هندسة برمجيات في جامعة أم القرى، وقد أكملت تدريبًا في الذكاء الاصطناعي لدى أكاديمية كاوست بعد اختياري ضمن أفضل 100 من أكثر من 14,000 متقدم.',
       intro:
         'أعمل على نماذج الذكاء الاصطناعي من البداية إلى النهاية: تصميم البيانات والتسميات، ثم التدريب والتقييم، وصولًا إلى الضغط والقياس الفعلي على الجهاز الذي ستعمل عليه.',
       profileAlt: 'يحيى الشريف',
@@ -618,14 +640,13 @@ export const localizedContent: Record<Language, DashboardContent> = {
           organization: 'أكاديمية كاوست',
           period: 'يونيو 2026 إلى أغسطس 2026',
           location: 'جامعة الملك خالد، أبها',
-          focus: 'مسؤول النموذج في OnKith، تصفية الخصوصية على الجهاز لمساعد صوتي',
+          focus: 'مطور من جانب النماذج خلال تدريب تخصصي في الذكاء الاصطناعي لمدة ثمانية أسابيع',
           points: [
-            'توليت نموذج الخصوصية طوال الأسابيع الثمانية: تصميم البيانات والتسميات، والتدريب، والتقييم، والتحسين، وتجهيز حزمة النشر.',
-            'أطلقت نموذج إخفاء قائمًا على TinyBERT، ثم استبدلته بـ DeBERTa-v3-xsmall بعد أن كشف التقييم ضعفًا في الفئات النادرة. ارتفع مقياس F1 خارج التوزيع من 0.46 إلى 0.62، واستدعاء المحارف الخاصة من 0.32 إلى 0.84.',
-            'قِست نموذج الإنتاج بصيغة INT8 على Raspberry Pi 5 المستهدف: 0.945 لمقياس F1 بوسيط زمن استجابة 53 ms، مع اتفاق في التنبؤات بنسبة 98.4% مع بيئة العمل.',
-            'تتبعت انهيارًا ظاهريًا نُسب إلى التكميم فتبين أنه خلل في فك الترميز داخل مسار الإنتاج، وغطيت الإصلاح باختبارات انحدار.',
+            'توليت اختيار البيانات وتصميم التسميات والتدريب والتقييم والتحسين وتجهيز حزمة النشر لنموذج الخصوصية الخاص بمشروع الفريق.',
+            'تدربت عبر محاضرات ومختبرات عملية ومشاريع في الرؤية الحاسوبية والنماذج التوليدية، والتعلم المعزز، ومعالجة اللغة الطبيعية باستخدام المحولات وضبط النماذج اللغوية والكلام والوكلاء وRAG.',
+            'طبقت تحسين الاستدلال والذكاء الاصطناعي الطرفي في مشروع جماعي بإشراف أعضاء هيئة تدريس وباحثين من كاوست.',
           ],
-          tags: ['تصنيف الرموز', 'DeBERTa', 'ONNX Runtime', 'INT8', 'Raspberry Pi 5'],
+          tags: ['الرؤية الحاسوبية', 'النماذج التوليدية', 'التعلم المعزز', 'معالجة اللغة الطبيعية', 'الذكاء الاصطناعي الطرفي'],
           links: [{ label: 'اقرأ تفاصيل المشروع', href: '#project-onkith' }],
         },
         {
@@ -640,8 +661,18 @@ export const localizedContent: Record<Language, DashboardContent> = {
           ],
           tags: ['الرؤية الحاسوبية', 'تجزئة الكائنات', 'MI-GAN', 'PyTorch'],
           links: [
-            { label: 'مستودع الترميم', href: links.kaggleInpaintingRepository, external: true },
-            { label: 'دفتر Kaggle', href: links.kaggleInpainting, external: true },
+            {
+              label: 'مستودع تجزئة الخلايا',
+              href: links.kaggleCellSegmentationRepository,
+              external: true,
+            },
+            {
+              label: 'دفتر Kaggle لتجزئة الخلايا',
+              href: links.kaggleCellSegmentation,
+              external: true,
+            },
+            { label: 'مستودع ترميم الصور', href: links.kaggleInpaintingRepository, external: true },
+            { label: 'دفتر Kaggle لترميم الصور', href: links.kaggleInpainting, external: true },
           ],
         },
       ],
@@ -654,17 +685,17 @@ export const localizedContent: Record<Language, DashboardContent> = {
         {
           id: 'project-onkith',
           name: 'OnKith: ذكاء اصطناعي طرفي يحفظ الخصوصية',
-          status: 'مشروع تخرج تدريب أكاديمية كاوست | تقييم النموذج منشور',
+          status: 'مشروع جماعي في أكاديمية كاوست | تقييم النموذج منشور',
           featured: true,
           description:
-            'OnKith مساعد صوتي يضع الخصوصية أولًا: يحوّل الكلام إلى نص ويزيل المعلومات التعريفية بالكامل على الجهاز. توليت نموذج كشف المعلومات الخاصة: اختيار النموذج الأساس، وتصميم البيانات والتسميات، والتدريب، والتقييم، والتكميم إلى INT8 لهدف Raspberry Pi 5.',
+            'OnKith مشروع جماعي في أكاديمية كاوست لبناء مساعد صوتي يضع الخصوصية أولًا، إذ يحول الكلام إلى نص ويزيل المعلومات التعريفية بالكامل على الجهاز. توليت نموذج كشف المعلومات الخاصة من أول نموذج أساس حتى تقييم الإنتاج على Raspberry Pi 5.',
           points: [
-            'ضبطت TinyBERT-4 لتصنيف الرموز بنظام BIO عبر 33 نوعًا من الكيانات، وبلغت 0.957 لمقياس F1 على مستوى الكيانات على تقسيم محتجز من 40,908 صفوف لم يُستخدم في التدريب أو الاختيار، ثم خفضت حجم الملف من 54.5 MB إلى 13.7 MB عبر ONNX بصيغة INT8 مقابل 0.3 نقطة فقط.',
-            'اختبرت المقياس الرئيسي بدل الاكتفاء به: بتثبيت العنوان والجملة وتغيير النطاق فقط، تبيّن أن النموذج يتعرف على مزودي البريد الشائعين ويخفق في النادر منها، أي أن جزءًا من درجة 0.99 للبريد الإلكتروني كان حفظًا.',
-            'أعدت بناء النموذج على DeBERTa-v3-xsmall عبر تصنيف من 31 كيانًا بعد أن كشف التقييم اختلالًا في البيانات، فارتفع مقياس F1 خارج التوزيع من 0.46 إلى 0.62 واستدعاء المحارف الخاصة من 0.32 إلى 0.84.',
-            'قِست المسار كاملًا على الجهاز المستهدف، بما في ذلك اختبار صوتي متكامل ينسب كل إخفاق إلى المرحلة المسببة له، ونشرت التقييم في مستودع عام يتضمن مخرجات الدفاتر وحدود النتائج.',
+            'نقلت مكون الخصوصية من التصنيف الثنائي إلى الإخفاء على مستوى الرموز، وبنيت نموذج BiLSTM أساسًا، ثم أعددت امتدادات BIO متحاذية على 147,366 صفًا من OpenPII وضبطت TinyBERT-4 ليبلغ 0.973 في F1 على مستوى الرموز و0.957 على مستوى الكيانات ضمن تقسيم محتجز من 40,908 صفوف.',
+            'اختبرت التعميم بتغيير نطاقات البريد الإلكتروني، وتتبعت مواطن الضعف إلى اختلال البيانات وإخفاق الفئات النادرة، ثم أعدت تصميم بيانات Model V2 واستراتيجية تقييمه حول تصنيف خصوصية مصان من 31 كيانًا.',
+            'أعدت تدريب Model V2 باستخدام DeBERTa-v3-xsmall وصدرت ملفات ONNX بصيغتي FP32 وINT8، فارتفع F1 المصنف خارج التوزيع من 0.46 إلى 0.62 واستدعاء المحارف الخاصة من 0.32 إلى 0.84.',
+            'شخصت انهيارًا ظاهريًا في INT8 بوصفه خللًا في تجميع رموز SentencePiece داخل مفكك ترميز الإنتاج، وأصلحته تحت اختبارات انحدار، ثم قست النظام النهائي على Raspberry Pi 5 عند 0.945 في F1 المصنف ووسيط زمن استجابة 53 ms مع اتفاق 98.4% مع بيئة العمل.',
           ],
-          tags: ['الخصوصية', 'تصنيف الرموز', 'ONNX Runtime', 'INT8', 'الذكاء الاصطناعي الطرفي'],
+          tags: ['الخصوصية', 'BiLSTM', 'TinyBERT', 'DeBERTa', 'ONNX Runtime', 'INT8', 'Raspberry Pi 5'],
           links: [
             { label: 'زيارة OnKith', href: links.onKith, external: true },
             { label: 'مستودع التقييم', href: links.onKithPublic, external: true },
@@ -753,15 +784,14 @@ export const localizedContent: Record<Language, DashboardContent> = {
         {
           title: 'تخصص الذكاء الاصطناعي',
           organization: 'أكاديمية كاوست',
-          period: 'نوفمبر 2025 إلى أغسطس 2026',
+          period: 'نوفمبر 2025 إلى يونيو 2026',
           status: 'مكتمل',
           logoSrc: kaustAcademyLogo,
           logoAlt: 'شعار أكاديمية كاوست',
           description:
-            'تخصص تنافسي متعدد المراحل، أكملته حتى البرنامج الصيفي النهائي للذكاء الاصطناعي لمدة ثمانية أسابيع في جامعة الملك خالد.',
+            'تخصص تنافسي متعدد المراحل غطى المستويين التمهيدي والمتقدم في الذكاء الاصطناعي قبل التأهل للتدريب الصيفي المنفصل لعام 2026.',
           points: [
-            'اختِرت ضمن أفضل 100 طالب من أكثر من 14,000 متقدم، وتقدمت عبر كل المراحل.',
-            'ثلاثة مسارات في البرنامج الصيفي: الرؤية الحاسوبية والنماذج التوليدية، والتعلم المعزز، ومعالجة اللغة الطبيعية.',
+            'اختِرت ضمن أفضل 100 طالب من أكثر من 14,000 متقدم، واجتزت كل مراحل التخصص للتأهل إلى التدريب.',
           ],
         },
       ],
@@ -792,6 +822,13 @@ export const localizedContent: Record<Language, DashboardContent> = {
       nextButton: 'المنشور التالي',
       positionLabel: (current, total) => `المنشور ${current} من ${total}`,
       items: [
+        {
+          title: 'أحدث منشور على LinkedIn',
+          description: 'أحدث تحديث مهني لي على LinkedIn.',
+          embedUrl: links.embedLatest,
+          postUrl: links.postLatest,
+          iframeTitle: 'أحدث منشور ليحيى الشريف على LinkedIn',
+        },
         {
           title: 'داعمو ومستثمرو المدرسة الصيفية للذكاء الاصطناعي في أكاديمية كاوست',
           description:

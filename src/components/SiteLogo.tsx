@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
 
 type SiteLogoProps = {
   label: string;
@@ -20,6 +20,10 @@ export function SiteLogo({ label }: SiteLogoProps) {
   const [ringLit, setRingLit] = useState(false);
   const [yLit, setYLit] = useState(false);
   const isPointerInsideRef = useRef(false);
+  const logoSrc = `${import.meta.env.BASE_URL}y-logo.svg`;
+  const logoMarkStyle = {
+    '--site-logo-mark-source': `url("${logoSrc}")`,
+  } as CSSProperties;
 
   useEffect(() => {
     if (!isEntering) {
@@ -85,8 +89,8 @@ export function SiteLogo({ label }: SiteLogoProps) {
       <svg viewBox="0 0 96 96" aria-hidden="true" focusable="false" className="site-logo-svg">
         <circle className="site-logo-ring-base" cx="48" cy="48" r="42" pathLength={1} />
         <circle className="site-logo-ring" cx="48" cy="48" r="42" pathLength={1} />
-        <path className="site-logo-y" d="M30 32 L48 52 L66 32 M48 52 L48 68" pathLength={1} />
       </svg>
+      <span className="site-logo-y" style={logoMarkStyle} aria-hidden="true" />
     </a>
   );
 }
