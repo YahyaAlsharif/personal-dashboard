@@ -8,8 +8,7 @@
       content="AI &amp; Software Development | Software Engineering Student. Yahya Alsharif builds practical AI and software projects with a focus on reliable, user-centered solutions."
     />
     <meta name="author" content="Yahya Alsharif" />
-    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#ffffff" />
     <link rel="icon" type="image/svg+xml" href="%BASE_URL%favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="%BASE_URL%favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="%BASE_URL%favicon-16x16.png" />
@@ -51,6 +50,16 @@
     <title>Yahya Alsharif | AI &amp; Software Development | Software Engineering Student</title>
   </head>
   <body>
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('theme');
+          document.documentElement.dataset.theme = saved === 'dark' ? 'dark' : 'light';
+        } catch (error) {
+          document.documentElement.dataset.theme = 'light';
+        }
+      })();
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

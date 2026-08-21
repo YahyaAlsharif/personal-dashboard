@@ -22,13 +22,9 @@ export function CvSection() {
 
   return (
     <>
-      <section id="cv" className="scroll-mt-36 py-14 xl:scroll-mt-24">
+      <section id="cv" className="scroll-mt-32 py-16 xl:scroll-mt-24">
         <div className="page-container">
-          <SectionHeading
-            eyebrow={cv.eyebrow}
-            title={cv.title}
-            description={cv.description}
-          />
+          <SectionHeading title={cv.title} lede={cv.cardText} />
 
           <DashboardCard
             as="div"
@@ -36,37 +32,33 @@ export function CvSection() {
             revealDelay={100}
           >
             <div>
-              <h3
-                className="text-xl font-semibold text-[var(--color-heading)]"
-              >
-                {cv.cardTitle}
-              </h3>
-              <p
-                className="mt-3 max-w-2xl text-base leading-7 text-[var(--color-muted)]"
-              >
-                {cv.cardText}
-              </p>
+              <p className="text-base leading-7 text-[var(--color-body)]">{cv.modalTitle}</p>
             </div>
             <div className="flex flex-wrap gap-3">
-              <ExternalLink
-                href={cv.href}
-                newTabLabel={externalLinkLabel}
-                className="action-button rounded-lg border px-5 py-3 text-sm font-semibold transition sm:hidden"
-              >
-                <span dir="auto" className="localized-inline">
-                  {cv.viewButton}
-                </span>
-              </ExternalLink>
-              <button
-                ref={viewCvButtonRef}
-                type="button"
-                onClick={() => setIsCvViewerOpen(true)}
-                className="action-button hidden rounded-lg border px-5 py-3 text-sm font-semibold transition sm:inline-flex"
-              >
-                <span dir="auto" className="localized-inline">
-                  {cv.viewButton}
-                </span>
-              </button>
+              {/* Small screens open the PDF directly; the in-page viewer needs room. */}
+              <span className="contents sm:hidden">
+                <ExternalLink
+                  href={cv.href}
+                  newTabLabel={externalLinkLabel}
+                  className="action-button rounded-lg border px-5 py-3 text-sm font-semibold transition"
+                >
+                  <span dir="auto" className="localized-inline">
+                    {cv.viewButton}
+                  </span>
+                </ExternalLink>
+              </span>
+              <span className="hidden sm:contents">
+                <button
+                  ref={viewCvButtonRef}
+                  type="button"
+                  onClick={() => setIsCvViewerOpen(true)}
+                  className="action-button rounded-lg border px-5 py-3 text-sm font-semibold transition"
+                >
+                  <span dir="auto" className="localized-inline">
+                    {cv.viewButton}
+                  </span>
+                </button>
+              </span>
               <a
                 href={cv.href}
                 download={cv.fileName}

@@ -22,13 +22,9 @@ export function PostsSection() {
   };
 
   return (
-    <section id="posts" className="scroll-mt-36 py-14 xl:scroll-mt-24">
+    <section id="posts" className="section-band scroll-mt-32 py-16 xl:scroll-mt-24">
       <div className="page-container">
-        <SectionHeading
-          eyebrow={posts.eyebrow}
-          title={posts.title}
-          description={posts.description}
-        />
+        <SectionHeading title={posts.title} />
 
         <div className="grid grid-cols-2 items-center gap-3 sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:gap-4">
           <DashboardCard

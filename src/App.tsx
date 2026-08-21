@@ -1,21 +1,24 @@
 import { useEffect, useRef, useState } from 'react';
 
 import { LanguageToggle } from './components/LanguageToggle';
+import { SiteLogo } from './components/SiteLogo';
 import { ThemeToggle } from './components/ThemeToggle';
 import { LanguageProvider } from './context/LanguageContext';
 import { useLanguage } from './context/useLanguage';
 import { localizedContent } from './data/content';
-import { AboutSection } from './sections/AboutSection';
 import { BackToTop } from './sections/BackToTop';
 import { ContactSection } from './sections/ContactSection';
 import { CvSection } from './sections/CvSection';
 import { EducationSection } from './sections/EducationSection';
-import { HeroSection } from './sections/HeroSection';
+import { ExperienceSection } from './sections/ExperienceSection';
+import { IntroSection } from './sections/IntroSection';
 import { PostsSection } from './sections/PostsSection';
 import { ProjectsSection } from './sections/ProjectsSection';
+import { SkillsSection } from './sections/SkillsSection';
 
 type Theme = 'light' | 'dark';
 
+/** Light is the default presentation; a saved choice always wins. */
 const getInitialTheme = (): Theme => {
   const savedTheme = localStorage.getItem('theme');
 
@@ -23,7 +26,7 @@ const getInitialTheme = (): Theme => {
     return savedTheme;
   }
 
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  return 'light';
 };
 
 function Dashboard() {
@@ -32,7 +35,6 @@ function Dashboard() {
   const menuToggleRef = useRef<HTMLButtonElement>(null);
   const { language, setLanguage } = useLanguage();
   const content = localizedContent[language];
-  const logoSrc = `${import.meta.env.BASE_URL}y-logo.svg`;
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
@@ -64,13 +66,7 @@ function Dashboard() {
       <header className="sticky top-0 z-20 border-b border-[var(--color-border)] bg-[var(--color-header)] backdrop-blur">
         <div className="page-container relative py-3">
           <div className="grid grid-cols-[auto_auto] items-center justify-between gap-3 sm:grid-cols-[auto_1fr_auto] xl:gap-5">
-            <a
-              href="#top"
-              aria-label={content.header.homeLabel}
-              className="site-logo-link focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
-            >
-              <img src={logoSrc} alt="" className="site-logo-image" />
-            </a>
+            <SiteLogo label={content.header.homeLabel} />
 
             <nav
               aria-label={content.header.navigationLabel}
@@ -162,10 +158,11 @@ function Dashboard() {
       </header>
 
       <main key={language} className="language-content">
-        <HeroSection />
-        <AboutSection />
-        <EducationSection />
+        <IntroSection />
+        <SkillsSection />
+        <ExperienceSection />
         <ProjectsSection />
+        <EducationSection />
         <CvSection />
         <PostsSection />
         <ContactSection />

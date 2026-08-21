@@ -1,4 +1,4 @@
-import { DashboardCard } from '../components/DashboardCard';
+import { Reveal } from '../components/Reveal';
 import { SectionHeading } from '../components/SectionHeading';
 import { useLanguage } from '../context/useLanguage';
 import { localizedContent } from '../data/content';
@@ -8,104 +8,70 @@ export function EducationSection() {
   const { education } = localizedContent[language];
 
   return (
-    <section id="education" className="scroll-mt-36 py-14 xl:scroll-mt-24">
+    <section id="education" className="scroll-mt-32 py-16 xl:scroll-mt-24">
       <div className="page-container">
-        <SectionHeading
-          eyebrow={education.eyebrow}
-          title={education.title}
-          description={education.description}
-        />
+        <SectionHeading title={education.title} />
 
-        <div className="flex w-full flex-col gap-5">
+        <div className="timeline">
           {education.items.map((item, index) => (
-            <DashboardCard key={item.title} revealDelay={index * 90}>
-              <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
-                <div className="flex min-w-0 flex-col gap-4 sm:flex-row sm:items-center">
-                  <div className="grid h-20 w-20 flex-none place-items-center rounded-lg border border-[var(--color-border)] bg-white p-2.5 shadow-sm shadow-black/5 sm:h-24 sm:w-24">
-                    <img
-                      src={item.logoSrc}
-                      alt={item.logoAlt}
-                      className="max-h-full max-w-full object-contain"
-                    />
-                  </div>
+            <Reveal as="article" key={item.title} delay={index * 90} className="timeline-item">
+              <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
+                <div className="flex min-w-0 items-center gap-4">
+                  <img
+                    src={item.logoSrc}
+                    alt={item.logoAlt}
+                    className="h-14 w-14 flex-none rounded-lg bg-white object-contain p-1.5 ring-1 ring-[var(--color-border)]"
+                  />
                   <div className="min-w-0">
-                    <h3
-                      className="text-xl font-semibold text-[var(--color-heading)]"
-                    >
+                    <h3 className="text-xl font-semibold text-[var(--color-heading)]">
                       {item.title}
                     </h3>
-                    <p
-                      className="mt-1 text-sm font-medium text-[var(--color-muted)]"
-                    >
-                      {item.organization}
-                    </p>
+                    <p className="mt-1 text-sm text-[var(--color-muted)]">{item.organization}</p>
                   </div>
                 </div>
-                <div className="flex flex-wrap gap-2 sm:justify-end">
-                  <span
-                    dir="auto"
-                    className="localized-inline rounded-md bg-[var(--color-chip)] px-3 py-1 text-xs font-semibold text-[var(--color-chip-text)]"
-                  >
+                <div className="text-sm text-[var(--color-muted)] sm:text-end">
+                  <p dir="auto" className="localized-inline">
                     {item.period}
-                  </span>
+                  </p>
                   {item.status ? (
-                    <span
-                      dir="auto"
-                      className="localized-inline rounded-md bg-[var(--color-accent-soft)] px-3 py-1 text-xs font-semibold text-[var(--color-accent-strong)]"
-                    >
+                    <p dir="auto" className="localized-inline font-medium text-[var(--color-body)]">
                       {item.status}
-                    </span>
+                    </p>
                   ) : null}
                 </div>
               </div>
-              <p
-                className="prose-justify mt-5 text-base leading-7 text-[var(--color-muted)]"
-              >
+
+              <p className="prose-justify mt-5 max-w-3xl text-base leading-7 text-[var(--color-muted)]">
                 {item.description}
               </p>
-              {item.details?.map((detail) => (
-                <p
-                  key={detail}
-                  className="prose-justify mt-4 text-base leading-7 text-[var(--color-muted)]"
-                >
-                  {detail}
-                </p>
-              ))}
-              <ul
-                className="mt-5 space-y-3 text-sm leading-6 text-[var(--color-muted)]"
-              >
+
+              <ul className="mt-4 max-w-3xl space-y-3 text-sm leading-7 text-[var(--color-muted)]">
                 {item.points.map((point) => (
                   <li key={point} className="flex gap-3">
                     <span
                       aria-hidden="true"
-                      className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-[var(--color-heading)]"
+                      className="mt-3 h-1 w-1 flex-none rounded-full bg-[var(--color-heading)]"
                     />
                     <span>{point}</span>
                   </li>
                 ))}
               </ul>
-            </DashboardCard>
+            </Reveal>
           ))}
         </div>
 
-        <DashboardCard as="div" className="mt-5" revealDelay={120}>
-          <h3
-            className="text-lg font-semibold text-[var(--color-heading)]"
-          >
+        <Reveal as="div" delay={120} className="mt-10 border-t border-[var(--color-border)] pt-7">
+          <h3 className="text-sm font-semibold uppercase tracking-[0.14em] text-[var(--color-muted)]">
             {education.certificatesTitle}
           </h3>
-          <div className="mt-4 flex flex-wrap gap-2">
+          <ul className="mt-4 grid gap-2 text-sm leading-6 text-[var(--color-muted)] sm:grid-cols-2">
             {education.certificates.map((certificate) => (
-              <span
-                key={certificate}
-                dir="auto"
-                className="localized-inline rounded-md bg-[var(--color-chip)] px-3 py-2 text-sm font-medium text-[var(--color-chip-text)]"
-              >
+              <li key={certificate} dir="auto" className="localized-inline">
                 {certificate}
-              </span>
+              </li>
             ))}
-          </div>
-        </DashboardCard>
+          </ul>
+        </Reveal>
       </div>
     </section>
   );

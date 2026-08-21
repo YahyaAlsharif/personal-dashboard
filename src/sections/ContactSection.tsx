@@ -9,13 +9,9 @@ export function ContactSection() {
   const { contact, externalLinkLabel } = localizedContent[language];
 
   return (
-    <section id="contact" className="scroll-mt-36 py-14 xl:scroll-mt-24">
+    <section id="contact" className="scroll-mt-32 py-16 xl:scroll-mt-24">
       <div className="page-container">
-        <SectionHeading
-          eyebrow={contact.eyebrow}
-          title={contact.title}
-          description={contact.description}
-        />
+        <SectionHeading title={contact.title} lede={contact.lede} />
 
         <div className="grid gap-5 md:grid-cols-3">
           {contact.options.map((option, index) => (

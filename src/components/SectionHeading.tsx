@@ -1,40 +1,26 @@
 import { Reveal } from './Reveal';
 
 type SectionHeadingProps = {
-  eyebrow?: string;
   title: string;
-  description?: string;
+  lede?: string;
 };
 
-export function SectionHeading({
-  eyebrow,
-  title,
-  description,
-}: SectionHeadingProps) {
+export function SectionHeading({ title, lede }: SectionHeadingProps) {
   return (
-    <div className="mb-8 me-auto max-w-6xl">
-      {eyebrow ? (
-        <Reveal
-          as="p"
-          className="text-sm font-semibold uppercase text-[var(--color-accent)]"
-        >
-          {eyebrow}
-        </Reveal>
-      ) : null}
+    <div className="section-heading">
       <Reveal
         as="h2"
-        delay={80}
-        className="mt-3 text-3xl font-semibold tracking-normal text-[var(--color-heading)] sm:text-4xl"
+        className="text-3xl font-semibold tracking-tight text-[var(--color-heading)] sm:text-4xl"
       >
         {title}
       </Reveal>
-      {description ? (
+      {lede ? (
         <Reveal
           as="p"
-          delay={140}
-          className="mt-4 text-base leading-7 text-[var(--color-muted)] sm:text-lg"
+          delay={90}
+          className="mt-3 max-w-2xl text-base leading-7 text-[var(--color-muted)]"
         >
-          {description}
+          {lede}
         </Reveal>
       ) : null}
     </div>

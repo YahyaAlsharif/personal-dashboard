@@ -16,8 +16,19 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# Local planning and content notes (kept out of the public repository)
+# Local planning and content notes, including the CV sources (kept out of the public repository)
 docs/
+
+# LaTeX / document build artefacts
+*.aux
+*.fdb_latexmk
+*.fls
+*.lof
+*.lot
+*.out
+*.synctex.gz
+*.toc
+*.log
 
 # Editor and OS files
 *.swp
