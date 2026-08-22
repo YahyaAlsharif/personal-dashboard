@@ -10,8 +10,8 @@ const shouldRenderHeroVideo = () =>
   !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /**
- * Hero and About share one grid so the portrait can travel with the copy
- * and come to rest where the About section ends.
+ * Hero and About share one grid. The portrait is a fixed part of the hero row:
+ * it does not follow the page or travel into About.
  */
 export function IntroSection() {
   const [renderVideo, setRenderVideo] = useState(shouldRenderHeroVideo);
@@ -74,9 +74,11 @@ export function IntroSection() {
           <Reveal
             as="p"
             delay={90}
-            className="mt-6 max-w-2xl text-lg leading-8 text-[var(--color-heading)] sm:text-xl"
+            className="intro-identity mt-6 max-w-2xl text-lg font-semibold leading-8 text-[var(--color-heading)] sm:text-xl"
           >
-            {hero.proof}
+            <span dir="auto" className="localized-inline">
+              {hero.proof}
+            </span>
           </Reveal>
           <Reveal
             as="p"
@@ -114,15 +116,23 @@ export function IntroSection() {
           </Reveal>
         </section>
 
-        <div className="intro-portrait">
-          <img
-            src={portraitSrc}
-            alt={hero.profileAlt}
-            width="880"
-            height="1111"
-            className="intro-portrait-image"
-          />
-        </div>
+        <Reveal as="div" delay={180} className="intro-portrait">
+          <figure className="profile-frame">
+            <img
+              src={portraitSrc}
+              alt={hero.profileAlt}
+              width="900"
+              height="1200"
+              className="profile-frame-image"
+            />
+            <figcaption className="profile-frame-caption">
+              <span className="profile-frame-name">{hero.profileName}</span>
+              <span dir="auto" className="localized-inline profile-frame-location">
+                {hero.profileLocation}
+              </span>
+            </figcaption>
+          </figure>
+        </Reveal>
 
         <section id="about" className="intro-about scroll-mt-32 xl:scroll-mt-24">
           <Reveal
@@ -131,7 +141,7 @@ export function IntroSection() {
           >
             {about.title}
           </Reveal>
-          <div className="mt-6 max-w-2xl space-y-5 text-base leading-8 text-[var(--color-muted)] sm:text-lg">
+          <div className="intro-about-columns mt-6">
             {about.paragraphs.map((paragraph, index) => (
               <Reveal as="p" key={paragraph} delay={index * 90} className="prose-justify">
                 {paragraph}

@@ -1,4 +1,5 @@
 import { ExternalLink } from '../components/ExternalLink';
+import { ProjectFigurePanel } from '../components/ProjectFigurePanel';
 import { Reveal } from '../components/Reveal';
 import { SectionHeading } from '../components/SectionHeading';
 import { useLanguage } from '../context/useLanguage';
@@ -44,6 +45,12 @@ export function ExperienceSection() {
                   </li>
                 ))}
               </ul>
+
+              {item.evidence ? (
+                <div className="experience-evidence">
+                  <ProjectFigurePanel figure={item.evidence} />
+                </div>
+              ) : null}
 
               <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2">
                 <p className="text-xs text-[var(--color-muted)]">{item.tags.join(' · ')}</p>

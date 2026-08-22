@@ -5,7 +5,8 @@ Add-Type -AssemblyName System.Drawing
 
 $scriptDirectory = Split-Path -Parent $MyInvocation.MyCommand.Path
 $projectRoot = Resolve-Path (Join-Path $scriptDirectory '..')
-$profileImagePath = Join-Path $projectRoot 'src\assets\profile\profile-picture-optimized.jpg'
+# System.Drawing cannot decode WebP, so the card is built from a JPEG copy of the same photo.
+$profileImagePath = Join-Path $projectRoot 'src\assets\profile\portrait-social-source.jpg'
 $outputPath = Join-Path $projectRoot 'public\social-preview.png'
 $outputTempPath = Join-Path (Split-Path -Parent $outputPath) 'social-preview.tmp.png'
 

@@ -36,10 +36,11 @@
   );
   --intro-veil: linear-gradient(
       180deg,
-      rgb(255 255 255 / 0.7) 0%,
-      rgb(255 255 255 / 0.86) 45%,
+      rgb(255 255 255 / 0.58) 0%,
+      rgb(255 255 255 / 0.8) 45%,
       rgb(255 255 255 / 1) 100%
     );
+  --evidence-plate: #ffffff;
   font-family:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
@@ -85,10 +86,11 @@
   );
   --intro-veil: linear-gradient(
     180deg,
-    rgb(0 0 0 / 0.62) 0%,
-    rgb(0 0 0 / 0.84) 45%,
+    rgb(0 0 0 / 0.52) 0%,
+    rgb(0 0 0 / 0.76) 45%,
     rgb(0 0 0 / 1) 100%
   );
+  --evidence-plate: #f4f4f2;
 }
 
 * {
@@ -245,7 +247,7 @@ a {
   height: 100%;
   width: 100%;
   object-fit: cover;
-  opacity: 0.38;
+  opacity: 0.48;
 }
 
 .intro-backdrop-veil {
@@ -274,15 +276,59 @@ a {
 .intro-portrait::before {
   content: '';
   position: absolute;
-  inset: -8% -6% 4%;
+  /* No horizontal spill: a negative inline inset scrolls the page sideways
+     on tablet widths. */
+  inset: -8% 0 4%;
   background: var(--portrait-halo);
   z-index: -1;
 }
 
-.intro-portrait-image {
-  width: min(100%, 22rem);
-  height: auto;
-  object-fit: contain;
+/* Framed portrait: a deliberate plate, not a generic card. */
+.profile-frame {
+  margin: 0;
+  width: min(100%, 20rem);
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+  background: var(--color-card-strong);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.profile-frame-image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: 50% 12%;
+  background: #ffffff;
+}
+
+.profile-frame-caption {
+  display: grid;
+  gap: 0.3rem;
+  border-block-start: 1px solid var(--color-border);
+  padding: 1rem 1.25rem 1.15rem;
+  text-align: center;
+}
+
+.profile-frame-name {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-heading);
+}
+
+.profile-frame-location {
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--color-muted);
+}
+
+.intro-about-columns {
+  display: grid;
+  gap: 1.25rem;
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--color-muted);
 }
 
 @media (min-width: 1024px) {
@@ -291,48 +337,55 @@ a {
   }
 
   .intro-grid {
-    grid-template-columns: minmax(0, 1fr) minmax(16rem, 22rem);
+    grid-template-columns: minmax(0, 1fr) minmax(18rem, 25rem);
     column-gap: 3.5rem;
-    row-gap: 4.5rem;
+    row-gap: 4rem;
     align-items: start;
   }
 
   .intro-hero {
     grid-column: 1;
     grid-row: 1;
-    padding-block-start: 2rem;
+    align-self: center;
+    padding-block-start: 0;
   }
 
+  /* About spans the full width once the portrait no longer travels with it. */
   .intro-about {
-    grid-column: 1;
+    grid-column: 1 / -1;
     grid-row: 2;
+  }
+
+  .intro-about-columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 3.5rem;
+    row-gap: 1.25rem;
+    font-size: 1.0625rem;
   }
 
   .intro-portrait {
     grid-column: 2;
-    grid-row: 1 / span 2;
-    position: sticky;
-    top: 5.75rem;
+    grid-row: 1;
     align-self: start;
+    justify-content: flex-end;
   }
 
-  .intro-portrait-image {
+  .profile-frame {
     width: 100%;
-    max-height: 32rem;
   }
 
   /* Keep the portrait on the same visual side in Arabic. */
   [dir='rtl'] .intro-grid {
-    grid-template-columns: minmax(16rem, 22rem) minmax(0, 1fr);
+    grid-template-columns: minmax(18rem, 25rem) minmax(0, 1fr);
   }
 
-  [dir='rtl'] .intro-hero,
-  [dir='rtl'] .intro-about {
+  [dir='rtl'] .intro-hero {
     grid-column: 2;
   }
 
   [dir='rtl'] .intro-portrait {
     grid-column: 1;
+    justify-content: flex-start;
   }
 }
 
@@ -351,6 +404,7 @@ a {
 
 .timeline {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 3rem;
   max-width: 62rem;
 }
@@ -362,27 +416,127 @@ a {
 
 .project-list {
   display: grid;
-  gap: 3.25rem;
-}
-
-.project-list > .project-block {
-  max-width: 62rem;
-}
-
-.project-list--split > .project-block {
-  max-width: none;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2rem;
 }
 
 .project-list--split {
-  margin-block-start: 3rem;
-  padding-block-start: 3rem;
-  border-block-start: 1px solid var(--color-border);
+  margin-block-start: 2rem;
+}
+
+/* Restored project container. */
+.project-card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+  background: var(--color-card);
+  box-shadow: var(--shadow-card);
+  padding: 1.5rem;
+}
+
+.project-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.project-card-description {
+  margin-block-start: 1.25rem;
+  max-width: 60ch;
+}
+
+.project-card-points {
+  display: grid;
+  gap: 0.75rem;
+  margin-block-start: 1.25rem;
+}
+
+.project-card-meta {
+  margin-block-start: auto;
+  padding-block-start: 1.75rem;
+}
+
+.project-brand-mark {
+  height: 2.5rem;
+  width: 2.5rem;
+  flex: none;
+}
+
+.evidence-figure {
+  margin-block-start: 1.75rem;
+  margin-inline: 0;
+  margin-block-end: 0;
+  /* Flex/grid children default to min-width:auto, which would let a wide
+     figure widen the card and scroll the whole page sideways. */
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* Repo figures ship with their own light background; the plate keeps them
+   readable in dark mode without recolouring the evidence. */
+.evidence-plate {
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+  background: var(--evidence-plate);
+  padding: 0.5rem;
+  /* Wide figures pan inside their own container rather than shrinking into
+     illegibility or pushing the page sideways. */
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+.evidence-image {
+  display: block;
+  height: auto;
+  width: 100%;
+  min-width: 32rem;
+  border-radius: 0.375rem;
+}
+
+@media (min-width: 640px) {
+  .evidence-image {
+    min-width: 0;
+  }
+}
+
+.evidence-caption {
+  margin-block-start: 0.75rem;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--color-muted);
+}
+
+.experience-evidence {
+  margin-block-start: 1.75rem;
+  min-width: 0;
+  max-width: 100%;
+}
+
+@media (min-width: 640px) {
+  .project-card {
+    padding: 2rem;
+  }
 }
 
 @media (min-width: 1024px) {
+  /* Two prose columns above a full-width figure: the width is used without
+     stretching any single line of text. */
+  .project-card--wide .project-card-points {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 3rem;
+    align-content: start;
+  }
+
   .project-list--split {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: 3.5rem;
+    column-gap: 2rem;
+  }
+
+  .project-card {
+    padding: 2.25rem;
   }
 }
 
@@ -520,10 +674,6 @@ a {
   .site-logo.is-entering .site-logo-ring,
   .site-logo.is-entering .site-logo-y {
     animation: none;
-  }
-
-  .intro-portrait {
-    position: static;
   }
 }
 

@@ -25,6 +25,12 @@ export type EducationItem = {
   points: string[];
 };
 
+export type ProjectFigure = {
+  src: string;
+  alt: string;
+  caption: string;
+};
+
 export type ExperienceItem = {
   role: string;
   organization: string;
@@ -33,6 +39,7 @@ export type ExperienceItem = {
   focus?: string;
   points: string[];
   tags: string[];
+  evidence?: ProjectFigure;
   links?: LocalizedLink[];
 };
 
@@ -45,10 +52,11 @@ export type Project = {
   description: string;
   points: string[];
   tags: string[];
-  image?: {
+  brandMark?: {
     src: string;
     alt: string;
   };
+  figure?: ProjectFigure;
   links?: LocalizedLink[];
 };
 
@@ -89,6 +97,8 @@ export type DashboardContent = {
     title: string;
     proof: string;
     intro: string;
+    profileName: string;
+    profileLocation: string;
     profileAlt: string;
     links: LocalizedLink[];
   };
@@ -149,6 +159,10 @@ const cvFileName = 'yahya_alsharif_cv.pdf';
 const cvHref = `${import.meta.env.BASE_URL}cv/${cvFileName}`;
 const esasHomeHref = `${import.meta.env.BASE_URL}projects/esas-home.webp`;
 const esasSrsHref = `${import.meta.env.BASE_URL}projects/esas-srs.pdf`;
+const onKithLogoHref = `${import.meta.env.BASE_URL}projects/onkith-logo.svg`;
+const onKithChartHref = `${import.meta.env.BASE_URL}projects/onkith-quantisation.webp`;
+const flappyChartHref = `${import.meta.env.BASE_URL}projects/flappy-evaluation.webp`;
+const cellLeaderboardHref = `${import.meta.env.BASE_URL}projects/cell-segmentation-leaderboard.webp`;
 
 export const portraitSrc = portrait;
 
@@ -211,9 +225,11 @@ export const localizedContent: Record<Language, DashboardContent> = {
     hero: {
       title: "Hi, I'm Yahya Alsharif.",
       proof:
-        'Software Engineering student at Umm Al-Qura University who completed a KAUST Academy AI internship after being selected among the top 100 of more than 14,000 applicants.',
+        'Software Engineering Student | KAUST Academy AI Intern | Top 100 of 14,000+ Applicants',
       intro:
         'I take AI models end to end, from data and label design through training and evaluation to quantisation and measured deployment on the hardware they will actually run on.',
+      profileName: 'Yahya Alsharif',
+      profileLocation: 'Makkah Region, Saudi Arabia',
       profileAlt: 'Yahya Alsharif',
       links: [
         { label: 'View CV', href: '#cv' },
@@ -310,6 +326,11 @@ export const localizedContent: Record<Language, DashboardContent> = {
             'Image inpainting, third place. No test masks were supplied, so mask recovery, data selection and inpainting all had to work together: FID 12.02 across 8,000 reconstructed images.',
           ],
           tags: ['Computer vision', 'Instance segmentation', 'MI-GAN', 'PyTorch'],
+          evidence: {
+            src: cellLeaderboardHref,
+            alt: 'Final private Kaggle leaderboard for the cell instance segmentation challenge, with the KAUST Makkah team third at 0.5472',
+            caption: 'Cell instance segmentation, final private leaderboard: third of 24 teams at 0.5472.',
+          },
           links: [
             {
               label: 'Cell segmentation repository',
@@ -343,9 +364,19 @@ export const localizedContent: Record<Language, DashboardContent> = {
             'Moved the privacy component from binary classification to token-level masking, built a BiLSTM tagger baseline, then prepared aligned BIO spans over 147,366 OpenPII rows and fine-tuned TinyBERT-4 to 0.973 token-level micro-F1 and 0.957 entity-level F1 on a 40,908-row held-out split.',
             'Probed generalisation by varying email domains, traced weaknesses to dataset imbalance and rare-label failure, and redesigned the Model V2 data and evaluation strategy around a maintained 31-entity privacy ontology.',
             'Retrained Model V2 on DeBERTa-v3-xsmall and exported FP32 and INT8 ONNX artefacts, raising out-of-distribution typed F1 from 0.46 to 0.62 and private-character recall from 0.32 to 0.84.',
-            'Diagnosed an apparent INT8 collapse as a SentencePiece token-grouping defect in the production decoder, fixed it under regression tests, and benchmarked the final Raspberry Pi 5 system at 0.945 typed F1 and 53 ms median latency with 98.4% workstation agreement.',
+            'Diagnosed an apparent INT8 collapse as a SentencePiece token-grouping defect in the production decoder, fixed it under regression tests, then benchmarked the final Raspberry Pi 5 system at 0.945 typed F1 and 53 ms median latency with 98.4% workstation agreement.',
           ],
           tags: ['Privacy', 'BiLSTM', 'TinyBERT', 'DeBERTa', 'ONNX Runtime', 'INT8', 'Raspberry Pi 5'],
+          brandMark: {
+            src: onKithLogoHref,
+            alt: 'OnKith logo',
+          },
+          figure: {
+            src: onKithChartHref,
+            alt: 'Two scatter plots comparing INT8 and FP32 entity-level micro-F1 against on-disk size and median latency, both far above a naive regex baseline',
+            caption:
+              'Quantisation trade-off from the public evaluation: INT8 keeps 0.9496 entity F1 against FP32 at 0.9565, for a quarter of the size and roughly half the latency.',
+          },
           links: [
             { label: 'Visit OnKith', href: links.onKith, external: true },
             { label: 'Evaluation repository', href: links.onKithPublic, external: true },
@@ -366,9 +397,10 @@ export const localizedContent: Record<Language, DashboardContent> = {
             'Built and tested catalogue, booking and role-based features, then presented the poster and live demo at the INJAZ 2026 exhibition.',
           ],
           tags: ['Requirements engineering', 'Spring Boot', 'PostgreSQL', 'Flutter', 'Docker'],
-          image: {
+          figure: {
             src: esasHomeHref,
             alt: 'ESAS homepage showing authentic Saudi tourism experiences and search controls',
+            caption: 'Traveller-facing catalogue with keyword, city and category search.',
           },
           links: [{ label: 'View SRS (114 pages)', href: esasSrsHref, external: true }],
         },
@@ -383,6 +415,12 @@ export const localizedContent: Record<Language, DashboardContent> = {
             'Ranked checkpoints on worst-seed score before mean score, then confirmed on unseen seeds: best episode 5,120 pipes, five-seed holdout mean 400.',
           ],
           tags: ['Reinforcement learning', 'Deep Q-Network', 'PyTorch', 'Evaluation design'],
+          figure: {
+            src: flappyChartHref,
+            alt: 'Line chart of minimum, mean and maximum greedy pipe score across scheduled training transitions, with the minimum staying low while the maximum climbs',
+            caption:
+              'Why checkpoints are ranked on the worst seed: the maximum swings wildly while the minimum barely moves.',
+          },
           links: [{ label: 'View repository', href: links.flappyBird, external: true }],
         },
         {
@@ -561,9 +599,11 @@ export const localizedContent: Record<Language, DashboardContent> = {
     hero: {
       title: 'مرحبًا، أنا يحيى الشريف.',
       proof:
-        'طالب هندسة برمجيات في جامعة أم القرى، وقد أكملت تدريبًا في الذكاء الاصطناعي لدى أكاديمية كاوست بعد اختياري ضمن أفضل 100 من أكثر من 14,000 متقدم.',
+        'طالب هندسة برمجيات | متدرب ذكاء اصطناعي في أكاديمية كاوست | ضمن أفضل 100 من أكثر من 14,000 متقدم',
       intro:
         'أعمل على نماذج الذكاء الاصطناعي من البداية إلى النهاية: تصميم البيانات والتسميات، ثم التدريب والتقييم، وصولًا إلى الضغط والقياس الفعلي على الجهاز الذي ستعمل عليه.',
+      profileName: 'يحيى الشريف',
+      profileLocation: 'منطقة مكة المكرمة، المملكة العربية السعودية',
       profileAlt: 'يحيى الشريف',
       links: [
         { label: 'عرض السيرة الذاتية', href: '#cv' },
@@ -660,6 +700,11 @@ export const localizedContent: Record<Language, DashboardContent> = {
             'ترميم الصور: المركز الثالث. لم تُقدَّم أقنعة الاختبار، لذلك كان على استعادة الأقنعة واختيار البيانات والترميم أن تعمل معًا: درجة FID بلغت 12.02 عبر 8,000 صورة أُعيد بناؤها.',
           ],
           tags: ['الرؤية الحاسوبية', 'تجزئة الكائنات', 'MI-GAN', 'PyTorch'],
+          evidence: {
+            src: cellLeaderboardHref,
+            alt: 'لوحة النتائج الخاصة النهائية لمسابقة تجزئة الخلايا، ويظهر فيها فريق كاوست مكة في المركز الثالث بنتيجة 0.5472',
+            caption: 'تجزئة الخلايا، لوحة النتائج الخاصة النهائية: المركز الثالث بين 24 فريقًا بنتيجة 0.5472.',
+          },
           links: [
             {
               label: 'مستودع تجزئة الخلايا',
@@ -696,6 +741,16 @@ export const localizedContent: Record<Language, DashboardContent> = {
             'شخصت انهيارًا ظاهريًا في INT8 بوصفه خللًا في تجميع رموز SentencePiece داخل مفكك ترميز الإنتاج، وأصلحته تحت اختبارات انحدار، ثم قست النظام النهائي على Raspberry Pi 5 عند 0.945 في F1 المصنف ووسيط زمن استجابة 53 ms مع اتفاق 98.4% مع بيئة العمل.',
           ],
           tags: ['الخصوصية', 'BiLSTM', 'TinyBERT', 'DeBERTa', 'ONNX Runtime', 'INT8', 'Raspberry Pi 5'],
+          brandMark: {
+            src: onKithLogoHref,
+            alt: 'شعار OnKith',
+          },
+          figure: {
+            src: onKithChartHref,
+            alt: 'مخططان يقارنان بين INT8 وFP32 في مقياس F1 على مستوى الكيانات مقابل حجم الملف ووسيط زمن الاستجابة، وكلاهما أعلى بكثير من خط أساس بسيط',
+            caption:
+              'موازنة التكميم من التقييم المنشور: يحافظ INT8 على 0.9496 في F1 مقابل 0.9565 لـ FP32، بربع الحجم ونحو نصف زمن الاستجابة.',
+          },
           links: [
             { label: 'زيارة OnKith', href: links.onKith, external: true },
             { label: 'مستودع التقييم', href: links.onKithPublic, external: true },
@@ -716,9 +771,10 @@ export const localizedContent: Record<Language, DashboardContent> = {
             'بنيت واختبرت ميزات الكتالوج والحجز والصلاحيات، ثم قدمت الملصق والعرض المباشر في معرض INJAZ 2026.',
           ],
           tags: ['هندسة المتطلبات', 'Spring Boot', 'PostgreSQL', 'Flutter', 'Docker'],
-          image: {
+          figure: {
             src: esasHomeHref,
             alt: 'الصفحة الرئيسية لمنصة ESAS تعرض تجارب سياحية سعودية أصيلة وخيارات البحث',
+            caption: 'كتالوج موجه للمسافر مع بحث بالكلمة المفتاحية والمدينة والفئة.',
           },
           links: [
             { label: 'عرض وثيقة متطلبات البرمجيات (114 صفحة)', href: esasSrsHref, external: true },
@@ -735,6 +791,12 @@ export const localizedContent: Record<Language, DashboardContent> = {
             'رتبت نقاط التحقق حسب أسوأ نتيجة عبر البذور قبل المتوسط، ثم تحققت على بذور غير مرئية: أفضل حلقة 5,120 أنبوبًا، ومتوسط خمس بذور محتجزة 400.',
           ],
           tags: ['التعلم المعزز', 'شبكات Q العميقة', 'PyTorch', 'تصميم التقييم'],
+          figure: {
+            src: flappyChartHref,
+            alt: 'مخطط خطي لأدنى ومتوسط وأعلى نتيجة أنابيب عبر خطوات التدريب المجدولة، إذ يبقى الحد الأدنى منخفضًا بينما يرتفع الحد الأعلى',
+            caption:
+              'لماذا تُرتب نقاط التحقق حسب أسوأ بذرة: الحد الأعلى يتأرجح بشدة بينما الحد الأدنى بالكاد يتحرك.',
+          },
           links: [{ label: 'عرض المستودع', href: links.flappyBird, external: true }],
         },
         {
