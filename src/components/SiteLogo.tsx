@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 type SiteLogoProps = {
   label: string;
@@ -20,10 +20,6 @@ export function SiteLogo({ label }: SiteLogoProps) {
   const [ringLit, setRingLit] = useState(false);
   const [yLit, setYLit] = useState(false);
   const isPointerInsideRef = useRef(false);
-  const logoSrc = `${import.meta.env.BASE_URL}y-logo.svg`;
-  const logoMarkStyle = {
-    '--site-logo-mark-source': `url("${logoSrc}")`,
-  } as CSSProperties;
 
   useEffect(() => {
     if (!isEntering) {
@@ -86,11 +82,23 @@ export function SiteLogo({ label }: SiteLogoProps) {
         }
       }}
     >
-      <svg viewBox="0 0 96 96" aria-hidden="true" focusable="false" className="site-logo-svg">
-        <circle className="site-logo-ring-base" cx="48" cy="48" r="42" pathLength={1} />
-        <circle className="site-logo-ring" cx="48" cy="48" r="42" pathLength={1} />
+      <svg viewBox="0 0 120 120" aria-hidden="true" focusable="false" className="site-logo-svg">
+        {/* The ring is only a light source, so it stays invisible until an interaction lights it. */}
+        <circle className="site-logo-ring" cx="60" cy="60" r="50" pathLength={1} />
+        {/* The same Y as public/y-logo.svg, tinted so it stays readable in both themes. */}
+        <text
+          className="site-logo-y"
+          x="60"
+          y="82"
+          fontFamily="Inter, Arial, Helvetica, sans-serif"
+          fontSize="62"
+          fontWeight="900"
+          letterSpacing="0"
+          textAnchor="middle"
+        >
+          Y
+        </text>
       </svg>
-      <span className="site-logo-y" style={logoMarkStyle} aria-hidden="true" />
     </a>
   );
 }

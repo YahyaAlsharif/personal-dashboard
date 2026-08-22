@@ -28,8 +28,6 @@
   --logo-ink: #14343a;
   --logo-lit: #2f8a94;
   --logo-glow: rgb(47 138 148 / 0.55);
-  --portrait-outline: rgb(20 52 58 / 0.48);
-  --portrait-shadow: rgb(7 16 18 / 0.18);
   --portrait-halo: radial-gradient(
     58% 46% at 52% 34%,
     rgb(184 223 225 / 0.5) 0%,
@@ -79,8 +77,6 @@
   --logo-ink: #cfe9ec;
   --logo-lit: #7fd4da;
   --logo-glow: rgb(127 212 218 / 0.6);
-  --portrait-outline: rgb(184 223 225 / 0.42);
-  --portrait-shadow: rgb(0 0 0 / 0.4);
   --portrait-halo: radial-gradient(
     58% 46% at 52% 34%,
     rgb(42 111 120 / 0.55) 0%,
@@ -155,10 +151,9 @@ a {
    Site logo: the ring and the Y behave as two neon light sources.
    --------------------------------------------------------------- */
 .site-logo {
-  position: relative;
   display: inline-flex;
-  height: 2.75rem;
-  width: 2.75rem;
+  height: 3rem;
+  width: 3rem;
   align-items: center;
   justify-content: center;
   border-radius: 9999px;
@@ -170,22 +165,15 @@ a {
 }
 
 .site-logo-svg {
-  height: 2.1rem;
-  width: 2.1rem;
+  height: 3rem;
+  width: 3rem;
   overflow: visible;
 }
 
-.site-logo-ring-base,
+/* Invisible at rest: the ring is an interaction light, not part of the brand mark. */
 .site-logo-ring {
   fill: none;
-  stroke-width: 5;
-}
-
-.site-logo-ring-base {
-  stroke: var(--color-border-strong);
-}
-
-.site-logo-ring {
+  stroke-width: 4.5;
   stroke: var(--logo-lit);
   stroke-linecap: round;
   stroke-dasharray: 1;
@@ -217,26 +205,19 @@ a {
 }
 
 .site-logo-y {
-  position: absolute;
-  display: block;
-  height: 2.1rem;
-  width: 2.1rem;
-  background-color: var(--logo-ink);
-  -webkit-mask: var(--site-logo-mark-source) center / contain no-repeat;
-  mask: var(--site-logo-mark-source) center / contain no-repeat;
-  pointer-events: none;
+  fill: var(--logo-ink);
   filter: drop-shadow(0 0 0 transparent);
   /* leaving: the Y cools down slowly */
   transition:
-    background-color 3000ms ease,
+    fill 3000ms ease,
     filter 3000ms ease;
 }
 
 .site-logo.is-y-lit .site-logo-y {
-  background-color: var(--logo-lit);
+  fill: var(--logo-lit);
   filter: drop-shadow(0 0 5px var(--logo-glow));
   transition:
-    background-color 200ms ease,
+    fill 200ms ease,
     filter 200ms ease;
 }
 
@@ -302,9 +283,6 @@ a {
   width: min(100%, 22rem);
   height: auto;
   object-fit: contain;
-  filter:
-    drop-shadow(0 0 1px var(--portrait-outline))
-    drop-shadow(0 8px 14px var(--portrait-shadow));
 }
 
 @media (min-width: 1024px) {
@@ -355,21 +333,6 @@ a {
 
   [dir='rtl'] .intro-portrait {
     grid-column: 1;
-  }
-}
-
-@media (min-width: 1280px) {
-  .intro-grid {
-    grid-template-columns: minmax(0, 1fr) minmax(22rem, 27rem);
-    column-gap: 3rem;
-  }
-
-  .intro-portrait-image {
-    max-height: 38rem;
-  }
-
-  [dir='rtl'] .intro-grid {
-    grid-template-columns: minmax(22rem, 27rem) minmax(0, 1fr);
   }
 }
 
@@ -589,18 +552,18 @@ a {
 @keyframes logo-y-flash {
   0%,
   26% {
-    background-color: var(--logo-ink);
+    fill: var(--logo-ink);
     filter: drop-shadow(0 0 0 transparent);
   }
 
   29%,
   33% {
-    background-color: var(--logo-lit);
+    fill: var(--logo-lit);
     filter: drop-shadow(0 0 5px var(--logo-glow));
   }
 
   100% {
-    background-color: var(--logo-ink);
+    fill: var(--logo-ink);
     filter: drop-shadow(0 0 0 transparent);
   }
 }
