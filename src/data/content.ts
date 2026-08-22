@@ -183,11 +183,14 @@ const links = {
     'https://www.kaggle.com/code/ghostylicious/3rd-place-object-centric-convnext-unet-distance',
   kaggleInpaintingRepository: 'https://github.com/YahyaAlsharif/Kaggle_inpainting_comp',
   kaggleInpainting: 'https://www.kaggle.com/code/ghostylicious/mi-gan-inpainting-comp-03',
-  postLatest: 'https://www.linkedin.com/feed/update/urn:li:ugcPost:7491964300434030592',
+  postSummerInternship: 'https://www.linkedin.com/feed/update/urn:li:ugcPost:7496956199477600256',
+  postCellSegmentation: 'https://www.linkedin.com/feed/update/urn:li:ugcPost:7491964300434030592',
   postSummerSchool: 'https://www.linkedin.com/feed/update/urn:li:share:7479585722992226305',
   postEsas: 'https://www.linkedin.com/feed/update/urn:li:ugcPost:7470469804227932160',
   postKaust: 'https://www.linkedin.com/feed/update/urn:li:ugcPost:7439279422131589120',
-  embedLatest:
+  embedSummerInternship:
+    'https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7496956199477600256?collapsed=1',
+  embedCellSegmentation:
     'https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7491964300434030592?collapsed=1',
   embedSummerSchool:
     'https://www.linkedin.com/embed/feed/update/urn:li:share:7479585722992226305?collapsed=1',
@@ -509,11 +512,20 @@ export const localizedContent: Record<Language, DashboardContent> = {
       positionLabel: (current, total) => `Post ${current} of ${total}`,
       items: [
         {
-          title: 'Latest LinkedIn post',
-          description: 'My latest professional update on LinkedIn.',
-          embedUrl: links.embedLatest,
-          postUrl: links.postLatest,
-          iframeTitle: 'Latest LinkedIn post by Yahya Alsharif',
+          title: 'Eight weeks at KAUST Academy',
+          description:
+            'Finishing the eight-week KAUST Academy AI Summer Internship, covering computer vision, NLP, generative models, reinforcement learning and Edge AI, alongside the OnKith privacy model and its Raspberry Pi 5 deployment.',
+          embedUrl: links.embedSummerInternship,
+          postUrl: links.postSummerInternship,
+          iframeTitle: 'LinkedIn post about completing the KAUST Academy AI Summer Internship',
+        },
+        {
+          title: 'Third place in cell instance segmentation',
+          description:
+            'Third place in the KAUST Academy cell instance segmentation challenge, and what training on crops centred on individual cells taught us about knowing when to stop tuning.',
+          embedUrl: links.embedCellSegmentation,
+          postUrl: links.postCellSegmentation,
+          iframeTitle: 'LinkedIn post about third place in the cell instance segmentation challenge',
         },
         {
           title: 'KAUST Academy AI Summer School supporters and investors',
@@ -527,15 +539,14 @@ export const localizedContent: Record<Language, DashboardContent> = {
         {
           title: 'Graduation project: ESAS',
           description:
-            'A milestone post about ESAS, my graduation project focused on authentic, locally curated tourism experiences in Saudi Arabia.',
+            'ESAS, my graduation project focused on authentic, locally curated tourism experiences in Saudi Arabia.',
           embedUrl: links.embedEsas,
           postUrl: links.postEsas,
           iframeTitle: 'LinkedIn post about the ESAS graduation project',
         },
         {
           title: 'KAUST Academy Stage 3 to Stage 4',
-          description:
-            'A milestone post about finishing KAUST Academy Stage 3 and being accepted into Stage 4.',
+          description: 'Finishing KAUST Academy Stage 3 and being accepted into Stage 4.',
           embedUrl: links.embedKaust,
           postUrl: links.postKaust,
           iframeTitle: 'LinkedIn post about KAUST Academy Stage 3 and Stage 4',
@@ -885,11 +896,20 @@ export const localizedContent: Record<Language, DashboardContent> = {
       positionLabel: (current, total) => `المنشور ${current} من ${total}`,
       items: [
         {
-          title: 'أحدث منشور على LinkedIn',
-          description: 'أحدث تحديث مهني لي على LinkedIn.',
-          embedUrl: links.embedLatest,
-          postUrl: links.postLatest,
-          iframeTitle: 'أحدث منشور ليحيى الشريف على LinkedIn',
+          title: 'ثمانية أسابيع في أكاديمية كاوست',
+          description:
+            'إنهاء التدريب الصيفي في الذكاء الاصطناعي بأكاديمية كاوست على مدى ثمانية أسابيع، شملت الرؤية الحاسوبية ومعالجة اللغة والنماذج التوليدية والتعلم المعزز والذكاء الاصطناعي الطرفي، إلى جانب نموذج الخصوصية في OnKith ونشره على Raspberry Pi 5.',
+          embedUrl: links.embedSummerInternship,
+          postUrl: links.postSummerInternship,
+          iframeTitle: 'منشور LinkedIn عن إنهاء التدريب الصيفي للذكاء الاصطناعي في أكاديمية كاوست',
+        },
+        {
+          title: 'المركز الثالث في تجزئة الخلايا',
+          description:
+            'المركز الثالث في مسابقة تجزئة الخلايا بأكاديمية كاوست، وما علمنا إياه التدريب على قصاصات متمركزة حول الخلايا الفردية عن التوقف في الوقت المناسب عن الضبط.',
+          embedUrl: links.embedCellSegmentation,
+          postUrl: links.postCellSegmentation,
+          iframeTitle: 'منشور LinkedIn عن المركز الثالث في مسابقة تجزئة الخلايا',
         },
         {
           title: 'داعمو ومستثمرو المدرسة الصيفية للذكاء الاصطناعي في أكاديمية كاوست',
@@ -902,14 +922,14 @@ export const localizedContent: Record<Language, DashboardContent> = {
         {
           title: 'مشروع التخرج ESAS',
           description:
-            'منشور عن ESAS، مشروع تخرجي الذي يركز على تجارب سياحية سعودية أصيلة ومنتقاة محليًا.',
+            'ESAS، مشروع تخرجي الذي يركز على تجارب سياحية سعودية أصيلة ومنتقاة محليًا.',
           embedUrl: links.embedEsas,
           postUrl: links.postEsas,
           iframeTitle: 'منشور LinkedIn عن مشروع التخرج ESAS',
         },
         {
           title: 'من المرحلة الثالثة إلى الرابعة في أكاديمية كاوست',
-          description: 'منشور عن إنهاء المرحلة الثالثة في أكاديمية كاوست والقبول في المرحلة الرابعة.',
+          description: 'إنهاء المرحلة الثالثة في أكاديمية كاوست والقبول في المرحلة الرابعة.',
           embedUrl: links.embedKaust,
           postUrl: links.postKaust,
           iframeTitle: 'منشور LinkedIn عن المرحلة الثالثة والرابعة في أكاديمية كاوست',
