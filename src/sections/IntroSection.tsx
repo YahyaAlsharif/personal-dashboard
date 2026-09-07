@@ -121,7 +121,7 @@ export function IntroSection() {
             <img
               src={portraitSrc}
               alt={hero.profileAlt}
-              width="900"
+              width="960"
               height="1200"
               className="profile-frame-image"
             />

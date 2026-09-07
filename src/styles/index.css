@@ -297,9 +297,10 @@ a {
 .profile-frame-image {
   display: block;
   width: 100%;
+  height: auto;
   aspect-ratio: 4 / 5;
   object-fit: cover;
-  object-position: 50% 12%;
+  object-position: 50% 50%;
   background: #ffffff;
 }
 

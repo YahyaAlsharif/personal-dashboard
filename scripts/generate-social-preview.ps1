@@ -5,14 +5,16 @@ Add-Type -AssemblyName System.Drawing
 
 $scriptDirectory = Split-Path -Parent $MyInvocation.MyCommand.Path
 $projectRoot = Resolve-Path (Join-Path $scriptDirectory '..')
-# System.Drawing cannot decode WebP, so the card is built from a JPEG copy of the same photo.
+# System.Drawing cannot decode WebP, so the card uses a dedicated JPEG portrait crop.
 $profileImagePath = Join-Path $projectRoot 'src\assets\profile\portrait-social-source.jpg'
+# Reuse the tracked site icon; no separate logo drawing or generated logo asset.
+$logoImagePath = Join-Path $projectRoot 'public\apple-touch-icon.png'
 $outputPath = Join-Path $projectRoot 'public\social-preview.png'
 $outputTempPath = Join-Path (Split-Path -Parent $outputPath) 'social-preview.tmp.png'
 
 $width = 1200
 $height = 630
-$roleText = 'AI & Software Development | Software Engineering Student'
+$roleText = "AI & Software Development`nSoftware Engineering"
 
 function New-RoundedRectanglePath {
   param (
@@ -134,6 +136,9 @@ function Draw-CoverImage {
 if (-not (Test-Path $profileImagePath)) {
   throw "Profile image not found: $profileImagePath"
 }
+if (-not (Test-Path $logoImagePath)) {
+  throw "Site logo not found: $logoImagePath"
+}
 
 $bitmap = [System.Drawing.Bitmap]::new($width, $height)
 $graphics = [System.Drawing.Graphics]::FromImage($bitmap)
@@ -141,17 +146,15 @@ $graphics = [System.Drawing.Graphics]::FromImage($bitmap)
 $backgroundBrush = $null
 $surfaceBrush = $null
 $surfacePen = $null
-$accentBrush = $null
 $headingBrush = $null
 $bodyBrush = $null
-$shadowBrush = $null
-$photoOverlayBrush = $null
 $photoBorderPen = $null
 $profile = $null
+$logo = $null
 $outputStream = $null
 
 $titleFont = [System.Drawing.Font]::new('Segoe UI', 74, [System.Drawing.FontStyle]::Bold, [System.Drawing.GraphicsUnit]::Pixel)
-$roleFont = [System.Drawing.Font]::new('Segoe UI', 34, [System.Drawing.FontStyle]::Regular, [System.Drawing.GraphicsUnit]::Pixel)
+$roleFont = [System.Drawing.Font]::new('Segoe UI', 32, [System.Drawing.FontStyle]::Regular, [System.Drawing.GraphicsUnit]::Pixel)
 
 try {
   $graphics.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::AntiAlias
@@ -161,40 +164,28 @@ try {
 
   $backgroundBrush = [System.Drawing.Drawing2D.LinearGradientBrush]::new(
     [System.Drawing.Rectangle]::new(0, 0, $width, $height),
-    [System.Drawing.ColorTranslator]::FromHtml('#020405'),
-    [System.Drawing.ColorTranslator]::FromHtml('#142024'),
+    [System.Drawing.ColorTranslator]::FromHtml('#10191e'),
+    [System.Drawing.ColorTranslator]::FromHtml('#25363c'),
     [System.Drawing.Drawing2D.LinearGradientMode]::ForwardDiagonal
   )
   $graphics.FillRectangle($backgroundBrush, 0, 0, $width, $height)
 
-  $surfaceBrush = [System.Drawing.SolidBrush]::new([System.Drawing.Color]::FromArgb(224, 7, 16, 18))
+  $surfaceBrush = New-SolidBrush '#000000'
   $surfacePen = [System.Drawing.Pen]::new([System.Drawing.Color]::FromArgb(118, 184, 223, 225), 2)
-  $accentBrush = New-SolidBrush '#b8dfe1'
   $headingBrush = New-SolidBrush '#ffffff'
   $bodyBrush = [System.Drawing.SolidBrush]::new([System.Drawing.Color]::FromArgb(226, 235, 247, 248))
-  $shadowBrush = [System.Drawing.SolidBrush]::new([System.Drawing.Color]::FromArgb(78, 0, 0, 0))
-  $photoOverlayBrush = [System.Drawing.Drawing2D.LinearGradientBrush]::new(
-    [System.Drawing.Rectangle]::new(760, 72, 352, 486),
-    [System.Drawing.Color]::FromArgb(105, 3, 5, 6),
-    [System.Drawing.Color]::FromArgb(6, 3, 5, 6),
-    [System.Drawing.Drawing2D.LinearGradientMode]::Horizontal
-  )
   $photoBorderPen = [System.Drawing.Pen]::new([System.Drawing.Color]::FromArgb(72, 184, 223, 225), 2)
 
-  Draw-RoundedRectangle -Graphics $graphics -Rectangle ([System.Drawing.RectangleF]::new(72, 80, 1080, 490)) -Radius 34 -Brush $shadowBrush
   Draw-RoundedRectangle -Graphics $graphics -Rectangle ([System.Drawing.RectangleF]::new(56, 60, 1088, 504)) -Radius 34 -Brush $surfaceBrush -Pen $surfacePen
 
   $profile = [System.Drawing.Image]::FromFile($profileImagePath)
-  $photoRectangle = [System.Drawing.RectangleF]::new(760, 72, 352, 486)
-  $photoShadowRectangle = [System.Drawing.RectangleF]::new(778, 92, 352, 486)
-  Draw-RoundedRectangle -Graphics $graphics -Rectangle $photoShadowRectangle -Radius 36 -Brush $shadowBrush
+  $photoRectangle = [System.Drawing.RectangleF]::new(752, 81, 360, 468)
 
-  $photoPath = New-RoundedRectanglePath -Rectangle $photoRectangle -Radius 36
+  $photoPath = New-RoundedRectanglePath -Rectangle $photoRectangle -Radius 24
   $previousClip = $graphics.Clip.Clone()
   try {
     $graphics.SetClip($photoPath)
     Draw-CoverImage -Graphics $graphics -Image $profile -Destination $photoRectangle
-    $graphics.FillRectangle($photoOverlayBrush, $photoRectangle)
   }
   finally {
     $graphics.SetClip($previousClip, [System.Drawing.Drawing2D.CombineMode]::Replace)
@@ -203,9 +194,11 @@ try {
   $graphics.DrawPath($photoBorderPen, $photoPath)
   $photoPath.Dispose()
 
-  Draw-Text -Graphics $graphics -Text 'Yahya Alsharif' -Font $titleFont -Brush $headingBrush -Rectangle ([System.Drawing.RectangleF]::new(92, 190, 630, 96))
+  Draw-Text -Graphics $graphics -Text 'Yahya Alsharif' -Font $titleFont -Brush $headingBrush -Rectangle ([System.Drawing.RectangleF]::new(96, 190, 630, 96))
   Draw-Text -Graphics $graphics -Text $roleText -Font $roleFont -Brush $bodyBrush -Rectangle ([System.Drawing.RectangleF]::new(96, 306, 600, 120))
-  Draw-RoundedRectangle -Graphics $graphics -Rectangle ([System.Drawing.RectangleF]::new(96, 462, 290, 8)) -Radius 4 -Brush $accentBrush
+  $logo = [System.Drawing.Image]::FromFile($logoImagePath)
+  # The icon includes padding; size and center the visible Y across both subtitle lines.
+  $graphics.DrawImage($logo, [System.Drawing.RectangleF]::new(520, 283, 144, 144))
 
   $graphics.Dispose()
   $graphics = $null
@@ -222,6 +215,7 @@ try {
 }
 finally {
   if ($null -ne $profile) { $profile.Dispose() }
+  if ($null -ne $logo) { $logo.Dispose() }
   if ($null -ne $outputStream) { $outputStream.Dispose() }
   if ($null -ne $graphics) { $graphics.Dispose() }
   $bitmap.Dispose()
@@ -230,10 +224,7 @@ finally {
   if ($null -ne $backgroundBrush) { $backgroundBrush.Dispose() }
   if ($null -ne $surfaceBrush) { $surfaceBrush.Dispose() }
   if ($null -ne $surfacePen) { $surfacePen.Dispose() }
-  if ($null -ne $accentBrush) { $accentBrush.Dispose() }
   if ($null -ne $headingBrush) { $headingBrush.Dispose() }
   if ($null -ne $bodyBrush) { $bodyBrush.Dispose() }
-  if ($null -ne $shadowBrush) { $shadowBrush.Dispose() }
-  if ($null -ne $photoOverlayBrush) { $photoOverlayBrush.Dispose() }
   if ($null -ne $photoBorderPen) { $photoBorderPen.Dispose() }
 }

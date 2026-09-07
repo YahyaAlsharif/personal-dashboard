@@ -183,11 +183,14 @@ const links = {
     'https://www.kaggle.com/code/ghostylicious/3rd-place-object-centric-convnext-unet-distance',
   kaggleInpaintingRepository: 'https://github.com/YahyaAlsharif/Kaggle_inpainting_comp',
   kaggleInpainting: 'https://www.kaggle.com/code/ghostylicious/mi-gan-inpainting-comp-03',
+  postGraduation: 'https://www.linkedin.com/feed/update/urn:li:ugcPost:7502789692703272960',
   postSummerInternship: 'https://www.linkedin.com/feed/update/urn:li:ugcPost:7496956199477600256',
   postCellSegmentation: 'https://www.linkedin.com/feed/update/urn:li:ugcPost:7491964300434030592',
   postSummerSchool: 'https://www.linkedin.com/feed/update/urn:li:share:7479585722992226305',
   postEsas: 'https://www.linkedin.com/feed/update/urn:li:ugcPost:7470469804227932160',
   postKaust: 'https://www.linkedin.com/feed/update/urn:li:ugcPost:7439279422131589120',
+  embedGraduation:
+    'https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7502789692703272960?collapsed=1',
   embedSummerInternship:
     'https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7496956199477600256?collapsed=1',
   embedCellSegmentation:
@@ -228,12 +231,12 @@ export const localizedContent: Record<Language, DashboardContent> = {
     hero: {
       title: "Hi, I'm Yahya Alsharif.",
       proof:
-        'Software Engineering Student | KAUST Academy AI Intern | Top 100 of 14,000+ Applicants',
+        'AI & Software Development | Software Engineering',
       intro:
         'I take AI models end to end, from data and label design through training and evaluation to quantisation and measured deployment on the hardware they will actually run on.',
       profileName: 'Yahya Alsharif',
       profileLocation: 'Makkah Region, Saudi Arabia',
-      profileAlt: 'Yahya Alsharif',
+      profileAlt: 'Yahya Alsharif at his KAUST Academy graduation',
       links: [
         { label: 'View CV', href: '#cv' },
         { label: 'Experience', href: '#experience' },
@@ -512,6 +515,14 @@ export const localizedContent: Record<Language, DashboardContent> = {
       positionLabel: (current, total) => `Post ${current} of ${total}`,
       items: [
         {
+          title: 'Completing the KAUST Academy AI Specialization',
+          description:
+            'Reflecting on the final eight-week summer program, presenting OnKith and my privacy-intelligence work at KAUST, and the people who made this journey possible.',
+          embedUrl: links.embedGraduation,
+          postUrl: links.postGraduation,
+          iframeTitle: 'LinkedIn post about completing the KAUST Academy AI Specialization',
+        },
+        {
           title: 'Eight weeks at KAUST Academy',
           description:
             'Finishing the eight-week KAUST Academy AI Summer Internship, covering computer vision, NLP, generative models, reinforcement learning and Edge AI, alongside the OnKith privacy model and its Raspberry Pi 5 deployment.',
@@ -610,12 +621,12 @@ export const localizedContent: Record<Language, DashboardContent> = {
     hero: {
       title: 'مرحبًا، أنا يحيى الشريف.',
       proof:
-        'طالب هندسة برمجيات | متدرب ذكاء اصطناعي في أكاديمية كاوست | ضمن أفضل 100 من أكثر من 14,000 متقدم',
+        'الذكاء الاصطناعي وتطوير البرمجيات | هندسة البرمجيات',
       intro:
         'أعمل على نماذج الذكاء الاصطناعي من البداية إلى النهاية: تصميم البيانات والتسميات، ثم التدريب والتقييم، وصولًا إلى الضغط والقياس الفعلي على الجهاز الذي ستعمل عليه.',
       profileName: 'يحيى الشريف',
       profileLocation: 'منطقة مكة المكرمة، المملكة العربية السعودية',
-      profileAlt: 'يحيى الشريف',
+      profileAlt: 'يحيى الشريف في حفل تخرجه من أكاديمية كاوست',
       links: [
         { label: 'عرض السيرة الذاتية', href: '#cv' },
         { label: 'الخبرة', href: '#experience' },
@@ -895,6 +906,14 @@ export const localizedContent: Record<Language, DashboardContent> = {
       nextButton: 'المنشور التالي',
       positionLabel: (current, total) => `المنشور ${current} من ${total}`,
       items: [
+        {
+          title: 'إتمام تخصص الذكاء الاصطناعي في أكاديمية كاوست',
+          description:
+            'تأملات في البرنامج الصيفي الختامي لمدة ثمانية أسابيع، وعرض OnKith وعملي في ذكاء الخصوصية في كاوست، والأشخاص الذين ساهموا في هذه الرحلة.',
+          embedUrl: links.embedGraduation,
+          postUrl: links.postGraduation,
+          iframeTitle: 'منشور LinkedIn عن إتمام تخصص الذكاء الاصطناعي في أكاديمية كاوست',
+        },
         {
           title: 'ثمانية أسابيع في أكاديمية كاوست',
           description:
