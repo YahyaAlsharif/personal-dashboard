@@ -1,8 +1,8 @@
 # Personal Dashboard
 
 This is Yahya Alsharif's personal dashboard / portfolio website. It introduces
-his software engineering background, AI learning journey, projects, CV, and
-contact links in a clean one-page static site.
+his AI engineering and software engineering background, experience, projects,
+certificates, CV, and contact links in a clean one-page static site.
 
 ## Stack
 

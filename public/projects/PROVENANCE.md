@@ -8,7 +8,7 @@ delivery only; no chart, label or result has been edited.
 | File | Source | Original path |
 | --- | --- | --- |
 | `onkith-logo.svg` | https://onkith.online/ | `/onkith-favicon.svg` (official mark, unmodified) |
-| `onkith-quantisation.webp` | https://github.com/YahyaAlsharif/OnKith_Public | `results/size_latency_vs_f1.png` |
+| `onkith-ood-comparison.webp` | https://github.com/YahyaAlsharif/OnKith | `research_results/figures/ood_model_comparison.png` |
 | `flappy-evaluation.webp` | https://github.com/YahyaAlsharif/flappy_bird_challenge | `artifacts/ddqn_local_v2/evaluation_scores.png` |
 | `cell-segmentation-leaderboard.webp` | https://github.com/YahyaAlsharif/kaust-cell-instance-segmentation | `pics/leaderboard.png` (final private leaderboard, uncropped) |
 | `esas-home.webp` | ESAS graduation project | homepage screenshot |

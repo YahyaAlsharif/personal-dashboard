@@ -29,6 +29,12 @@ export type ProjectFigure = {
   src: string;
   alt: string;
   caption: string;
+  isPhoto?: boolean;
+};
+
+export type BrandMark = {
+  src: string;
+  alt: string;
 };
 
 export type ExperienceItem = {
@@ -37,6 +43,7 @@ export type ExperienceItem = {
   period: string;
   location?: string;
   focus?: string;
+  brandMark?: BrandMark;
   points: string[];
   tags: string[];
   evidence?: ProjectFigure;
@@ -52,12 +59,24 @@ export type Project = {
   description: string;
   points: string[];
   tags: string[];
-  brandMark?: {
-    src: string;
-    alt: string;
-  };
+  brandMark?: BrandMark;
   figure?: ProjectFigure;
   links?: LocalizedLink[];
+};
+
+export type Certificate = {
+  title: string;
+  issuer: string;
+  date?: string;
+  note?: string;
+  /** Rendered preview of the certificate; omitted when no copy is published. */
+  image?: {
+    src: string;
+    thumbnailSrc: string;
+    alt: string;
+    width: number;
+    height: number;
+  };
 };
 
 export type Post = {
@@ -119,7 +138,12 @@ export type DashboardContent = {
     title: string;
     items: EducationItem[];
     certificatesTitle: string;
-    certificates: string[];
+    certificates: Certificate[];
+    certificatePreview: {
+      open: string;
+      closeButton: string;
+      closeAriaLabel: string;
+    };
   };
   projects: {
     title: string;
@@ -160,9 +184,20 @@ const cvHref = `${import.meta.env.BASE_URL}cv/${cvFileName}`;
 const esasHomeHref = `${import.meta.env.BASE_URL}projects/esas-home.webp`;
 const esasSrsHref = `${import.meta.env.BASE_URL}projects/esas-srs.pdf`;
 const onKithLogoHref = `${import.meta.env.BASE_URL}projects/onkith-logo.svg`;
-const onKithChartHref = `${import.meta.env.BASE_URL}projects/onkith-quantisation.webp`;
+const onKithChartHref = `${import.meta.env.BASE_URL}projects/onkith-ood-comparison.webp`;
 const flappyChartHref = `${import.meta.env.BASE_URL}projects/flappy-evaluation.webp`;
 const cellLeaderboardHref = `${import.meta.env.BASE_URL}projects/cell-segmentation-leaderboard.webp`;
+const mawhubMarkHref = `${import.meta.env.BASE_URL}experience/mawhub-mark.svg`;
+const worldSkillsBadgeHref = `${import.meta.env.BASE_URL}experience/worldskills-badge.webp`;
+const worldSkillsPhotoHref = `${import.meta.env.BASE_URL}experience/worldskills-software-testing.webp`;
+
+const certificateImage = (slug: string, alt: string, width: number, height: number) => ({
+  src: `${import.meta.env.BASE_URL}certificates/${slug}.webp`,
+  thumbnailSrc: `${import.meta.env.BASE_URL}certificates/${slug}-thumb.webp`,
+  alt,
+  width,
+  height,
+});
 
 export const portraitSrc = portrait;
 
@@ -175,7 +210,7 @@ const links = {
   edgeAiProject: 'https://github.com/YahyaAlsharif/edge_ai_project',
   onKith: 'https://onkith.online/',
   onKithLinkedIn: 'https://www.linkedin.com/company/onkith/',
-  onKithPublic: 'https://github.com/YahyaAlsharif/OnKith_Public',
+  onKithRepository: 'https://github.com/YahyaAlsharif/OnKith',
   email: 'yahya.alsharif567@gmail.com',
   kaggleCellSegmentationRepository:
     'https://github.com/YahyaAlsharif/kaust-cell-instance-segmentation',
@@ -183,12 +218,18 @@ const links = {
     'https://www.kaggle.com/code/ghostylicious/3rd-place-object-centric-convnext-unet-distance',
   kaggleInpaintingRepository: 'https://github.com/YahyaAlsharif/Kaggle_inpainting_comp',
   kaggleInpainting: 'https://www.kaggle.com/code/ghostylicious/mi-gan-inpainting-comp-03',
+  postWorldSkills: 'https://www.linkedin.com/feed/update/urn:li:ugcPost:7511493575872823296',
+  postMawhub: 'https://www.linkedin.com/feed/update/urn:li:share:7505719217787187200',
   postGraduation: 'https://www.linkedin.com/feed/update/urn:li:ugcPost:7502789692703272960',
   postSummerInternship: 'https://www.linkedin.com/feed/update/urn:li:ugcPost:7496956199477600256',
   postCellSegmentation: 'https://www.linkedin.com/feed/update/urn:li:ugcPost:7491964300434030592',
   postSummerSchool: 'https://www.linkedin.com/feed/update/urn:li:share:7479585722992226305',
   postEsas: 'https://www.linkedin.com/feed/update/urn:li:ugcPost:7470469804227932160',
   postKaust: 'https://www.linkedin.com/feed/update/urn:li:ugcPost:7439279422131589120',
+  embedWorldSkills:
+    'https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7511493575872823296?collapsed=1',
+  embedMawhub:
+    'https://www.linkedin.com/embed/feed/update/urn:li:share:7505719217787187200?collapsed=1',
   embedGraduation:
     'https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7502789692703272960?collapsed=1',
   embedSummerInternship:
@@ -230,13 +271,12 @@ export const localizedContent: Record<Language, DashboardContent> = {
     },
     hero: {
       title: "Hi, I'm Yahya Alsharif.",
-      proof:
-        'AI & Software Development | Software Engineering',
+      proof: 'AI Engineer @ Mawhub | Software Engineering Student',
       intro:
-        'I take AI models end to end, from data and label design through training and evaluation to quantisation and measured deployment on the hardware they will actually run on.',
+        'I build applied AI and software, from data, training and evaluation through edge deployment, testing and delivery. I represented Saudi Arabia in Software Testing at WorldSkills Shanghai 2026.',
       profileName: 'Yahya Alsharif',
       profileLocation: 'Makkah Region, Saudi Arabia',
-      profileAlt: 'Yahya Alsharif at his KAUST Academy graduation',
+      profileAlt: 'Professional headshot of Yahya Alsharif',
       links: [
         { label: 'View CV', href: '#cv' },
         { label: 'Experience', href: '#experience' },
@@ -247,8 +287,8 @@ export const localizedContent: Record<Language, DashboardContent> = {
     about: {
       title: 'About Me',
       paragraphs: [
-        'I work on two sides of the same problem: the software engineering that turns an idea into a documented, testable system, and the applied AI that makes it worth building. In practice that means requirements, architecture and testing on one hand, and datasets, training and evaluation on the other.',
-        'Most of my work ends in a measurement. I would rather report a model benchmarked on the device it has to run on than a number from a notebook, and I try to keep every project explainable to someone who will never read the code.',
+        'I work where software engineering and applied AI meet. As an AI Engineer at Mawhub, I take implementation work from product requirements to delivery: planning changes across existing codebases, implementing and testing them, and keeping what ships aligned with what was specified. Alongside that, I study Software Engineering at Umm Al-Qura University.',
+        'On the AI side, I care about the whole path from data and label design through training and evaluation to quantisation and measurement on the hardware a model will actually run on. Testing is the other half of how I work: after four months of preparation, I represented Saudi Arabia in Software Testing at WorldSkills Shanghai 2026. I would rather report a measured result than a hopeful one.',
       ],
     },
     skills: {
@@ -260,72 +300,112 @@ export const localizedContent: Record<Language, DashboardContent> = {
             'Python',
             'PyTorch',
             'Hugging Face Transformers',
-            'Computer vision',
-            'NLP',
-            'Reinforcement learning',
-            'Evaluation design',
-          ],
-        },
-        {
-          title: 'Edge and Optimisation',
-          skills: [
             'ONNX Runtime',
             'INT8 quantisation',
-            'Model compression',
             'TensorFlow Lite',
-            'Raspberry Pi',
-            'Benchmarking',
+            'OpenCV',
+            'NumPy',
           ],
         },
         {
-          title: 'Software Engineering',
+          title: 'Software Testing',
           skills: [
-            'Requirements engineering',
-            'System design',
-            'Software testing',
-            'Documentation',
+            'pytest',
+            'Selenium',
+            'Appium',
+            'Postman',
+            'Newman',
+            'JMeter',
+            'API, web, mobile and performance testing',
+          ],
+        },
+        {
+          title: 'Software Development',
+          skills: [
             'Java',
-            'Project coordination',
+            'TypeScript',
+            'HTML',
+            'CSS',
+            'REST APIs',
+            'React',
+            'Vite',
+            'Tailwind CSS',
+            'Git',
+            'GitHub',
+            'Docker',
           ],
         },
         {
-          title: 'Web and Tools',
+          title: 'Engineering Practice',
           skills: [
-            'React',
-            'TypeScript',
-            'Tailwind CSS',
-            'Spring Boot',
-            'PostgreSQL',
-            'Flutter',
-            'Git',
-            'Docker',
+            'Requirements engineering (SRS)',
+            'UML and BPMN modelling',
+            'Code review',
+            'Technical documentation',
           ],
         },
       ],
     },
     experience: {
       title: 'Experience',
-      lede: 'An eight-week AI internship at KAUST Academy, and the competitions that ran alongside it.',
+      lede: 'AI engineering at Mawhub, an applied AI internship at KAUST Academy, and competition in software testing and machine learning.',
       items: [
+        {
+          role: 'AI Engineer',
+          organization: 'Mawhub',
+          period: 'Sep 2026 to Present',
+          focus: 'Implementation of AI and software changes, from product requirements to delivery',
+          brandMark: { src: mawhubMarkHref, alt: 'Mawhub logo' },
+          points: [
+            'Own implementation work from product requirements to delivery, turning product intent into technical plans across existing codebases.',
+            'Identify and help resolve the technical and product decisions that implementation depends on.',
+            'Implement, test and review AI and software changes through Git and GitHub workflows, documenting and integrating each change while keeping delivered behaviour aligned with the documented requirements.',
+          ],
+          tags: ['Applied AI', 'Software engineering', 'Testing', 'Code review', 'Git and GitHub'],
+        },
         {
           role: 'AI Intern',
           organization: 'KAUST Academy',
           period: 'Jun 2026 to Aug 2026',
           location: 'King Khalid University, Abha',
-          focus: 'Model-side developer during an eight-week AI Specialisation internship',
+          focus: 'Privacy-model track of a six-person team project during an eight-week AI internship',
+          brandMark: { src: kaustAcademyLogo, alt: 'KAUST Academy logo' },
           points: [
-            "Owned dataset selection, label design, training, evaluation, optimisation and deployment packaging for the team's privacy model.",
-            'Trained through lectures, hands-on labs and project work across computer vision and generative models, reinforcement learning, and NLP with transformers, LLM fine-tuning, speech, agents and RAG.',
-            'Applied inference optimisation and Edge AI material to a team project mentored by KAUST faculty and researchers.',
+            'Owned the privacy-model track of a team project mentored by KAUST faculty and researchers: dataset and label design, training, evaluation methodology, failure analysis and model iteration for on-device PII detection.',
+            "Applied the internship's Edge AI and inference-optimisation work hands-on, carrying a transformer model from PyTorch training through ONNX export and INT8 quantisation to benchmarking on Raspberry Pi hardware.",
           ],
-          tags: ['Computer vision', 'Generative models', 'Reinforcement learning', 'NLP', 'Edge AI'],
+          tags: ['PyTorch', 'Transformers', 'ONNX Runtime', 'INT8', 'Raspberry Pi', 'Edge AI'],
           links: [{ label: 'Read the full project', href: '#project-onkith' }],
+        },
+        {
+          role: 'Software Testing Competitor',
+          organization: 'WorldSkills Shanghai 2026',
+          period: 'Sep 2026',
+          location: 'Shanghai, China',
+          focus: 'Represented Saudi Arabia in Software Testing at the international WorldSkills Competition',
+          brandMark: {
+            src: worldSkillsBadgeHref,
+            alt: 'WorldSkills Shanghai 2026 Software Testing credential badge',
+          },
+          points: [
+            "Selected as my college's candidate to train for the competition, then completed about four months of intensive preparation before representing Saudi Arabia in Shanghai.",
+            'Tested unfamiliar systems against timed task specifications across API, web, mobile, performance and white-box testing.',
+            'Worked with Postman and Newman for APIs, Selenium for the web, Appium for mobile, JMeter for performance and pytest for code-level tests.',
+          ],
+          tags: ['Postman', 'Newman', 'Selenium', 'Appium', 'JMeter', 'pytest'],
+          evidence: {
+            src: worldSkillsPhotoHref,
+            alt: 'Group photo of Software Testing competitors and experts waving in front of the skill 11 Software Testing area at WorldSkills Shanghai 2026',
+            caption: 'Software Testing competitors and experts at WorldSkills Shanghai 2026.',
+            isPhoto: true,
+          },
         },
         {
           role: 'Kaggle Competitor',
           organization: 'KAUST Academy',
           period: 'Jul 2026 to Aug 2026',
           focus: 'Third place in two of the Academy competitions',
+          brandMark: { src: kaustAcademyLogo, alt: 'KAUST Academy logo' },
           points: [
             'Competed across image classification, image generation and inpainting, instance segmentation, natural language and audio tasks.',
             'Cell instance segmentation, third of 24 teams. A ConvNeXt-Tiny U-Net regressing a normalised distance map, decoded by marker-controlled watershed: 0.8144 instance F1 on a near-duplicate-aware grouped split and 0.5472 private instance F1.',
@@ -361,48 +441,50 @@ export const localizedContent: Record<Language, DashboardContent> = {
       items: [
         {
           id: 'project-onkith',
-          name: 'OnKith: Privacy-Aware Edge AI',
-          status: 'KAUST Academy team project | Model evaluation published',
+          name: 'OnKith: Privacy-Preserving Edge AI',
+          status: 'KAUST Academy team project | Benchmarked on Raspberry Pi 5',
+          role: 'Privacy model, data, evaluation and deployment',
           featured: true,
           description:
-            'OnKith is a KAUST Academy team project building a privacy-first voice assistant that transcribes speech and strips personally identifiable information entirely on-device. I owned the PII detection model from the first baseline through production evaluation on Raspberry Pi 5.',
+            'OnKith is a six-person KAUST Academy team project for privacy-preserving local voice processing: speech is transcribed and personal information is masked on the device, so private details never have to leave it. My track was the privacy model, from its data and evaluation design to the quantised artefact running on a Raspberry Pi 5.',
           points: [
-            'Moved the privacy component from binary classification to token-level masking, built a BiLSTM tagger baseline, then prepared aligned BIO spans over 147,366 OpenPII rows and fine-tuned TinyBERT-4 to 0.973 token-level micro-F1 and 0.957 entity-level F1 on a 40,908-row held-out split.',
-            'Probed generalisation by varying email domains, traced weaknesses to dataset imbalance and rare-label failure, and redesigned the Model V2 data and evaluation strategy around a maintained 31-entity privacy ontology.',
-            'Retrained Model V2 on DeBERTa-v3-xsmall and exported FP32 and INT8 ONNX artefacts, raising out-of-distribution typed F1 from 0.46 to 0.62 and private-character recall from 0.32 to 0.84.',
-            'Diagnosed an apparent INT8 collapse as a SentencePiece token-grouping defect in the production decoder, fixed it under regression tests, then benchmarked the final Raspberry Pi 5 system at 0.945 typed F1 and 53 ms median latency with 98.4% workstation agreement.',
+            'Took the privacy model from a BiLSTM span baseline through TinyBERT-4 to DeBERTa-v3-xsmall, choosing the final backbone for out-of-distribution robustness rather than headline in-distribution F1.',
+            'Redesigned the data and evaluation strategy after TinyBERT failed out of distribution: a 31-entity privacy ontology over a 284,619-row English corpus with 2,088,335 labelled spans, leakage-aware splits, hard negatives and a frozen out-of-distribution benchmark scored only once.',
+            'On that frozen benchmark, moving to DeBERTa raised typed entity F1 from 0.46 to 0.62 and private-character recall from 0.32 to 0.84, and cut the hard-negative false-positive rate from 0.65 to 0.24.',
+            'Released the model as a 78.5 MiB INT8 ONNX artefact after tracing an apparent quantisation collapse to a span-decoding defect. On a 4 GB Raspberry Pi 5 it reaches 0.945 typed F1 at 62 ms median masking latency, inside a voice pipeline that runs faster than real time on average (mean RTF 0.63).',
           ],
-          tags: ['Privacy', 'BiLSTM', 'TinyBERT', 'DeBERTa', 'ONNX Runtime', 'INT8', 'Raspberry Pi 5'],
+          tags: ['Privacy', 'PyTorch', 'TinyBERT', 'DeBERTa-v3', 'ONNX Runtime', 'INT8', 'Raspberry Pi 5'],
           brandMark: {
             src: onKithLogoHref,
             alt: 'OnKith logo',
           },
           figure: {
             src: onKithChartHref,
-            alt: 'Two scatter plots comparing INT8 and FP32 entity-level micro-F1 against on-disk size and median latency, both far above a naive regex baseline',
+            alt: 'Three bar charts comparing TinyBERT-4 INT8 and DeBERTa-v3-xsmall INT8 on out-of-distribution fixtures: typed entity F1, private character recall and hard-negative false-positive rate, each on the OOD dev set and the frozen OOD final set',
             caption:
-              'Quantisation trade-off from the public evaluation: INT8 keeps 0.9496 entity F1 against FP32 at 0.9565, for a quarter of the size and roughly half the latency.',
+              'Out-of-distribution behaviour on identical 360-case fixtures: DeBERTa-v3-xsmall (Model V2) against TinyBERT-4 (Model V1). The frozen final set was scored once.',
           },
           links: [
             { label: 'Visit OnKith', href: links.onKith, external: true },
-            { label: 'Evaluation repository', href: links.onKithPublic, external: true },
+            { label: 'Project repository', href: links.onKithRepository, external: true },
             { label: 'OnKith on LinkedIn', href: links.onKithLinkedIn, external: true },
           ],
         },
         {
           id: 'project-esas',
           name: 'ESAS: Experience Saudi As a Saudi',
-          status: 'Completed graduation project',
+          status: 'Completed graduation project | Working prototype',
           role: 'Coordinator',
           featured: true,
           description:
-            'ESAS is a graduation project for discovering authentic, locally curated Saudi tourism experiences, built with Spring Boot, PostgreSQL, Docker and Flutter. I coordinated a six-person team and owned the repository and the documentation set.',
+            'ESAS is a six-person graduation project for discovering authentic, locally curated Saudi tourism experiences: a three-role prototype for travellers, experience providers and administrators. I coordinated the team, owned the repository and much of the formal documentation, and contributed to both the backend and the frontend.',
           points: [
-            'Coordinated the team from brainstorming through planning, requirements gathering and demo preparation.',
-            'Wrote the Software Requirements Specification and designed the use cases, workflows and system diagrams for traveller, provider and administrator journeys.',
-            'Built and tested catalogue, booking and role-based features, then presented the poster and live demo at the INJAZ 2026 exhibition.',
+            'Coordinated the team from concept through requirements, design and demonstration, and owned the GitHub repository, merge reviews and integration.',
+            'Wrote much of the Software Requirements Specification and the UML and BPMN design documentation for traveller, provider and administrator journeys.',
+            'Implemented backend and frontend features for catalogue browsing, role-based access, booking, and the provider and admin dashboards, on Java 21 with Spring Boot, PostgreSQL, Flyway, Spring Security with JWT, REST APIs, Flutter and Docker.',
+            'The prototype covers authentication and roles, catalogue filtering, experience details, cart and simulated checkout, bookings, wishlists, provider onboarding and submissions, admin approval and moderation, and an Arabic and English interface. Presented as a poster and live demo at INJAZ 2026.',
           ],
-          tags: ['Requirements engineering', 'Spring Boot', 'PostgreSQL', 'Flutter', 'Docker'],
+          tags: ['Java 21', 'Spring Boot', 'PostgreSQL', 'Flyway', 'JWT', 'Flutter', 'Docker'],
           figure: {
             src: esasHomeHref,
             alt: 'ESAS homepage showing authentic Saudi tourism experiences and search controls',
@@ -449,7 +531,7 @@ export const localizedContent: Record<Language, DashboardContent> = {
             'A bilingual English and Arabic portfolio built with React, TypeScript, Vite and Tailwind CSS, deployed as a static site on GitHub Pages.',
           points: [
             'Frontend only, with structured content files so the profile, experience, projects and skills stay in one place.',
-            'Light and dark themes, responsive layout, CV viewing and download, and accessible anchor navigation.',
+            'Light and dark themes, responsive layout, CV and certificate previews, and accessible anchor navigation.',
           ],
           tags: ['React', 'TypeScript', 'Vite', 'Tailwind CSS'],
           links: [{ label: 'View repository', href: links.personalDashboard, external: true }],
@@ -489,12 +571,74 @@ export const localizedContent: Record<Language, DashboardContent> = {
       ],
       certificatesTitle: 'Certificates',
       certificates: [
-        'Advanced Artificial Intelligence, KAUST Academy',
-        'Fundamentals of Deep Learning, NVIDIA',
-        'Convolutional Neural Networks, DeepLearning.AI',
-        'Linear Algebra for Machine Learning and Data Science, DeepLearning.AI',
-        'Introduction to Data Science in Python, University of Michigan',
+        {
+          title: 'Artificial Intelligence Specialization Summer Program',
+          issuer: 'KAUST Academy',
+          date: 'Jun to Aug 2026',
+          note: '320 training hours at King Khalid University, Abha',
+          image: certificateImage(
+            'kaust-ai-summer-program',
+            'KAUST Academy certificate for completing the Artificial Intelligence Specialization Summer Program, 320 training hours at King Khalid University, Abha, June 28 to August 20, 2026',
+            1600,
+            1132,
+          ),
+        },
+        {
+          title: 'Software Testing Competitor',
+          issuer: 'WorldSkills Shanghai 2026',
+          date: 'Sep 2026',
+          note: 'Recognises participation and achievement as a Competitor',
+          image: certificateImage(
+            'worldskills-shanghai-2026-software-testing',
+            'WorldSkills certificate recognising Yahya Alsharif for participation and achievement as a Competitor in Software Testing at WorldSkills Shanghai 2026',
+            1132,
+            1600,
+          ),
+        },
+        {
+          title: 'Advanced Artificial Intelligence',
+          issuer: 'KAUST Academy',
+          date: 'Feb 2026',
+          note: 'Completed with distinction',
+          image: certificateImage(
+            'kaust-advanced-ai',
+            'KAUST Academy certificate for completing the Advanced Artificial Intelligence course with distinction at Umm Al-Qura University, February 2026',
+            1600,
+            1132,
+          ),
+        },
+        {
+          title: 'Fundamentals of Deep Learning',
+          issuer: 'NVIDIA',
+          date: 'Nov 2025',
+          image: certificateImage(
+            'nvidia-fundamentals-of-deep-learning',
+            'NVIDIA certificate of competency for Fundamentals of Deep Learning, issued November 29, 2025',
+            1237,
+            1600,
+          ),
+        },
+        {
+          title: 'Linear Algebra for Machine Learning and Data Science',
+          issuer: 'DeepLearning.AI',
+          date: 'Dec 2025',
+          image: certificateImage(
+            'deeplearningai-linear-algebra',
+            'DeepLearning.AI course certificate for Linear Algebra for Machine Learning and Data Science, offered through Coursera, December 2025',
+            1600,
+            1237,
+          ),
+        },
+        {
+          title: 'Convolutional Neural Networks',
+          issuer: 'DeepLearning.AI',
+        },
       ],
+      certificatePreview: {
+        open: 'View certificate',
+        closeButton: 'Close',
+        closeAriaLabel: 'Close certificate preview',
+      },
     },
     cv: {
       title: 'CV',
@@ -514,6 +658,22 @@ export const localizedContent: Record<Language, DashboardContent> = {
       nextButton: 'Next post',
       positionLabel: (current, total) => `Post ${current} of ${total}`,
       items: [
+        {
+          title: 'Representing Saudi Arabia at WorldSkills Shanghai 2026',
+          description:
+            'Competing in Software Testing at WorldSkills Shanghai 2026, working through challenging and sometimes unexpected testing tasks under pressure alongside competitors from around the world.',
+          embedUrl: links.embedWorldSkills,
+          postUrl: links.postWorldSkills,
+          iframeTitle: 'LinkedIn post about competing in Software Testing at WorldSkills Shanghai 2026',
+        },
+        {
+          title: 'Joining Mawhub',
+          description:
+            'Joining MawHub, The Talent Hub, to apply what I have learned in AI and software engineering to a real-world product.',
+          embedUrl: links.embedMawhub,
+          postUrl: links.postMawhub,
+          iframeTitle: 'LinkedIn post about joining Mawhub',
+        },
         {
           title: 'Completing the KAUST Academy AI Specialization',
           description:
@@ -620,13 +780,12 @@ export const localizedContent: Record<Language, DashboardContent> = {
     },
     hero: {
       title: 'مرحبًا، أنا يحيى الشريف.',
-      proof:
-        'الذكاء الاصطناعي وتطوير البرمجيات | هندسة البرمجيات',
+      proof: 'مهندس ذكاء اصطناعي في Mawhub | طالب هندسة برمجيات',
       intro:
-        'أعمل على نماذج الذكاء الاصطناعي من البداية إلى النهاية: تصميم البيانات والتسميات، ثم التدريب والتقييم، وصولًا إلى الضغط والقياس الفعلي على الجهاز الذي ستعمل عليه.',
+        'أبني حلولًا تطبيقية في الذكاء الاصطناعي والبرمجيات، من البيانات والتدريب والتقييم إلى النشر على الأجهزة الطرفية والاختبار والتسليم. ومثّلت المملكة العربية السعودية في اختبار البرمجيات في WorldSkills Shanghai 2026.',
       profileName: 'يحيى الشريف',
       profileLocation: 'منطقة مكة المكرمة، المملكة العربية السعودية',
-      profileAlt: 'يحيى الشريف في حفل تخرجه من أكاديمية كاوست',
+      profileAlt: 'صورة شخصية احترافية ليحيى الشريف',
       links: [
         { label: 'عرض السيرة الذاتية', href: '#cv' },
         { label: 'الخبرة', href: '#experience' },
@@ -637,8 +796,8 @@ export const localizedContent: Record<Language, DashboardContent> = {
     about: {
       title: 'نبذة عني',
       paragraphs: [
-        'أعمل على وجهين للمسألة نفسها: هندسة البرمجيات التي تحوّل الفكرة إلى نظام موثق وقابل للاختبار، والذكاء الاصطناعي التطبيقي الذي يجعل بناءه ذا قيمة. عمليًا يعني ذلك المتطلبات والتصميم والاختبار من جهة، والبيانات والتدريب والتقييم من جهة أخرى.',
-        'معظم عملي ينتهي بقياس. أفضّل أن أعرض نموذجًا جرى قياسه على الجهاز الذي سيعمل عليه بدل رقم من دفتر تجارب، وأحرص على أن يبقى كل مشروع قابلًا للشرح لمن لن يقرأ الشيفرة أبدًا.',
+        'أعمل حيث تلتقي هندسة البرمجيات بالذكاء الاصطناعي التطبيقي. بصفتي مهندس ذكاء اصطناعي في Mawhub، أتولى أعمال التنفيذ من متطلبات المنتج حتى التسليم: أخطط للتغييرات عبر قواعد شيفرة قائمة، وأنفذها وأختبرها، وأحرص على أن يطابق ما يُسلَّم ما جرى تحديده. وإلى جانب ذلك أدرس هندسة البرمجيات في جامعة أم القرى.',
+        'في جانب الذكاء الاصطناعي، يهمني المسار كاملًا: من تصميم البيانات والتسميات، مرورًا بالتدريب والتقييم، وصولًا إلى التكميم والقياس على الجهاز الذي سيعمل عليه النموذج فعلًا. والاختبار هو النصف الآخر من طريقة عملي: بعد أربعة أشهر من الاستعداد، مثّلت المملكة العربية السعودية في اختبار البرمجيات في WorldSkills Shanghai 2026. وأفضّل أن أعرض نتيجة مقيسة على نتيجة مأمولة.',
       ],
     },
     skills: {
@@ -650,72 +809,112 @@ export const localizedContent: Record<Language, DashboardContent> = {
             'Python',
             'PyTorch',
             'Hugging Face Transformers',
-            'الرؤية الحاسوبية',
-            'معالجة اللغة الطبيعية',
-            'التعلم المعزز',
-            'تصميم التقييم',
-          ],
-        },
-        {
-          title: 'الأجهزة الطرفية والتحسين',
-          skills: [
             'ONNX Runtime',
             'تكميم INT8',
-            'ضغط النماذج',
             'TensorFlow Lite',
-            'Raspberry Pi',
-            'قياس الأداء',
+            'OpenCV',
+            'NumPy',
           ],
         },
         {
-          title: 'هندسة البرمجيات',
+          title: 'اختبار البرمجيات',
           skills: [
-            'هندسة المتطلبات',
-            'تصميم الأنظمة',
-            'اختبار البرمجيات',
-            'التوثيق',
+            'pytest',
+            'Selenium',
+            'Appium',
+            'Postman',
+            'Newman',
+            'JMeter',
+            'اختبار واجهات API والويب والجوال والأداء',
+          ],
+        },
+        {
+          title: 'تطوير البرمجيات',
+          skills: [
             'Java',
-            'تنسيق المشاريع',
+            'TypeScript',
+            'HTML',
+            'CSS',
+            'واجهات REST',
+            'React',
+            'Vite',
+            'Tailwind CSS',
+            'Git',
+            'GitHub',
+            'Docker',
           ],
         },
         {
-          title: 'الويب والأدوات',
+          title: 'الممارسات الهندسية',
           skills: [
-            'React',
-            'TypeScript',
-            'Tailwind CSS',
-            'Spring Boot',
-            'PostgreSQL',
-            'Flutter',
-            'Git',
-            'Docker',
+            'هندسة المتطلبات (SRS)',
+            'النمذجة بـ UML وBPMN',
+            'مراجعة الشيفرة',
+            'التوثيق التقني',
           ],
         },
       ],
     },
     experience: {
       title: 'الخبرة',
-      lede: 'تدريب في الذكاء الاصطناعي لمدة ثمانية أسابيع في أكاديمية كاوست، والمسابقات التي رافقته.',
+      lede: 'هندسة الذكاء الاصطناعي في Mawhub، وتدريب تطبيقي في الذكاء الاصطناعي بأكاديمية كاوست، ومنافسات في اختبار البرمجيات وتعلم الآلة.',
       items: [
+        {
+          role: 'مهندس ذكاء اصطناعي',
+          organization: 'Mawhub',
+          period: 'سبتمبر 2026 حتى الآن',
+          focus: 'تنفيذ تغييرات الذكاء الاصطناعي والبرمجيات من متطلبات المنتج حتى التسليم',
+          brandMark: { src: mawhubMarkHref, alt: 'شعار Mawhub' },
+          points: [
+            'أتولى أعمال التنفيذ من متطلبات المنتج حتى التسليم، وأحوّل مقاصد المنتج إلى خطط تقنية عبر قواعد شيفرة قائمة.',
+            'أحدد القرارات التقنية وقرارات المنتج التي يعتمد عليها التنفيذ، وأساعد في حسمها.',
+            'أنفذ تغييرات الذكاء الاصطناعي والبرمجيات وأختبرها وأراجعها عبر مسارات عمل Git وGitHub، وأوثق كل تغيير وأدمجه مع الحفاظ على توافق السلوك المُسلَّم مع المتطلبات الموثقة.',
+          ],
+          tags: ['الذكاء الاصطناعي التطبيقي', 'هندسة البرمجيات', 'الاختبار', 'مراجعة الشيفرة', 'Git وGitHub'],
+        },
         {
           role: 'متدرب ذكاء اصطناعي',
           organization: 'أكاديمية كاوست',
           period: 'يونيو 2026 إلى أغسطس 2026',
           location: 'جامعة الملك خالد، أبها',
-          focus: 'مطور من جانب النماذج خلال تدريب تخصصي في الذكاء الاصطناعي لمدة ثمانية أسابيع',
+          focus: 'مسار نموذج الخصوصية في مشروع فريق من ستة أعضاء خلال تدريب في الذكاء الاصطناعي لمدة ثمانية أسابيع',
+          brandMark: { src: kaustAcademyLogo, alt: 'شعار أكاديمية كاوست' },
           points: [
-            'توليت اختيار البيانات وتصميم التسميات والتدريب والتقييم والتحسين وتجهيز حزمة النشر لنموذج الخصوصية الخاص بمشروع الفريق.',
-            'تدربت عبر محاضرات ومختبرات عملية ومشاريع في الرؤية الحاسوبية والنماذج التوليدية، والتعلم المعزز، ومعالجة اللغة الطبيعية باستخدام المحولات وضبط النماذج اللغوية والكلام والوكلاء وRAG.',
-            'طبقت تحسين الاستدلال والذكاء الاصطناعي الطرفي في مشروع جماعي بإشراف أعضاء هيئة تدريس وباحثين من كاوست.',
+            'توليت مسار نموذج الخصوصية في مشروع جماعي بإشراف أعضاء هيئة تدريس وباحثين من كاوست: تصميم البيانات والتسميات، والتدريب، ومنهجية التقييم، وتحليل الإخفاقات، وتطوير النموذج على مراحل لكشف المعلومات الشخصية على الجهاز.',
+            'طبقت عمليًا ما تناوله التدريب في الذكاء الاصطناعي الطرفي وتحسين الاستدلال، فنقلت نموذج محولات من التدريب في PyTorch إلى التصدير بصيغة ONNX والتكميم إلى INT8، وصولًا إلى قياس أدائه على Raspberry Pi.',
           ],
-          tags: ['الرؤية الحاسوبية', 'النماذج التوليدية', 'التعلم المعزز', 'معالجة اللغة الطبيعية', 'الذكاء الاصطناعي الطرفي'],
+          tags: ['PyTorch', 'Transformers', 'ONNX Runtime', 'INT8', 'Raspberry Pi', 'الذكاء الاصطناعي الطرفي'],
           links: [{ label: 'اقرأ تفاصيل المشروع', href: '#project-onkith' }],
+        },
+        {
+          role: 'متسابق في اختبار البرمجيات',
+          organization: 'WorldSkills Shanghai 2026',
+          period: 'سبتمبر 2026',
+          location: 'شنغهاي، الصين',
+          focus: 'مثّلت المملكة العربية السعودية في اختبار البرمجيات في مسابقة WorldSkills الدولية',
+          brandMark: {
+            src: worldSkillsBadgeHref,
+            alt: 'شارة اعتماد WorldSkills Shanghai 2026 في اختبار البرمجيات',
+          },
+          points: [
+            'اختارتني كليتي مرشحًا للتدرب على المسابقة، فأتممت نحو أربعة أشهر من الاستعداد المكثف قبل تمثيل المملكة العربية السعودية في شنغهاي.',
+            'اختبرت أنظمة غير مألوفة وفق مواصفات مهام محددة بزمن، في اختبار واجهات API والويب والجوال والأداء واختبار الصندوق الأبيض.',
+            'استخدمت Postman وNewman لواجهات API، وSelenium للويب، وAppium للجوال، وJMeter للأداء، وpytest لاختبارات الشيفرة.',
+          ],
+          tags: ['Postman', 'Newman', 'Selenium', 'Appium', 'JMeter', 'pytest'],
+          evidence: {
+            src: worldSkillsPhotoHref,
+            alt: 'صورة جماعية لمتسابقي وخبراء اختبار البرمجيات يلوّحون أمام منطقة المهارة 11 لاختبار البرمجيات في WorldSkills Shanghai 2026',
+            caption: 'متسابقو وخبراء اختبار البرمجيات في WorldSkills Shanghai 2026.',
+            isPhoto: true,
+          },
         },
         {
           role: 'متسابق في Kaggle',
           organization: 'أكاديمية كاوست',
           period: 'يوليو 2026 إلى أغسطس 2026',
           focus: 'المركز الثالث في مسابقتين من مسابقات الأكاديمية',
+          brandMark: { src: kaustAcademyLogo, alt: 'شعار أكاديمية كاوست' },
           points: [
             'شاركت في مسابقات تشمل تصنيف الصور، وتوليد الصور وترميمها، وتجزئة الكائنات، ومعالجة اللغة الطبيعية، ومهام الصوت.',
             'تجزئة الخلايا: المركز الثالث بين 24 فريقًا. شبكة ConvNeXt-Tiny U-Net تتنبأ بخريطة مسافات مطبعة، ويجري فك ترميزها بمستجمعات محكومة بالعلامات: 0.8144 لمقياس F1 على تقسيم مجمّع يراعي التكرارات، و0.5472 على المجموعة الخاصة.',
@@ -752,47 +951,49 @@ export const localizedContent: Record<Language, DashboardContent> = {
         {
           id: 'project-onkith',
           name: 'OnKith: ذكاء اصطناعي طرفي يحفظ الخصوصية',
-          status: 'مشروع جماعي في أكاديمية كاوست | تقييم النموذج منشور',
+          status: 'مشروع جماعي في أكاديمية كاوست | جرى قياسه على Raspberry Pi 5',
+          role: 'نموذج الخصوصية والبيانات والتقييم والنشر',
           featured: true,
           description:
-            'OnKith مشروع جماعي في أكاديمية كاوست لبناء مساعد صوتي يضع الخصوصية أولًا، إذ يحول الكلام إلى نص ويزيل المعلومات التعريفية بالكامل على الجهاز. توليت نموذج كشف المعلومات الخاصة من أول نموذج أساس حتى تقييم الإنتاج على Raspberry Pi 5.',
+            'OnKith مشروع جماعي من ستة أعضاء في أكاديمية كاوست لمعالجة الصوت محليًا مع الحفاظ على الخصوصية: يُحوَّل الكلام إلى نص وتُخفى المعلومات الشخصية على الجهاز نفسه، فلا تحتاج التفاصيل الخاصة إلى مغادرته. كان مساري نموذج الخصوصية، من تصميم بياناته وتقييمه إلى النسخة المكممة التي تعمل على Raspberry Pi 5.',
           points: [
-            'نقلت مكون الخصوصية من التصنيف الثنائي إلى الإخفاء على مستوى الرموز، وبنيت نموذج BiLSTM أساسًا، ثم أعددت امتدادات BIO متحاذية على 147,366 صفًا من OpenPII وضبطت TinyBERT-4 ليبلغ 0.973 في F1 على مستوى الرموز و0.957 على مستوى الكيانات ضمن تقسيم محتجز من 40,908 صفوف.',
-            'اختبرت التعميم بتغيير نطاقات البريد الإلكتروني، وتتبعت مواطن الضعف إلى اختلال البيانات وإخفاق الفئات النادرة، ثم أعدت تصميم بيانات Model V2 واستراتيجية تقييمه حول تصنيف خصوصية مصان من 31 كيانًا.',
-            'أعدت تدريب Model V2 باستخدام DeBERTa-v3-xsmall وصدرت ملفات ONNX بصيغتي FP32 وINT8، فارتفع F1 المصنف خارج التوزيع من 0.46 إلى 0.62 واستدعاء المحارف الخاصة من 0.32 إلى 0.84.',
-            'شخصت انهيارًا ظاهريًا في INT8 بوصفه خللًا في تجميع رموز SentencePiece داخل مفكك ترميز الإنتاج، وأصلحته تحت اختبارات انحدار، ثم قست النظام النهائي على Raspberry Pi 5 عند 0.945 في F1 المصنف ووسيط زمن استجابة 53 ms مع اتفاق 98.4% مع بيئة العمل.',
+            'طورت نموذج الخصوصية من نموذج BiLSTM أساسي لكشف الامتدادات، مرورًا بـ TinyBERT-4، وصولًا إلى DeBERTa-v3-xsmall، واخترت البنية النهائية لمتانتها خارج التوزيع لا لأعلى درجة F1 داخله.',
+            'أعدت تصميم استراتيجية البيانات والتقييم بعد إخفاق TinyBERT خارج التوزيع: تصنيف خصوصية من 31 كيانًا على مدونة إنجليزية من 284,619 صفًا و2,088,335 امتدادًا معنونًا، مع تقسيمات تمنع التسرب، وأمثلة سلبية صعبة، ومعيار ثابت خارج التوزيع لا يُقاس إلا مرة واحدة.',
+            'على ذلك المعيار الثابت، رفع الانتقال إلى DeBERTa مقياس F1 للكيانات المصنفة من 0.46 إلى 0.62، واستدعاء المحارف الخاصة من 0.32 إلى 0.84، وخفض معدل الإيجابيات الكاذبة في الأمثلة السلبية الصعبة من 0.65 إلى 0.24.',
+            'أصدرت النموذج بصيغة ONNX مكممة إلى INT8 بحجم 78.5 MiB بعد أن تتبعت انهيارًا ظاهريًا في التكميم إلى خلل في فك ترميز الامتدادات. وعلى Raspberry Pi 5 بذاكرة 4 GB بلغ 0.945 في F1 المصنف بوسيط زمن إخفاء 62 ms، ضمن مسار صوتي يعمل أسرع من الزمن الحقيقي في المتوسط (متوسط RTF يبلغ 0.63).',
           ],
-          tags: ['الخصوصية', 'BiLSTM', 'TinyBERT', 'DeBERTa', 'ONNX Runtime', 'INT8', 'Raspberry Pi 5'],
+          tags: ['الخصوصية', 'PyTorch', 'TinyBERT', 'DeBERTa-v3', 'ONNX Runtime', 'INT8', 'Raspberry Pi 5'],
           brandMark: {
             src: onKithLogoHref,
             alt: 'شعار OnKith',
           },
           figure: {
             src: onKithChartHref,
-            alt: 'مخططان يقارنان بين INT8 وFP32 في مقياس F1 على مستوى الكيانات مقابل حجم الملف ووسيط زمن الاستجابة، وكلاهما أعلى بكثير من خط أساس بسيط',
+            alt: 'ثلاثة مخططات أعمدة تقارن بين TinyBERT-4 INT8 وDeBERTa-v3-xsmall INT8 على بيانات خارج التوزيع: F1 للكيانات المصنفة، واستدعاء المحارف الخاصة، ومعدل الإيجابيات الكاذبة في الأمثلة السلبية الصعبة، على مجموعة التطوير والمجموعة النهائية الثابتة',
             caption:
-              'موازنة التكميم من التقييم المنشور: يحافظ INT8 على 0.9496 في F1 مقابل 0.9565 لـ FP32، بربع الحجم ونحو نصف زمن الاستجابة.',
+              'السلوك خارج التوزيع على 360 حالة متطابقة: DeBERTa-v3-xsmall (Model V2) مقابل TinyBERT-4 (Model V1). قيست المجموعة النهائية الثابتة مرة واحدة فقط.',
           },
           links: [
             { label: 'زيارة OnKith', href: links.onKith, external: true },
-            { label: 'مستودع التقييم', href: links.onKithPublic, external: true },
+            { label: 'مستودع المشروع', href: links.onKithRepository, external: true },
             { label: 'OnKith على LinkedIn', href: links.onKithLinkedIn, external: true },
           ],
         },
         {
           id: 'project-esas',
           name: 'ESAS: Experience Saudi As a Saudi',
-          status: 'مشروع تخرج مكتمل',
+          status: 'مشروع تخرج مكتمل | نموذج أولي عامل',
           role: 'منسق',
           featured: true,
           description:
-            'ESAS مشروع تخرج لاكتشاف تجارب سياحية سعودية أصيلة ومنتقاة محليًا، بُني باستخدام Spring Boot وPostgreSQL وDocker وFlutter. نسقت فريقًا من ستة أعضاء، وتوليت المستودع ومجموعة التوثيق كاملة.',
+            'ESAS مشروع تخرج لفريق من ستة أعضاء لاكتشاف تجارب سياحية سعودية أصيلة ومنتقاة محليًا: نموذج أولي بثلاثة أدوار للمسافرين ومقدمي التجارب والمشرفين. نسقت الفريق، وتوليت المستودع وجزءًا كبيرًا من التوثيق الرسمي، وساهمت في الواجهتين الخلفية والأمامية.',
           points: [
-            'قدت الفريق من العصف الذهني إلى التخطيط وجمع المتطلبات وتجهيز العرض التجريبي.',
-            'كتبت وثيقة متطلبات البرمجيات وصممت حالات الاستخدام ومسارات العمل ومخططات النظام لرحلات المسافر ومقدم الخدمة والمشرف.',
-            'بنيت واختبرت ميزات الكتالوج والحجز والصلاحيات، ثم قدمت الملصق والعرض المباشر في معرض INJAZ 2026.',
+            'نسقت الفريق من الفكرة إلى المتطلبات والتصميم والعرض، وتوليت مستودع GitHub ومراجعات الدمج والتكامل.',
+            'كتبت جزءًا كبيرًا من وثيقة متطلبات البرمجيات ووثائق التصميم بـ UML وBPMN لرحلات المسافر ومقدم الخدمة والمشرف.',
+            'نفذت ميزات في الواجهتين الخلفية والأمامية لتصفح الكتالوج، والصلاحيات حسب الدور، والحجز، ولوحات مقدم الخدمة والمشرف، باستخدام Java 21 مع Spring Boot وPostgreSQL وFlyway وSpring Security مع JWT وواجهات REST وFlutter وDocker.',
+            'يشمل النموذج الأولي المصادقة والأدوار، وتصفية الكتالوج، وتفاصيل التجارب، والسلة والدفع المحاكى، والحجوزات، وقوائم الأمنيات، وتسجيل مقدمي الخدمة وتقديم تجاربهم، وموافقة المشرف والإشراف على المحتوى، وواجهة بالعربية والإنجليزية. وقُدّم ملصقًا وعرضًا مباشرًا في معرض INJAZ 2026.',
           ],
-          tags: ['هندسة المتطلبات', 'Spring Boot', 'PostgreSQL', 'Flutter', 'Docker'],
+          tags: ['Java 21', 'Spring Boot', 'PostgreSQL', 'Flyway', 'JWT', 'Flutter', 'Docker'],
           figure: {
             src: esasHomeHref,
             alt: 'الصفحة الرئيسية لمنصة ESAS تعرض تجارب سياحية سعودية أصيلة وخيارات البحث',
@@ -841,7 +1042,7 @@ export const localizedContent: Record<Language, DashboardContent> = {
             'ملف أعمال ثنائي اللغة بالعربية والإنجليزية، بُني باستخدام React وTypeScript وVite وTailwind CSS، ونُشر كموقع ثابت على GitHub Pages.',
           points: [
             'واجهة أمامية فقط، مع ملفات محتوى منظمة تجمع الملف الشخصي والخبرة والمشاريع والمهارات في مكان واحد.',
-            'وضعان فاتح وداكن، وتخطيط متجاوب، وعرض السيرة الذاتية وتنزيلها، وتنقل يمكن الوصول إليه.',
+            'وضعان فاتح وداكن، وتخطيط متجاوب، ومعاينة السيرة الذاتية والشهادات، وتنقل يمكن الوصول إليه.',
           ],
           tags: ['React', 'TypeScript', 'Vite', 'Tailwind CSS'],
           links: [{ label: 'عرض المستودع', href: links.personalDashboard, external: true }],
@@ -881,12 +1082,74 @@ export const localizedContent: Record<Language, DashboardContent> = {
       ],
       certificatesTitle: 'الشهادات',
       certificates: [
-        'الذكاء الاصطناعي المتقدم، أكاديمية كاوست',
-        'أساسيات التعلم العميق، NVIDIA',
-        'الشبكات العصبية الالتفافية، DeepLearning.AI',
-        'الجبر الخطي لتعلم الآلة وعلم البيانات، DeepLearning.AI',
-        'مقدمة في علم البيانات باستخدام Python، جامعة ميشيغان',
+        {
+          title: 'برنامج تخصص الذكاء الاصطناعي الصيفي',
+          issuer: 'أكاديمية كاوست',
+          date: 'يونيو إلى أغسطس 2026',
+          note: '320 ساعة تدريبية في جامعة الملك خالد، أبها',
+          image: certificateImage(
+            'kaust-ai-summer-program',
+            'شهادة أكاديمية كاوست لإتمام برنامج تخصص الذكاء الاصطناعي الصيفي، 320 ساعة تدريبية في جامعة الملك خالد بأبها، من 28 يونيو إلى 20 أغسطس 2026',
+            1600,
+            1132,
+          ),
+        },
+        {
+          title: 'متسابق في اختبار البرمجيات',
+          issuer: 'WorldSkills Shanghai 2026',
+          date: 'سبتمبر 2026',
+          note: 'تقديرًا للمشاركة والإنجاز بصفة متسابق',
+          image: certificateImage(
+            'worldskills-shanghai-2026-software-testing',
+            'شهادة WorldSkills تقديرًا ليحيى الشريف على المشاركة والإنجاز بصفة متسابق في اختبار البرمجيات في WorldSkills Shanghai 2026',
+            1132,
+            1600,
+          ),
+        },
+        {
+          title: 'الذكاء الاصطناعي المتقدم',
+          issuer: 'أكاديمية كاوست',
+          date: 'فبراير 2026',
+          note: 'أُتمّ بامتياز',
+          image: certificateImage(
+            'kaust-advanced-ai',
+            'شهادة أكاديمية كاوست لإتمام مقرر الذكاء الاصطناعي المتقدم بامتياز في جامعة أم القرى، فبراير 2026',
+            1600,
+            1132,
+          ),
+        },
+        {
+          title: 'أساسيات التعلم العميق',
+          issuer: 'NVIDIA',
+          date: 'نوفمبر 2025',
+          image: certificateImage(
+            'nvidia-fundamentals-of-deep-learning',
+            'شهادة كفاءة من NVIDIA في أساسيات التعلم العميق، صادرة في 29 نوفمبر 2025',
+            1237,
+            1600,
+          ),
+        },
+        {
+          title: 'الجبر الخطي لتعلم الآلة وعلم البيانات',
+          issuer: 'DeepLearning.AI',
+          date: 'ديسمبر 2025',
+          image: certificateImage(
+            'deeplearningai-linear-algebra',
+            'شهادة مقرر من DeepLearning.AI في الجبر الخطي لتعلم الآلة وعلم البيانات عبر Coursera، ديسمبر 2025',
+            1600,
+            1237,
+          ),
+        },
+        {
+          title: 'الشبكات العصبية الالتفافية',
+          issuer: 'DeepLearning.AI',
+        },
       ],
+      certificatePreview: {
+        open: 'عرض الشهادة',
+        closeButton: 'إغلاق',
+        closeAriaLabel: 'إغلاق معاينة الشهادة',
+      },
     },
     cv: {
       title: 'السيرة الذاتية',
@@ -906,6 +1169,22 @@ export const localizedContent: Record<Language, DashboardContent> = {
       nextButton: 'المنشور التالي',
       positionLabel: (current, total) => `المنشور ${current} من ${total}`,
       items: [
+        {
+          title: 'تمثيل المملكة العربية السعودية في WorldSkills Shanghai 2026',
+          description:
+            'المنافسة في اختبار البرمجيات في WorldSkills Shanghai 2026، والعمل تحت الضغط على مهام اختبار صعبة وغير متوقعة أحيانًا إلى جانب متسابقين من حول العالم.',
+          embedUrl: links.embedWorldSkills,
+          postUrl: links.postWorldSkills,
+          iframeTitle: 'منشور LinkedIn عن المنافسة في اختبار البرمجيات في WorldSkills Shanghai 2026',
+        },
+        {
+          title: 'الانضمام إلى Mawhub',
+          description:
+            'الانضمام إلى MawHub، The Talent Hub، لتطبيق ما تعلمته في الذكاء الاصطناعي وهندسة البرمجيات على منتج حقيقي.',
+          embedUrl: links.embedMawhub,
+          postUrl: links.postMawhub,
+          iframeTitle: 'منشور LinkedIn عن الانضمام إلى Mawhub',
+        },
         {
           title: 'إتمام تخصص الذكاء الاصطناعي في أكاديمية كاوست',
           description:

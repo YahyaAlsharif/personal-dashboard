@@ -17,11 +17,23 @@ export function ExperienceSection() {
         <div className="timeline">
           {experience.items.map((item, index) => (
             <Reveal as="article" key={item.role} delay={index * 90} className="timeline-item">
-              <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                <h3 className="text-xl font-semibold text-[var(--color-heading)] sm:text-2xl">
-                  {item.role}
-                  <span className="text-[var(--color-muted)]">, {item.organization}</span>
-                </h3>
+              <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+                <div className="flex min-w-0 items-center gap-4">
+                  {item.brandMark ? (
+                    <img
+                      src={item.brandMark.src}
+                      alt={item.brandMark.alt}
+                      width="48"
+                      height="48"
+                      loading="lazy"
+                      className="experience-brand-mark"
+                    />
+                  ) : null}
+                  <h3 className="min-w-0 text-xl font-semibold text-[var(--color-heading)] sm:text-2xl">
+                    {item.role}
+                    <span className="text-[var(--color-muted)]">, {item.organization}</span>
+                  </h3>
+                </div>
                 <p dir="auto" className="localized-inline text-sm font-medium text-[var(--color-muted)]">
                   {item.period}
                 </p>

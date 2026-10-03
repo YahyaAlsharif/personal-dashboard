@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 import { CvViewerModal } from '../components/CvViewerModal';
 import { DashboardCard } from '../components/DashboardCard';
@@ -9,16 +9,10 @@ import { localizedContent } from '../data/content';
 
 export function CvSection() {
   const [isCvViewerOpen, setIsCvViewerOpen] = useState(false);
-  const viewCvButtonRef = useRef<HTMLButtonElement>(null);
   const { language } = useLanguage();
   const { cv, externalLinkLabel } = localizedContent[language];
 
-  const closeCvViewer = () => {
-    setIsCvViewerOpen(false);
-    window.requestAnimationFrame(() => {
-      viewCvButtonRef.current?.focus();
-    });
-  };
+  const closeCvViewer = () => setIsCvViewerOpen(false);
 
   return (
     <>
@@ -49,7 +43,6 @@ export function CvSection() {
               </span>
               <span className="hidden sm:contents">
                 <button
-                  ref={viewCvButtonRef}
                   type="button"
                   onClick={() => setIsCvViewerOpen(true)}
                   className="action-button rounded-lg border px-5 py-3 text-sm font-semibold transition"

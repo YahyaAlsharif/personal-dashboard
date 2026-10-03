@@ -14,7 +14,7 @@ $outputTempPath = Join-Path (Split-Path -Parent $outputPath) 'social-preview.tmp
 
 $width = 1200
 $height = 630
-$roleText = "AI & Software Development`nSoftware Engineering"
+$roleText = "AI Engineer @ Mawhub`nSoftware Engineering Student"
 
 function New-RoundedRectanglePath {
   param (
@@ -198,7 +198,7 @@ try {
   Draw-Text -Graphics $graphics -Text $roleText -Font $roleFont -Brush $bodyBrush -Rectangle ([System.Drawing.RectangleF]::new(96, 306, 600, 120))
   $logo = [System.Drawing.Image]::FromFile($logoImagePath)
   # The icon includes padding; size and center the visible Y across both subtitle lines.
-  $graphics.DrawImage($logo, [System.Drawing.RectangleF]::new(520, 283, 144, 144))
+  $graphics.DrawImage($logo, [System.Drawing.RectangleF]::new(580, 283, 144, 144))
 
   $graphics.Dispose()
   $graphics = $null
