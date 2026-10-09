@@ -1,4 +1,4 @@
-import { ExternalLink } from '../components/ExternalLink';
+import { LinkRow } from '../components/LinkRow';
 import { ProjectFigurePanel } from '../components/ProjectFigurePanel';
 import { Reveal } from '../components/Reveal';
 import { SectionHeading } from '../components/SectionHeading';
@@ -14,30 +14,23 @@ type ProjectCardProps = {
 };
 
 /**
- * Projects carrying visual evidence get a full-width card so the figure is
- * readable at its native scale; the prose splits into two columns above it.
- * Projects without a figure stay compact in a two-up grid.
+ * Projects with visual evidence use a wide card: the summary sits beside the
+ * detailed points and the figure spans the full width underneath, where charts
+ * stay readable. Projects without a figure stay compact in a two-up row.
  */
 function ProjectCard({ project, roleLabel, externalLinkLabel, delay }: ProjectCardProps) {
   const isWide = Boolean(project.figure);
+  const classNames = [
+    'project-card',
+    isWide ? 'project-card--wide' : '',
+    project.featured ? 'project-card--featured' : '',
+  ]
+    .filter(Boolean)
+    .join(' ');
 
   return (
-    <Reveal
-      as="article"
-      id={project.id}
-      delay={delay}
-      className={`project-card scroll-mt-32 xl:scroll-mt-24 ${isWide ? 'project-card--wide' : ''}`}
-    >
+    <Reveal as="article" id={project.id} delay={delay} className={classNames}>
       <header className="project-card-header">
-        <div className="min-w-0">
-          <h3 className="text-xl font-semibold text-[var(--color-heading)] sm:text-2xl">
-            {project.name}
-          </h3>
-          <p dir="auto" className="localized-inline mt-1 text-sm text-[var(--color-muted)]">
-            {project.status}
-            {project.role ? ` · ${roleLabel}: ${project.role}` : ''}
-          </p>
-        </div>
         {project.brandMark ? (
           <img
             src={project.brandMark.src}
@@ -47,55 +40,58 @@ function ProjectCard({ project, roleLabel, externalLinkLabel, delay }: ProjectCa
             className="project-brand-mark"
           />
         ) : null}
+        <div className="min-w-0">
+          <h3 className="project-card-title type-title">{project.name}</h3>
+          <p dir="auto" className="localized-inline project-card-meta type-meta">
+            {project.status}
+            {project.role ? ` · ${roleLabel}: ${project.role}` : ''}
+          </p>
+        </div>
       </header>
 
-      <p className="prose-justify project-card-description text-base leading-7 text-[var(--color-muted)]">
-        {project.description}
-      </p>
+      <div className="project-card-body">
+        <div className="project-card-summary">
+          <p className="project-card-description type-lead">{project.description}</p>
+          {isWide ? (
+            <ProjectCardLinks project={project} externalLinkLabel={externalLinkLabel} />
+          ) : null}
+        </div>
 
-      <ul className="project-card-points text-sm leading-7 text-[var(--color-muted)]">
-        {project.points.map((point) => (
-          <li key={point} className="flex gap-3">
-            <span
-              aria-hidden="true"
-              className="mt-3 h-1 w-1 flex-none rounded-full bg-[var(--color-heading)]"
-            />
-            <span>{point}</span>
+        <ul className="point-list type-prose">
+          {project.points.map((point) => (
+            <li key={point}>{point}</li>
+          ))}
+        </ul>
+
+        {isWide ? null : (
+          <ProjectCardLinks project={project} externalLinkLabel={externalLinkLabel} />
+        )}
+      </div>
+
+      {project.figure ? <ProjectFigurePanel figure={project.figure} /> : null}
+    </Reveal>
+  );
+}
+
+type ProjectCardLinksProps = {
+  project: Project;
+  externalLinkLabel: string;
+};
+
+function ProjectCardLinks({ project, externalLinkLabel }: ProjectCardLinksProps) {
+  return (
+    <div className="grid gap-3.5">
+      <ul className="inline-list type-meta">
+        {project.tags.map((tag) => (
+          <li key={tag}>
+            <bdi>{tag}</bdi>
           </li>
         ))}
       </ul>
-
-      {project.figure ? <ProjectFigurePanel figure={project.figure} /> : null}
-
-      <div className="project-card-meta">
-        <p className="text-xs text-[var(--color-muted)]">{project.tags.join(' · ')}</p>
-
-        {project.links?.length ? (
-          <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2">
-            {project.links.map((link) =>
-              link.external ? (
-                <ExternalLink
-                  key={link.href}
-                  href={link.href}
-                  newTabLabel={externalLinkLabel}
-                  className="quiet-link"
-                >
-                  <span dir="auto" className="localized-inline">
-                    {link.label}
-                  </span>
-                </ExternalLink>
-              ) : (
-                <a key={link.href} href={link.href} className="quiet-link">
-                  <span dir="auto" className="localized-inline">
-                    {link.label}
-                  </span>
-                </a>
-              ),
-            )}
-          </div>
-        ) : null}
-      </div>
-    </Reveal>
+      {project.links?.length ? (
+        <LinkRow links={project.links} newTabLabel={externalLinkLabel} />
+      ) : null}
+    </div>
   );
 }
 
@@ -106,32 +102,32 @@ export function ProjectsSection() {
   const compact = projects.items.filter((project) => !project.figure);
 
   return (
-    <section id="projects" className="section-band scroll-mt-32 py-16 xl:scroll-mt-24">
+    <section id="projects" className="section section-band">
       <div className="page-container">
         <SectionHeading title={projects.title} lede={projects.lede} />
 
-        <div className="project-list">
+        <div className="project-stack">
           {withEvidence.map((project, index) => (
             <ProjectCard
               key={project.name}
               project={project}
               roleLabel={projects.roleLabel}
               externalLinkLabel={externalLinkLabel}
-              delay={index * 90}
+              delay={index * 60}
             />
           ))}
-        </div>
 
-        <div className="project-list project-list--split">
-          {compact.map((project, index) => (
-            <ProjectCard
-              key={project.name}
-              project={project}
-              roleLabel={projects.roleLabel}
-              externalLinkLabel={externalLinkLabel}
-              delay={index * 80}
-            />
-          ))}
+          <div className="project-pair">
+            {compact.map((project, index) => (
+              <ProjectCard
+                key={project.name}
+                project={project}
+                roleLabel={projects.roleLabel}
+                externalLinkLabel={externalLinkLabel}
+                delay={index * 60}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>

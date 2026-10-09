@@ -19,6 +19,8 @@ export function IntroSection() {
   const { hero, about, externalLinkLabel } = localizedContent[language];
   const heroVideoSrc = `${import.meta.env.BASE_URL}hero/makkah-clock-tower.mp4`;
   const heroPosterSrc = `${import.meta.env.BASE_URL}hero/makkah-clock-tower-poster.jpg`;
+  const internalLinks = hero.links.filter((link) => !link.external);
+  const externalLinks = hero.links.filter((link) => link.external);
 
   useEffect(() => {
     const viewportQuery = window.matchMedia('(min-width: 1024px)');
@@ -65,54 +67,46 @@ export function IntroSection() {
 
       <div className="page-container intro-grid">
         <section id="top" className="intro-hero">
-          <Reveal
-            as="h1"
-            className="max-w-3xl text-4xl font-semibold leading-[1.1] tracking-tight text-[var(--color-heading)] sm:text-5xl lg:text-6xl"
-          >
+          <Reveal as="h1" className="type-display">
             {hero.title}
           </Reveal>
-          <Reveal
-            as="p"
-            delay={90}
-            className="intro-identity mt-6 max-w-2xl text-lg font-semibold leading-8 text-[var(--color-heading)] sm:text-xl"
-          >
+          <Reveal as="p" delay={90} className="hero-role">
             <span dir="auto" className="localized-inline">
               {hero.proof}
             </span>
           </Reveal>
-          <Reveal
-            as="p"
-            delay={150}
-            className="mt-4 max-w-2xl text-base leading-7 text-[var(--color-muted)]"
-          >
+          <Reveal as="p" delay={150} className="hero-intro type-lead">
             {hero.intro}
           </Reveal>
-          <Reveal as="div" delay={210} className="mt-8 flex flex-wrap gap-3">
-            {hero.links.map((link, index) => {
-              const className = `rounded-lg border px-5 py-3 text-sm font-semibold transition ${
-                index === 0 ? 'hero-primary-button' : 'hero-secondary-button'
-              }`;
-              const label = (
-                <span dir="auto" className="localized-inline">
-                  {link.label}
-                </span>
-              );
-
-              return link.external ? (
+          <Reveal as="div" delay={210} className="hero-actions">
+            {/* In-page destinations are buttons; profiles elsewhere stay quiet links. */}
+            <div className="hero-buttons">
+              {internalLinks.map((link, index) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className={`btn ${index === 0 ? 'btn-primary' : 'btn-secondary'}`}
+                >
+                  <span dir="auto" className="localized-inline">
+                    {link.label}
+                  </span>
+                </a>
+              ))}
+            </div>
+            <div className="hero-links">
+              {externalLinks.map((link) => (
                 <ExternalLink
                   key={link.href}
                   href={link.href}
                   newTabLabel={externalLinkLabel}
-                  className={className}
+                  className="quiet-link"
                 >
-                  {label}
+                  <span dir="auto" className="localized-inline">
+                    {link.label}
+                  </span>
                 </ExternalLink>
-              ) : (
-                <a key={link.href} href={link.href} className={className}>
-                  {label}
-                </a>
-              );
-            })}
+              ))}
+            </div>
           </Reveal>
         </section>
 
@@ -123,27 +117,24 @@ export function IntroSection() {
               alt={hero.profileAlt}
               width="800"
               height="1000"
+              fetchPriority="high"
               className="profile-frame-image"
             />
-            <figcaption className="profile-frame-caption">
-              <span className="profile-frame-name">{hero.profileName}</span>
-              <span dir="auto" className="localized-inline profile-frame-location">
+            <figcaption className="profile-frame-caption type-meta">
+              <span dir="auto" className="localized-inline">
                 {hero.profileLocation}
               </span>
             </figcaption>
           </figure>
         </Reveal>
 
-        <section id="about" className="intro-about scroll-mt-32 xl:scroll-mt-24">
-          <Reveal
-            as="h2"
-            className="text-3xl font-semibold tracking-tight text-[var(--color-heading)] sm:text-4xl"
-          >
+        <section id="about" className="intro-about">
+          <Reveal as="h2" className="type-section">
             {about.title}
           </Reveal>
-          <div className="intro-about-columns mt-6">
+          <div className="intro-about-columns">
             {about.paragraphs.map((paragraph, index) => (
-              <Reveal as="p" key={paragraph} delay={index * 90} className="prose-justify">
+              <Reveal as="p" key={paragraph} delay={index * 90} className="type-lead">
                 {paragraph}
               </Reveal>
             ))}

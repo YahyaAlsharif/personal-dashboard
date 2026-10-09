@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { CertificateViewerModal } from '../components/CertificateViewerModal';
+import { ImageViewerModal } from '../components/ImageViewerModal';
 import { Reveal } from '../components/Reveal';
 import { SectionHeading } from '../components/SectionHeading';
 import { useLanguage } from '../context/useLanguage';
@@ -14,60 +14,50 @@ export function EducationSection() {
 
   return (
     <>
-      <section id="education" className="scroll-mt-32 py-16 xl:scroll-mt-24">
+      <section id="education" className="section">
         <div className="page-container">
           <SectionHeading title={education.title} />
 
-          <div className="timeline">
+          <div>
             {education.items.map((item, index) => (
-              <Reveal as="article" key={item.title} delay={index * 90} className="timeline-item">
-                <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
-                  <div className="flex min-w-0 items-center gap-4">
-                    <img
-                      src={item.logoSrc}
-                      alt={item.logoAlt}
-                      className="h-14 w-14 flex-none rounded-lg bg-white object-contain p-1.5 ring-1 ring-[var(--color-border)]"
-                    />
-                    <div className="min-w-0">
-                      <h3 className="text-xl font-semibold text-[var(--color-heading)]">
-                        {item.title}
-                      </h3>
-                      <p className="mt-1 text-sm text-[var(--color-muted)]">{item.organization}</p>
-                    </div>
-                  </div>
-                  <div className="text-sm text-[var(--color-muted)] sm:text-end">
-                    <p dir="auto" className="localized-inline">
+              <Reveal as="article" key={item.title} delay={index * 60} className="entry">
+                <div className="entry-meta">
+                  <img
+                    src={item.logoSrc}
+                    alt={item.logoAlt}
+                    width="48"
+                    height="48"
+                    loading="lazy"
+                    className="entry-logo"
+                  />
+                  <div>
+                    <p dir="auto" className="localized-inline entry-period type-mono">
                       {item.period}
                     </p>
                     {item.status ? (
-                      <p dir="auto" className="localized-inline font-medium text-[var(--color-body)]">
+                      <p dir="auto" className="localized-inline type-meta">
                         {item.status}
                       </p>
                     ) : null}
                   </div>
                 </div>
 
-                <p className="prose-justify mt-5 max-w-3xl text-base leading-7 text-[var(--color-muted)]">
-                  {item.description}
-                </p>
-
-                <ul className="mt-4 max-w-3xl space-y-3 text-sm leading-7 text-[var(--color-muted)]">
-                  {item.points.map((point) => (
-                    <li key={point} className="flex gap-3">
-                      <span
-                        aria-hidden="true"
-                        className="mt-3 h-1 w-1 flex-none rounded-full bg-[var(--color-heading)]"
-                      />
-                      <span>{point}</span>
-                    </li>
-                  ))}
-                </ul>
+                <div className="entry-text">
+                  <h3 className="type-title">{item.title}</h3>
+                  <p className="entry-organization">{item.organization}</p>
+                  <p className="entry-focus type-prose">{item.description}</p>
+                  <ul className="entry-points point-list type-prose">
+                    {item.points.map((point) => (
+                      <li key={point}>{point}</li>
+                    ))}
+                  </ul>
+                </div>
               </Reveal>
             ))}
           </div>
 
-          <Reveal as="div" delay={120} className="mt-10 border-t border-[var(--color-border)] pt-7">
-            <h3 className="text-sm font-semibold uppercase tracking-[0.14em] text-[var(--color-muted)]">
+          <Reveal as="div" delay={120} className="mt-12 lg:mt-14">
+            <h3 className="type-title">
               {education.certificatesTitle}
             </h3>
             <ul className="certificate-list mt-5">
@@ -140,8 +130,14 @@ export function EducationSection() {
         </div>
       </section>
 
-      <CertificateViewerModal
-        certificate={activeCertificate}
+      <ImageViewerModal
+        image={activeCertificate?.image ?? null}
+        title={activeCertificate?.title ?? ''}
+        subtitle={
+          activeCertificate
+            ? [activeCertificate.issuer, activeCertificate.date].filter(Boolean).join(' · ')
+            : undefined
+        }
         closeLabel={education.certificatePreview.closeButton}
         closeAriaLabel={education.certificatePreview.closeAriaLabel}
         onClose={() => setActiveCertificate(null)}

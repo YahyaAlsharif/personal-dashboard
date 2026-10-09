@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
 import { CvViewerModal } from '../components/CvViewerModal';
-import { DashboardCard } from '../components/DashboardCard';
 import { ExternalLink } from '../components/ExternalLink';
+import { Reveal } from '../components/Reveal';
 import { SectionHeading } from '../components/SectionHeading';
 import { useLanguage } from '../context/useLanguage';
 import { localizedContent } from '../data/content';
@@ -13,56 +13,60 @@ export function CvSection() {
   const { cv, externalLinkLabel } = localizedContent[language];
 
   const closeCvViewer = () => setIsCvViewerOpen(false);
+  const viewLabel = (
+    <span dir="auto" className="localized-inline">
+      {cv.viewButton}
+    </span>
+  );
 
   return (
     <>
-      <section id="cv" className="scroll-mt-32 py-16 xl:scroll-mt-24">
+      <section id="cv" className="section !pt-0">
         <div className="page-container">
-          <SectionHeading title={cv.title} lede={cv.cardText} />
-
-          <DashboardCard
-            as="div"
-            className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between"
-            revealDelay={100}
-          >
-            <div>
-              <p className="text-base leading-7 text-[var(--color-body)]">{cv.modalTitle}</p>
-            </div>
+          <Reveal as="div" className="cv-panel">
+            <SectionHeading title={cv.title} lede={cv.cardText} className="max-w-2xl" />
             <div className="flex flex-wrap gap-3">
               {/* Small screens open the PDF directly; the in-page viewer needs room. */}
               <span className="contents sm:hidden">
                 <ExternalLink
                   href={cv.href}
                   newTabLabel={externalLinkLabel}
-                  className="action-button rounded-lg border px-5 py-3 text-sm font-semibold transition"
+                  className="btn btn-primary"
                 >
-                  <span dir="auto" className="localized-inline">
-                    {cv.viewButton}
-                  </span>
+                  {viewLabel}
                 </ExternalLink>
               </span>
               <span className="hidden sm:contents">
                 <button
                   type="button"
+                  aria-haspopup="dialog"
                   onClick={() => setIsCvViewerOpen(true)}
-                  className="action-button rounded-lg border px-5 py-3 text-sm font-semibold transition"
+                  className="btn btn-primary"
                 >
-                  <span dir="auto" className="localized-inline">
-                    {cv.viewButton}
-                  </span>
+                  {viewLabel}
                 </button>
               </span>
-              <a
-                href={cv.href}
-                download={cv.fileName}
-                className="action-button rounded-lg border px-5 py-3 text-sm font-semibold transition"
-              >
+              <a href={cv.href} download={cv.fileName} className="btn btn-secondary">
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                  className="h-4 w-4"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                >
+                  <path d="M12 4v11" />
+                  <path d="m7 10 5 5 5-5" />
+                  <path d="M5 20h14" />
+                </svg>
                 <span dir="auto" className="localized-inline">
                   {cv.downloadButton}
                 </span>
               </a>
             </div>
-          </DashboardCard>
+          </Reveal>
         </div>
       </section>
 

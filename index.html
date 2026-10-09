@@ -48,6 +48,16 @@
       content="https://yahyaalsharif.github.io/personal-dashboard/social-preview.png"
     />
     <title>Yahya Alsharif | AI Engineer | Software Engineering Student</title>
+    <script>
+      // Apply a saved dark theme before first paint so the page does not flash light.
+      try {
+        if (localStorage.getItem('theme') === 'dark') {
+          document.documentElement.dataset.theme = 'dark';
+        }
+      } catch {
+        // Storage can be unavailable (private mode); the app falls back to light.
+      }
+    </script>
   </head>
   <body>
     <script>

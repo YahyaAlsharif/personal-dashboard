@@ -28,6 +28,9 @@ export type EducationItem = {
 export type ProjectFigure = {
   src: string;
   alt: string;
+  /** Intrinsic size, so the page does not jump while the image loads. */
+  width: number;
+  height: number;
   caption: string;
   isPhoto?: boolean;
 };
@@ -106,8 +109,6 @@ export type DashboardContent = {
       close: string;
     };
     theme: {
-      light: string;
-      dark: string;
       switchToLight: string;
       switchToDark: string;
     };
@@ -116,7 +117,6 @@ export type DashboardContent = {
     title: string;
     proof: string;
     intro: string;
-    profileName: string;
     profileLocation: string;
     profileAlt: string;
     links: LocalizedLink[];
@@ -168,6 +168,9 @@ export type DashboardContent = {
     previousButton: string;
     nextButton: string;
     positionLabel: (current: number, total: number) => string;
+    indexLabel: string;
+    loading: string;
+    unavailable: string;
     items: Post[];
   };
   contact: {
@@ -175,8 +178,14 @@ export type DashboardContent = {
     lede: string;
     options: ContactOption[];
   };
+  figureViewer: {
+    open: string;
+    closeButton: string;
+    closeAriaLabel: string;
+  };
   externalLinkLabel: string;
   backToTop: string;
+  copyright: (year: number) => string;
 };
 
 const cvFileName = 'yahya_alsharif_cv.pdf';
@@ -263,8 +272,6 @@ export const localizedContent: Record<Language, DashboardContent> = {
         close: 'Close navigation menu',
       },
       theme: {
-        light: 'Light',
-        dark: 'Dark',
         switchToLight: 'Switch to light mode',
         switchToDark: 'Switch to dark mode',
       },
@@ -274,7 +281,6 @@ export const localizedContent: Record<Language, DashboardContent> = {
       proof: 'AI Engineer @ Mawhub | Software Engineering Student',
       intro:
         'I build applied AI and software, from data, training and evaluation through edge deployment, testing and delivery. I represented Saudi Arabia in Software Testing at WorldSkills Shanghai 2026.',
-      profileName: 'Yahya Alsharif',
       profileLocation: 'Makkah Region, Saudi Arabia',
       profileAlt: 'Professional headshot of Yahya Alsharif',
       links: [
@@ -395,6 +401,8 @@ export const localizedContent: Record<Language, DashboardContent> = {
           tags: ['Postman', 'Newman', 'Selenium', 'Appium', 'JMeter', 'pytest'],
           evidence: {
             src: worldSkillsPhotoHref,
+            width: 1600,
+            height: 758,
             alt: 'Group photo of Software Testing competitors and experts waving in front of the skill 11 Software Testing area at WorldSkills Shanghai 2026',
             caption: 'Software Testing competitors and experts at WorldSkills Shanghai 2026.',
             isPhoto: true,
@@ -414,6 +422,8 @@ export const localizedContent: Record<Language, DashboardContent> = {
           tags: ['Computer vision', 'Instance segmentation', 'MI-GAN', 'PyTorch'],
           evidence: {
             src: cellLeaderboardHref,
+            width: 1485,
+            height: 681,
             alt: 'Final private Kaggle leaderboard for the cell instance segmentation challenge, with the KAUST Makkah team third at 0.5472',
             caption: 'Cell instance segmentation, final private leaderboard: third of 24 teams at 0.5472.',
           },
@@ -460,6 +470,8 @@ export const localizedContent: Record<Language, DashboardContent> = {
           },
           figure: {
             src: onKithChartHref,
+            width: 1600,
+            height: 664,
             alt: 'Three bar charts comparing TinyBERT-4 INT8 and DeBERTa-v3-xsmall INT8 on out-of-distribution fixtures: typed entity F1, private character recall and hard-negative false-positive rate, each on the OOD dev set and the frozen OOD final set',
             caption:
               'Out-of-distribution behaviour on identical 360-case fixtures: DeBERTa-v3-xsmall (Model V2) against TinyBERT-4 (Model V1). The frozen final set was scored once.',
@@ -487,6 +499,8 @@ export const localizedContent: Record<Language, DashboardContent> = {
           tags: ['Java 21', 'Spring Boot', 'PostgreSQL', 'Flyway', 'JWT', 'Flutter', 'Docker'],
           figure: {
             src: esasHomeHref,
+            width: 1600,
+            height: 552,
             alt: 'ESAS homepage showing authentic Saudi tourism experiences and search controls',
             caption: 'Traveller-facing catalogue with keyword, city and category search.',
           },
@@ -505,6 +519,8 @@ export const localizedContent: Record<Language, DashboardContent> = {
           tags: ['Reinforcement learning', 'Deep Q-Network', 'PyTorch', 'Evaluation design'],
           figure: {
             src: flappyChartHref,
+            width: 1650,
+            height: 600,
             alt: 'Line chart of minimum, mean and maximum greedy pipe score across scheduled training transitions, with the minimum staying low while the maximum climbs',
             caption:
               'Why checkpoints are ranked on the worst seed: the maximum swings wildly while the minimum barely moves.',
@@ -657,6 +673,9 @@ export const localizedContent: Record<Language, DashboardContent> = {
       previousButton: 'Previous post',
       nextButton: 'Next post',
       positionLabel: (current, total) => `Post ${current} of ${total}`,
+      indexLabel: 'All milestones',
+      loading: 'Loading the LinkedIn post…',
+      unavailable: 'This LinkedIn post could not be shown here.',
       items: [
         {
           title: 'Representing Saudi Arabia at WorldSkills Shanghai 2026',
@@ -751,8 +770,14 @@ export const localizedContent: Record<Language, DashboardContent> = {
         },
       ],
     },
+    figureViewer: {
+      open: 'View larger',
+      closeButton: 'Close',
+      closeAriaLabel: 'Close enlarged figure',
+    },
     externalLinkLabel: '(opens in a new tab)',
     backToTop: 'Back to top',
+    copyright: (year) => `© ${year} Yahya Alsharif`,
   },
   ar: {
     header: {
@@ -772,8 +797,6 @@ export const localizedContent: Record<Language, DashboardContent> = {
         close: 'إغلاق قائمة التنقل',
       },
       theme: {
-        light: 'فاتح',
-        dark: 'داكن',
         switchToLight: 'التبديل إلى الوضع الفاتح',
         switchToDark: 'التبديل إلى الوضع الداكن',
       },
@@ -783,7 +806,6 @@ export const localizedContent: Record<Language, DashboardContent> = {
       proof: 'مهندس ذكاء اصطناعي في Mawhub | طالب هندسة برمجيات',
       intro:
         'أبني حلولًا تطبيقية في الذكاء الاصطناعي والبرمجيات، من البيانات والتدريب والتقييم إلى النشر على الأجهزة الطرفية والاختبار والتسليم. ومثّلت المملكة العربية السعودية في اختبار البرمجيات في WorldSkills Shanghai 2026.',
-      profileName: 'يحيى الشريف',
       profileLocation: 'منطقة مكة المكرمة، المملكة العربية السعودية',
       profileAlt: 'صورة شخصية احترافية ليحيى الشريف',
       links: [
@@ -904,6 +926,8 @@ export const localizedContent: Record<Language, DashboardContent> = {
           tags: ['Postman', 'Newman', 'Selenium', 'Appium', 'JMeter', 'pytest'],
           evidence: {
             src: worldSkillsPhotoHref,
+            width: 1600,
+            height: 758,
             alt: 'صورة جماعية لمتسابقي وخبراء اختبار البرمجيات يلوّحون أمام منطقة المهارة 11 لاختبار البرمجيات في WorldSkills Shanghai 2026',
             caption: 'متسابقو وخبراء اختبار البرمجيات في WorldSkills Shanghai 2026.',
             isPhoto: true,
@@ -923,6 +947,8 @@ export const localizedContent: Record<Language, DashboardContent> = {
           tags: ['الرؤية الحاسوبية', 'تجزئة الكائنات', 'MI-GAN', 'PyTorch'],
           evidence: {
             src: cellLeaderboardHref,
+            width: 1485,
+            height: 681,
             alt: 'لوحة النتائج الخاصة النهائية لمسابقة تجزئة الخلايا، ويظهر فيها فريق كاوست مكة في المركز الثالث بنتيجة 0.5472',
             caption: 'تجزئة الخلايا، لوحة النتائج الخاصة النهائية: المركز الثالث بين 24 فريقًا بنتيجة 0.5472.',
           },
@@ -969,6 +995,8 @@ export const localizedContent: Record<Language, DashboardContent> = {
           },
           figure: {
             src: onKithChartHref,
+            width: 1600,
+            height: 664,
             alt: 'ثلاثة مخططات أعمدة تقارن بين TinyBERT-4 INT8 وDeBERTa-v3-xsmall INT8 على بيانات خارج التوزيع: F1 للكيانات المصنفة، واستدعاء المحارف الخاصة، ومعدل الإيجابيات الكاذبة في الأمثلة السلبية الصعبة، على مجموعة التطوير والمجموعة النهائية الثابتة',
             caption:
               'السلوك خارج التوزيع على 360 حالة متطابقة: DeBERTa-v3-xsmall (Model V2) مقابل TinyBERT-4 (Model V1). قيست المجموعة النهائية الثابتة مرة واحدة فقط.',
@@ -996,6 +1024,8 @@ export const localizedContent: Record<Language, DashboardContent> = {
           tags: ['Java 21', 'Spring Boot', 'PostgreSQL', 'Flyway', 'JWT', 'Flutter', 'Docker'],
           figure: {
             src: esasHomeHref,
+            width: 1600,
+            height: 552,
             alt: 'الصفحة الرئيسية لمنصة ESAS تعرض تجارب سياحية سعودية أصيلة وخيارات البحث',
             caption: 'كتالوج موجه للمسافر مع بحث بالكلمة المفتاحية والمدينة والفئة.',
           },
@@ -1016,6 +1046,8 @@ export const localizedContent: Record<Language, DashboardContent> = {
           tags: ['التعلم المعزز', 'شبكات Q العميقة', 'PyTorch', 'تصميم التقييم'],
           figure: {
             src: flappyChartHref,
+            width: 1650,
+            height: 600,
             alt: 'مخطط خطي لأدنى ومتوسط وأعلى نتيجة أنابيب عبر خطوات التدريب المجدولة، إذ يبقى الحد الأدنى منخفضًا بينما يرتفع الحد الأعلى',
             caption:
               'لماذا تُرتب نقاط التحقق حسب أسوأ بذرة: الحد الأعلى يتأرجح بشدة بينما الحد الأدنى بالكاد يتحرك.',
@@ -1168,6 +1200,9 @@ export const localizedContent: Record<Language, DashboardContent> = {
       previousButton: 'المنشور السابق',
       nextButton: 'المنشور التالي',
       positionLabel: (current, total) => `المنشور ${current} من ${total}`,
+      indexLabel: 'جميع المحطات',
+      loading: 'جارٍ تحميل منشور LinkedIn…',
+      unavailable: 'تعذّر عرض منشور LinkedIn هنا.',
       items: [
         {
           title: 'تمثيل المملكة العربية السعودية في WorldSkills Shanghai 2026',
@@ -1261,7 +1296,13 @@ export const localizedContent: Record<Language, DashboardContent> = {
         },
       ],
     },
+    figureViewer: {
+      open: 'عرض بحجم أكبر',
+      closeButton: 'إغلاق',
+      closeAriaLabel: 'إغلاق الشكل المكبّر',
+    },
     externalLinkLabel: '(يفتح في علامة تبويب جديدة)',
     backToTop: 'العودة إلى الأعلى',
+    copyright: (year) => `© ${year} يحيى الشريف`,
   },
 };

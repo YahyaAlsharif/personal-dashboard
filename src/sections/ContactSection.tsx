@@ -1,5 +1,5 @@
-import { DashboardCard } from '../components/DashboardCard';
 import { ExternalLink } from '../components/ExternalLink';
+import { Reveal } from '../components/Reveal';
 import { SectionHeading } from '../components/SectionHeading';
 import { useLanguage } from '../context/useLanguage';
 import { localizedContent } from '../data/content';
@@ -9,53 +9,46 @@ export function ContactSection() {
   const { contact, externalLinkLabel } = localizedContent[language];
 
   return (
-    <section id="contact" className="scroll-mt-32 py-16 xl:scroll-mt-24">
-      <div className="page-container">
-        <SectionHeading title={contact.title} lede={contact.lede} />
+    <section id="contact" className="section">
+      <div className="page-container contact-layout">
+        <SectionHeading title={contact.title} lede={contact.lede} className="max-w-xl" />
 
-        <div className="grid gap-5 md:grid-cols-3">
-          {contact.options.map((option, index) => (
-            <DashboardCard
-              key={option.title}
-              as="div"
-              className="flex h-full flex-col"
-              revealDelay={(index % 3) * 90}
-            >
-              <h3
-                dir="auto"
-                className="localized-inline text-lg font-semibold text-[var(--color-heading)]"
-              >
-                {option.title}
-              </h3>
-              <p
-                className="mt-3 text-sm leading-6 text-[var(--color-muted)]"
-              >
-                {option.description}
-              </p>
-              <div className="mt-auto flex pt-5">
-                {option.external ? (
-                  <ExternalLink
-                    href={option.href}
-                    newTabLabel={externalLinkLabel}
-                    className="action-button inline-flex rounded-lg border px-5 py-3 text-sm font-semibold transition"
-                  >
-                    <span dir="auto" className="localized-inline">
-                      {option.buttonText}
-                    </span>
-                  </ExternalLink>
-                ) : (
-                  <a
-                    href={option.href}
-                    className="action-button inline-flex rounded-lg border px-5 py-3 text-sm font-semibold transition"
-                  >
-                  <span dir="auto" className="localized-inline">
-                    {option.buttonText}
-                  </span>
-                  </a>
-                )}
-              </div>
-            </DashboardCard>
-          ))}
+        <div className="contact-rows">
+          {contact.options.map((option, index) => {
+            // Email is the direct line, so it carries the single primary action.
+            const buttonClassName = `btn ${option.external ? 'btn-secondary' : 'btn-primary'}`;
+            const label = (
+              <span dir="auto" className="localized-inline">
+                {option.buttonText}
+              </span>
+            );
+
+            return (
+              <Reveal as="div" key={option.title} delay={index * 60} className="contact-row">
+                <div className="min-w-0">
+                  <h3 dir="auto" className="localized-inline type-title !text-[1.0625rem]">
+                    {option.title}
+                  </h3>
+                  <p className="mt-1 type-meta">{option.description}</p>
+                </div>
+                <div>
+                  {option.external ? (
+                    <ExternalLink
+                      href={option.href}
+                      newTabLabel={externalLinkLabel}
+                      className={buttonClassName}
+                    >
+                      {label}
+                    </ExternalLink>
+                  ) : (
+                    <a href={option.href} className={buttonClassName}>
+                      {label}
+                    </a>
+                  )}
+                </div>
+              </Reveal>
+            );
+          })}
         </div>
       </div>
     </section>
