@@ -369,6 +369,18 @@ If new generated files appear after a command, explain whether they should be ig
 
 Do not add large unnecessary files.
 
+## Commit Authorship and Attribution
+
+All commits are authored by Yahya alone.
+
+* Do not add Claude, Anthropic, or any AI agent as a co-author or contributor.
+* Do not add `Co-Authored-By: Claude` or any similar Git trailer.
+* Do not add AI attribution to commit messages, PR descriptions, or repository files.
+* Use Yahya's existing Git author identity; do not change the Git configuration.
+* Before committing, inspect the proposed commit message and confirm it contains no AI attribution.
+
+This applies to every commit in this repository.
+
 ## Dependency Policy
 
 Before installing any package:
