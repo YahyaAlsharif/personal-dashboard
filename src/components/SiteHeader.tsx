@@ -29,7 +29,59 @@ export function SiteHeader({
 }: SiteHeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuToggleRef = useRef<HTMLButtonElement>(null);
+  const navRef = useRef<HTMLElement>(null);
+  const indicatorRef = useRef<HTMLSpanElement>(null);
+  const indicatorLanguageRef = useRef(language);
   const activeSection = useActiveSection(trackedSections, language);
+
+  // One shared underline slides between links, so a section change reads as
+  // movement along the nav rather than one mark vanishing and another appearing.
+  useEffect(() => {
+    const nav = navRef.current;
+    const indicator = indicatorRef.current;
+
+    if (!nav || !indicator) {
+      return undefined;
+    }
+
+    const placeIndicator = () => {
+      const activeLink = nav.querySelector<HTMLElement>('[aria-current="true"]');
+
+      if (!activeLink) {
+        indicator.dataset.visible = 'false';
+        return;
+      }
+
+      // Appearing, or relaid out for another language: jump into place, then fade in.
+      const shouldJump =
+        indicator.dataset.visible !== 'true' || indicatorLanguageRef.current !== language;
+      indicatorLanguageRef.current = language;
+
+      if (shouldJump) {
+        indicator.style.transition = 'none';
+      }
+
+      // Rects rather than offsetLeft/offsetWidth, which round to whole pixels.
+      const navBox = nav.getBoundingClientRect();
+      const linkBox = activeLink.getBoundingClientRect();
+      indicator.style.transform = `translateX(${linkBox.left - navBox.left}px) scaleX(${linkBox.width})`;
+
+      if (shouldJump) {
+        indicator.getBoundingClientRect();
+        indicator.style.transition = '';
+      }
+
+      indicator.dataset.visible = 'true';
+    };
+
+    placeIndicator();
+
+    // Link widths change when the web font arrives or the window resizes.
+    const resizeObserver = new ResizeObserver(placeIndicator);
+    resizeObserver.observe(nav);
+
+    return () => resizeObserver.disconnect();
+  }, [activeSection, language]);
 
   useEffect(() => {
     if (!isMenuOpen) {
@@ -54,7 +106,8 @@ export function SiteHeader({
       <div className="page-container site-header-inner">
         <SiteLogo label={header.homeLabel} />
 
-        <nav aria-label={header.navigationLabel} className="site-nav">
+        <nav ref={navRef} aria-label={header.navigationLabel} className="site-nav">
+          <span ref={indicatorRef} aria-hidden="true" className="site-nav-indicator" />
           {header.nav.map((link) => (
             <a
               key={link.href}
@@ -71,6 +124,7 @@ export function SiteHeader({
 
         <div className="site-header-actions">
           <LanguageToggle
+            label={header.languageLabel}
             language={language}
             onChange={(nextLanguage) => {
               setIsMenuOpen(false);

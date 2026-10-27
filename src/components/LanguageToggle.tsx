@@ -1,18 +1,19 @@
 import type { Language } from '../context/language';
 
 type LanguageToggleProps = {
+  label: string;
   language: Language;
   onChange: (language: Language) => void;
 };
 
-export function LanguageToggle({ language, onChange }: LanguageToggleProps) {
+export function LanguageToggle({ label, language, onChange }: LanguageToggleProps) {
   const isArabic = language === 'ar';
 
   return (
     <div
       className="relative grid h-10 grid-cols-2 rounded-full border border-[var(--color-border)] bg-[var(--color-button)] p-1 text-[0.8125rem] font-semibold text-[var(--color-button-text)]"
       role="group"
-      aria-label="Language"
+      aria-label={label}
     >
       <span
         aria-hidden="true"

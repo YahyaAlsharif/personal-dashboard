@@ -49,27 +49,24 @@
     />
     <title>Yahya Alsharif | AI Engineer | Software Engineering Student</title>
     <script>
-      // Apply a saved dark theme before first paint so the page does not flash light.
-      try {
-        if (localStorage.getItem('theme') === 'dark') {
-          document.documentElement.dataset.theme = 'dark';
-        }
-      } catch {
-        // Storage can be unavailable (private mode); the app falls back to light.
-      }
-    </script>
-  </head>
-  <body>
-    <script>
+      // Apply the saved theme before first paint so a dark visit never flashes light.
       (function () {
+        var theme = 'light';
         try {
-          var saved = localStorage.getItem('theme');
-          document.documentElement.dataset.theme = saved === 'dark' ? 'dark' : 'light';
+          if (localStorage.getItem('theme') === 'dark') {
+            theme = 'dark';
+          }
         } catch (error) {
-          document.documentElement.dataset.theme = 'light';
+          // Storage can be unavailable; the app falls back to light.
+        }
+        document.documentElement.dataset.theme = theme;
+        if (theme === 'dark') {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0a0a0a');
         }
       })();
     </script>
+  </head>
+  <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

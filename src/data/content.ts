@@ -103,6 +103,8 @@ export type DashboardContent = {
     brand: string;
     homeLabel: string;
     navigationLabel: string;
+    skipToContent: string;
+    languageLabel: string;
     nav: LocalizedLink[];
     menu: {
       open: string;
@@ -120,6 +122,10 @@ export type DashboardContent = {
     profileLocation: string;
     profileAlt: string;
     links: LocalizedLink[];
+    video: {
+      pause: string;
+      play: string;
+    };
   };
   about: {
     title: string;
@@ -220,6 +226,8 @@ const links = {
   onKith: 'https://onkith.online/',
   onKithLinkedIn: 'https://www.linkedin.com/company/onkith/',
   onKithRepository: 'https://github.com/YahyaAlsharif/OnKith',
+  onKithEvaluation: 'https://github.com/YahyaAlsharif/OnKith_Public',
+  tajweedRepository: 'https://github.com/YahyaAlsharif/kaust-tajweed-audio-classification',
   email: 'yahya.alsharif567@gmail.com',
   kaggleCellSegmentationRepository:
     'https://github.com/YahyaAlsharif/kaust-cell-instance-segmentation',
@@ -259,6 +267,8 @@ export const localizedContent: Record<Language, DashboardContent> = {
       brand: 'Yahya Alsharif',
       homeLabel: 'Yahya Alsharif home',
       navigationLabel: 'Primary navigation',
+      skipToContent: 'Skip to main content',
+      languageLabel: 'Language',
       nav: [
         { label: 'About', href: '#about' },
         { label: 'Experience', href: '#experience' },
@@ -277,7 +287,7 @@ export const localizedContent: Record<Language, DashboardContent> = {
       },
     },
     hero: {
-      title: "Hi, I'm Yahya Alsharif.",
+      title: 'Hi, I’m Yahya Alsharif.',
       proof: 'AI Engineer @ Mawhub | Software Engineering Student',
       intro:
         'I build applied AI and software, from data, training and evaluation through edge deployment, testing and delivery. I represented Saudi Arabia in Software Testing at WorldSkills Shanghai 2026.',
@@ -289,6 +299,10 @@ export const localizedContent: Record<Language, DashboardContent> = {
         { label: 'GitHub', href: links.github, external: true },
         { label: 'LinkedIn', href: links.linkedin, external: true },
       ],
+      video: {
+        pause: 'Pause background video',
+        play: 'Play background video',
+      },
     },
     about: {
       title: 'About Me',
@@ -329,6 +343,8 @@ export const localizedContent: Record<Language, DashboardContent> = {
           title: 'Software Development',
           skills: [
             'Java',
+            'Spring Boot',
+            'PostgreSQL',
             'TypeScript',
             'HTML',
             'CSS',
@@ -346,6 +362,9 @@ export const localizedContent: Record<Language, DashboardContent> = {
           skills: [
             'Requirements engineering (SRS)',
             'UML and BPMN modelling',
+            'Workflow and pipeline design',
+            'Backend integration',
+            'Test automation',
             'Code review',
             'Technical documentation',
           ],
@@ -418,6 +437,7 @@ export const localizedContent: Record<Language, DashboardContent> = {
             'Competed across image classification, image generation and inpainting, instance segmentation, natural language and audio tasks.',
             'Cell instance segmentation, third of 24 teams. A ConvNeXt-Tiny U-Net regressing a normalised distance map, decoded by marker-controlled watershed: 0.8144 instance F1 on a near-duplicate-aware grouped split and 0.5472 private instance F1.',
             'Image inpainting, third place. No test masks were supplied, so mask recovery, data selection and inpainting all had to work together: FID 12.02 across 8,000 reconstructed images.',
+            'Tajweed audio classification, 17th of 71 teams: ConvNeXt-Tiny on spectrogram features with temporal context, 0.9608 private macro-F1.',
           ],
           tags: ['Computer vision', 'Instance segmentation', 'MI-GAN', 'PyTorch'],
           evidence: {
@@ -440,6 +460,7 @@ export const localizedContent: Record<Language, DashboardContent> = {
             },
             { label: 'Inpainting repository', href: links.kaggleInpaintingRepository, external: true },
             { label: 'Inpainting Kaggle notebook', href: links.kaggleInpainting, external: true },
+            { label: 'Tajweed audio repository', href: links.tajweedRepository, external: true },
           ],
         },
       ],
@@ -479,6 +500,7 @@ export const localizedContent: Record<Language, DashboardContent> = {
           links: [
             { label: 'Visit OnKith', href: links.onKith, external: true },
             { label: 'Project repository', href: links.onKithRepository, external: true },
+            { label: 'Model evaluation notebooks', href: links.onKithEvaluation, external: true },
             { label: 'OnKith on LinkedIn', href: links.onKithLinkedIn, external: true },
           ],
         },
@@ -784,6 +806,8 @@ export const localizedContent: Record<Language, DashboardContent> = {
       brand: 'يحيى الشريف',
       homeLabel: 'الصفحة الرئيسية ليحيى الشريف',
       navigationLabel: 'التنقل الرئيسي',
+      skipToContent: 'الانتقال إلى المحتوى الرئيسي',
+      languageLabel: 'اللغة',
       nav: [
         { label: 'نبذة عني', href: '#about' },
         { label: 'الخبرة', href: '#experience' },
@@ -814,6 +838,10 @@ export const localizedContent: Record<Language, DashboardContent> = {
         { label: 'GitHub', href: links.github, external: true },
         { label: 'لينكدإن', href: links.linkedin, external: true },
       ],
+      video: {
+        pause: 'إيقاف فيديو الخلفية مؤقتًا',
+        play: 'تشغيل فيديو الخلفية',
+      },
     },
     about: {
       title: 'نبذة عني',
@@ -854,6 +882,8 @@ export const localizedContent: Record<Language, DashboardContent> = {
           title: 'تطوير البرمجيات',
           skills: [
             'Java',
+            'Spring Boot',
+            'PostgreSQL',
             'TypeScript',
             'HTML',
             'CSS',
@@ -871,6 +901,9 @@ export const localizedContent: Record<Language, DashboardContent> = {
           skills: [
             'هندسة المتطلبات (SRS)',
             'النمذجة بـ UML وBPMN',
+            'تصميم سير العمل وخطوط المعالجة',
+            'تكامل الأنظمة الخلفية',
+            'أتمتة الاختبارات',
             'مراجعة الشيفرة',
             'التوثيق التقني',
           ],
@@ -943,6 +976,7 @@ export const localizedContent: Record<Language, DashboardContent> = {
             'شاركت في مسابقات تشمل تصنيف الصور، وتوليد الصور وترميمها، وتجزئة الكائنات، ومعالجة اللغة الطبيعية، ومهام الصوت.',
             'تجزئة الخلايا: المركز الثالث بين 24 فريقًا. شبكة ConvNeXt-Tiny U-Net تتنبأ بخريطة مسافات مطبعة، ويجري فك ترميزها بمستجمعات محكومة بالعلامات: 0.8144 لمقياس F1 على تقسيم مجمّع يراعي التكرارات، و0.5472 على المجموعة الخاصة.',
             'ترميم الصور: المركز الثالث. لم تُقدَّم أقنعة الاختبار، لذلك كان على استعادة الأقنعة واختيار البيانات والترميم أن تعمل معًا: درجة FID بلغت 12.02 عبر 8,000 صورة أُعيد بناؤها.',
+            'تصنيف تلاوات التجويد صوتيًا: المركز 17 بين 71 فريقًا، بنموذج ConvNeXt-Tiny على ميزات طيفية تراعي السياق الزمني، و0.9608 لمقياس macro-F1 على المجموعة الخاصة.',
           ],
           tags: ['الرؤية الحاسوبية', 'تجزئة الكائنات', 'MI-GAN', 'PyTorch'],
           evidence: {
@@ -965,6 +999,7 @@ export const localizedContent: Record<Language, DashboardContent> = {
             },
             { label: 'مستودع ترميم الصور', href: links.kaggleInpaintingRepository, external: true },
             { label: 'دفتر Kaggle لترميم الصور', href: links.kaggleInpainting, external: true },
+            { label: 'مستودع تصنيف صوت التجويد', href: links.tajweedRepository, external: true },
           ],
         },
       ],
@@ -1004,6 +1039,7 @@ export const localizedContent: Record<Language, DashboardContent> = {
           links: [
             { label: 'زيارة OnKith', href: links.onKith, external: true },
             { label: 'مستودع المشروع', href: links.onKithRepository, external: true },
+            { label: 'دفاتر تقييم النموذج', href: links.onKithEvaluation, external: true },
             { label: 'OnKith على LinkedIn', href: links.onKithLinkedIn, external: true },
           ],
         },

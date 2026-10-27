@@ -34,7 +34,7 @@ export function CvViewerModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex overscroll-contain items-center justify-center bg-black/70 p-3 sm:p-6"
+      className="dialog-backdrop fixed inset-0 z-50 flex overscroll-contain items-center justify-center bg-black/70 p-3 sm:p-6"
       role="presentation"
       onMouseDown={(event) => {
         if (event.target === event.currentTarget) {
@@ -47,7 +47,7 @@ export function CvViewerModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby="cv-viewer-title"
-        className="flex h-[92vh] w-full max-w-6xl flex-col overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-card-strong)] shadow-2xl shadow-black/30 sm:h-[90vh]"
+        className="dialog-panel flex h-[92vh] w-full max-w-6xl flex-col overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-card-strong)] shadow-2xl shadow-black/30 sm:h-[90vh]"
       >
         <header className="flex flex-col gap-4 border-b border-[var(--color-border)] bg-[var(--color-card)] px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5">
           <div className="min-w-0">

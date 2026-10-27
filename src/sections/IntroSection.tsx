@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { ExternalLink } from '../components/ExternalLink';
 import { Reveal } from '../components/Reveal';
@@ -15,6 +15,8 @@ const shouldRenderHeroVideo = () =>
  */
 export function IntroSection() {
   const [renderVideo, setRenderVideo] = useState(shouldRenderHeroVideo);
+  const [isVideoPaused, setIsVideoPaused] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const { language } = useLanguage();
   const { hero, about, externalLinkLabel } = localizedContent[language];
   const heroVideoSrc = `${import.meta.env.BASE_URL}hero/makkah-clock-tower.mp4`;
@@ -38,11 +40,30 @@ export function IntroSection() {
     };
   }, []);
 
+  const toggleVideo = () => {
+    const video = videoRef.current;
+
+    if (!video) {
+      return;
+    }
+
+    if (video.paused) {
+      // Playback can be refused (for example by power-saving modes); the
+      // button simply stays on "play".
+      video.play().catch(() => undefined);
+    } else {
+      video.pause();
+    }
+  };
+
   return (
     <div className="intro-shell">
       <div aria-hidden="true" className="intro-backdrop">
         {renderVideo ? (
           <video
+            ref={videoRef}
+            onPlay={() => setIsVideoPaused(false)}
+            onPause={() => setIsVideoPaused(true)}
             autoPlay
             muted
             loop
@@ -126,6 +147,33 @@ export function IntroSection() {
               </span>
             </figcaption>
           </figure>
+
+          {/* The looping backdrop runs longer than five seconds, so it can be paused (WCAG 2.2.2). */}
+          {renderVideo ? (
+            <button
+              type="button"
+              aria-label={isVideoPaused ? hero.video.play : hero.video.pause}
+              title={isVideoPaused ? hero.video.play : hero.video.pause}
+              onClick={toggleVideo}
+              className="icon-button hero-video-toggle"
+            >
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                className="h-4 w-4"
+                fill="currentColor"
+              >
+                {isVideoPaused ? (
+                  <path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z" />
+                ) : (
+                  <>
+                    <rect x="6.5" y="5" width="4" height="14" rx="1" />
+                    <rect x="13.5" y="5" width="4" height="14" rx="1" />
+                  </>
+                )}
+              </svg>
+            </button>
+          ) : null}
         </Reveal>
 
         <section id="about" className="intro-about">

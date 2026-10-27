@@ -46,9 +46,12 @@ export function Reveal({
           observer.unobserve(entry.target);
         }
       },
+      // Reveal as soon as the top edge clears the bottom of the viewport. A
+      // visibility threshold would keep tall blocks (project cards on phones)
+      // blank while they are already partly on screen.
       {
-        rootMargin: '0px 0px -8% 0px',
-        threshold: 0.12,
+        rootMargin: '0px 0px -6% 0px',
+        threshold: 0,
       },
     );
 
