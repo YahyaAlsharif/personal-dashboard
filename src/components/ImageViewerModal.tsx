@@ -40,7 +40,7 @@ export function ImageViewerModal({
   // Portalled so a transformed ancestor (the reveal animation) cannot trap the overlay.
   return createPortal(
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center overscroll-contain bg-black/70 p-3 sm:p-6"
+      className="dialog-backdrop fixed inset-0 z-50 flex items-center justify-center overscroll-contain bg-black/70 p-3 sm:p-6"
       role="presentation"
       onMouseDown={(event) => {
         if (event.target === event.currentTarget) {
@@ -53,7 +53,7 @@ export function ImageViewerModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby="image-viewer-title"
-        className="flex max-h-[92vh] w-full max-w-[min(100%,110rem)] flex-col overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-card-strong)] shadow-2xl shadow-black/30 sm:w-auto"
+        className="dialog-panel flex max-h-[92vh] w-full max-w-[min(100%,110rem)] flex-col overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-card-strong)] shadow-2xl shadow-black/30 sm:w-auto"
       >
         <header className="flex items-start justify-between gap-4 border-b border-[var(--color-border)] bg-[var(--color-card)] px-4 py-3 sm:px-5">
           <div className="min-w-0">

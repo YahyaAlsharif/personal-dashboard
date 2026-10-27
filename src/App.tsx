@@ -1,7 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 
 import { SiteHeader } from './components/SiteHeader';
+import { withViewTransition } from './components/withViewTransition';
+import type { Language } from './context/language';
 import { LanguageProvider } from './context/LanguageContext';
+import { readStorage, writeStorage } from './context/storage';
 import { useLanguage } from './context/useLanguage';
 import { localizedContent } from './data/content';
 import { ContactSection } from './sections/ContactSection';
@@ -24,7 +27,7 @@ const themeColors: Record<Theme, string> = {
 
 /** Light is the default presentation; a saved choice always wins. */
 const getInitialTheme = (): Theme => {
-  const savedTheme = localStorage.getItem('theme');
+  const savedTheme = readStorage('theme');
 
   if (savedTheme === 'light' || savedTheme === 'dark') {
     return savedTheme;
@@ -38,27 +41,49 @@ function Dashboard() {
   const { language, setLanguage } = useLanguage();
   const content = localizedContent[language];
 
-  useEffect(() => {
-    document.documentElement.dataset.theme = theme;
+  // A layout effect, so the new theme is in place before a view transition
+  // captures the page.
+  useLayoutEffect(() => {
+    const root = document.documentElement;
+
+    // Every colour switches at once instead of buttons and cards easing on
+    // their own timers; the forced style read commits the change untransitioned.
+    root.classList.add('theme-switching');
+    root.dataset.theme = theme;
+    window.getComputedStyle(root).getPropertyValue('color');
+    root.classList.remove('theme-switching');
+
     document.querySelector('meta[name="theme-color"]')?.setAttribute('content', themeColors[theme]);
-    localStorage.setItem('theme', theme);
+    writeStorage('theme', theme);
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme((currentTheme) => (currentTheme === 'dark' ? 'light' : 'dark'));
+    withViewTransition(() => {
+      setTheme((currentTheme) => (currentTheme === 'dark' ? 'light' : 'dark'));
+    });
+  };
+
+  const changeLanguage = (nextLanguage: Language) => {
+    if (nextLanguage !== language) {
+      withViewTransition(() => setLanguage(nextLanguage));
+    }
   };
 
   return (
     <div className="min-h-screen bg-[var(--color-page)] text-[var(--color-body)]">
+      <a href="#main" className="skip-link">
+        {content.header.skipToContent}
+      </a>
+
       <SiteHeader
         header={content.header}
         language={language}
-        onLanguageChange={setLanguage}
+        onLanguageChange={changeLanguage}
         theme={theme}
         onThemeToggle={toggleTheme}
       />
 
-      <main key={language} className="language-content">
+      <main id="main" tabIndex={-1}>
         <IntroSection />
         <SkillsSection />
         <ExperienceSection />

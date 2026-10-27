@@ -2,7 +2,10 @@
 
 This is Yahya Alsharif's personal dashboard / portfolio website. It introduces
 his AI engineering and software engineering background, experience, projects,
-certificates, CV, and contact links in a clean one-page static site.
+certificates, CV, and contact links in a clean one-page static site, in
+English and Arabic with light and dark themes.
+
+Live site: https://yahyaalsharif.github.io/personal-dashboard/
 
 ## Stack
 
@@ -72,8 +75,9 @@ folder, which is intentionally kept out of the public repository.
 
 ## Deployment
 
-The site can be deployed later through GitHub Pages or another static host such
-as Cloudflare Pages, Netlify, or Vercel.
+Every push to `main` runs `.github/workflows/deploy.yml`, which builds the site
+and publishes `dist/` to GitHub Pages. `vite.config.ts` sets the base path to
+`/personal-dashboard/`; change it if the site moves to another path or host.
 
 ## License
 

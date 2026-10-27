@@ -93,9 +93,10 @@ export function PostsSection() {
                     </span>
                     <span className="min-w-0">
                       <span className="milestone-option-title block">{post.title}</span>
-                      {isCurrent ? (
-                        <span className="milestone-option-description block">{post.description}</span>
-                      ) : null}
+                      {/* Always rendered so the selected item can open smoothly; hidden ones stay out of the button name. */}
+                      <span aria-hidden={!isCurrent} className="milestone-option-detail">
+                        <span className="milestone-option-description">{post.description}</span>
+                      </span>
                     </span>
                   </button>
                 </li>

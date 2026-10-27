@@ -229,12 +229,13 @@ article[id] {
   }
 }
 
+/* Content settles in once as it scrolls into view: short, ease-out, small travel. */
 .reveal {
   opacity: 0;
-  transform: translateY(12px);
+  transform: translateY(10px);
   transition:
-    opacity 600ms ease-out,
-    transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 450ms ease-out,
+    transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
   transition-delay: var(--reveal-delay, 0ms);
 }
 
@@ -243,8 +244,51 @@ article[id] {
   transform: translateY(0);
 }
 
-.language-content {
-  animation: language-fade 260ms ease-out;
+/* A reveal inside a reveal rides along with its parent instead of fading twice. */
+.reveal .reveal {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+/* Theme changes swap every colour at once (see App.tsx). */
+.theme-switching,
+.theme-switching *,
+.theme-switching *::before,
+.theme-switching *::after {
+  transition: none !important;
+}
+
+/* Theme and language changes crossfade the whole page where supported. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 220ms;
+  animation-timing-function: ease-out;
+}
+
+.skip-link {
+  position: fixed;
+  inset-block-start: 0.75rem;
+  inset-inline-start: 0.75rem;
+  z-index: 60;
+  border-radius: 0.625rem;
+  background: var(--color-primary);
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-primary-text);
+  transform: translateY(-200%);
+}
+
+.skip-link:focus-visible {
+  transform: none;
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+/* The skip-link target is a landmark, not a control; it needs no ring. */
+main:focus {
+  outline: none;
 }
 
 .localized-inline {
@@ -498,24 +542,26 @@ article[id] {
   color: var(--color-heading);
 }
 
-.site-nav-link::after {
-  content: '';
+/* One underline shared by all links. SiteHeader sets its position and width
+   as a transform (a 1px bar scaled to the link), so moving it never relays out. */
+.site-nav-indicator {
   position: absolute;
-  inset-inline: 0;
+  /* Physical, because the measured offset is physical in both directions. */
+  left: 0;
   bottom: -0.125rem;
   height: 2px;
-  border-radius: 2px;
+  width: 1px;
   background: var(--color-teal);
   opacity: 0;
-  transform: scaleX(0.4);
+  pointer-events: none;
+  transform-origin: 0 50%;
   transition:
-    opacity 200ms ease,
-    transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+    transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 200ms ease-out;
 }
 
-.site-nav-link[aria-current='true']::after {
+.site-nav-indicator[data-visible='true'] {
   opacity: 1;
-  transform: scaleX(1);
 }
 
 .site-nav-link:focus-visible,
@@ -537,6 +583,9 @@ article[id] {
   background: var(--color-card-strong);
   padding: 0.5rem;
   box-shadow: var(--shadow-overlay);
+  /* Opens from the menu button above it; closing is instant. */
+  transform-origin: top;
+  animation: menu-enter 180ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .mobile-nav[hidden] {
@@ -565,6 +614,7 @@ article[id] {
 
 @media (min-width: 1024px) {
   .site-nav {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 1.75rem;
@@ -770,6 +820,20 @@ article[id] {
   border-block-start: 1px solid var(--color-border);
   padding: 0.75rem 1rem;
   text-align: center;
+}
+
+/* Sits in the gap under the portrait, on the same side in both languages. */
+.hero-video-toggle {
+  position: absolute;
+  top: calc(100% + 0.75rem);
+  right: 0;
+  height: 2.25rem;
+  width: 2.25rem;
+  color: var(--color-muted);
+}
+
+.hero-video-toggle:hover {
+  color: var(--color-heading);
 }
 
 .intro-about-columns {
@@ -1307,6 +1371,15 @@ article[id] {
   box-shadow: 0 0 0 1px var(--color-border);
 }
 
+/* Dialogs settle in from the page (ease-out, under 250ms) and close at once. */
+.dialog-backdrop {
+  animation: dialog-backdrop-enter 180ms ease-out;
+}
+
+.dialog-panel {
+  animation: dialog-panel-enter 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 /* ---------------------------------------------------------------
    Certificates: compact cards; selected ones open a larger preview.
    --------------------------------------------------------------- */
@@ -1333,12 +1406,29 @@ article[id] {
   cursor: pointer;
   transition:
     border-color 180ms ease,
-    background-color 180ms ease;
+    background-color 180ms ease,
+    transform 120ms ease;
 }
 
-.certificate-card--interactive:hover {
-  border-color: var(--color-border-strong);
-  background: var(--color-card-strong);
+.certificate-card--interactive:active {
+  transform: scale(0.99);
+}
+
+/* The card is the stable hover target; only the thumbnail inside it moves. */
+.certificate-thumb img {
+  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Hover effects only where a pointer can hover, so taps never leave them stuck. */
+@media (hover: hover) {
+  .certificate-card--interactive:hover {
+    border-color: var(--color-border-strong);
+    background: var(--color-card-strong);
+  }
+
+  .certificate-card--interactive:hover .certificate-thumb img {
+    transform: scale(1.05);
+  }
 }
 
 .certificate-card--interactive:focus-visible {
@@ -1485,11 +1575,36 @@ article[id] {
   line-height: 1.45;
 }
 
+/* The selected milestone's description opens smoothly: a 0fr to 1fr grid row
+   animates to the content's natural height without measuring it. */
+.milestone-option-detail {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition:
+    grid-template-rows 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 200ms ease-out;
+}
+
+.milestone-option[aria-current='true'] .milestone-option-detail {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
 .milestone-option-description {
-  margin-block-start: 0.375rem;
+  display: block;
+  min-height: 0;
+  overflow: hidden;
   font-size: 0.875rem;
   line-height: 1.6;
   color: var(--color-prose);
+}
+
+/* Spacing lives inside the clipped box; padding would keep collapsed rows open. */
+.milestone-option-description::before {
+  content: '';
+  display: block;
+  height: 0.375rem;
 }
 
 .milestone-controls {
@@ -1678,20 +1793,29 @@ article[id] {
     display: none;
   }
 
-  .language-content {
-    animation: none;
-  }
-
   .reveal {
     opacity: 1;
     transform: none;
     transition: none;
   }
 
+  .mobile-nav,
+  .dialog-backdrop,
+  .dialog-panel {
+    animation: none;
+  }
+
   .btn,
   .btn:active,
-  .evidence-zoom:active {
+  .evidence-zoom:active,
+  .certificate-card--interactive:active,
+  .certificate-card--interactive:hover .certificate-thumb img {
     transform: none;
+  }
+
+  .milestone-option-detail,
+  .site-nav-indicator {
+    transition: none;
   }
 
   .embed-skeleton-avatar,
@@ -1699,7 +1823,6 @@ article[id] {
     animation: none;
   }
 
-  .site-nav-link::after,
   .embed-frame iframe {
     transition: none;
   }
@@ -1758,14 +1881,22 @@ article[id] {
   }
 }
 
-@keyframes language-fade {
+@keyframes menu-enter {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(-4px) scale(0.98);
   }
+}
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
+@keyframes dialog-backdrop-enter {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes dialog-panel-enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.98);
   }
 }

@@ -24,7 +24,7 @@ export function ThemeToggle({ theme, onToggle, labels }: ThemeToggleProps) {
       <svg
         aria-hidden="true"
         viewBox="0 0 24 24"
-        className={`absolute h-[1.125rem] w-[1.125rem] transition duration-[600ms] ease-out motion-reduce:transform-none motion-reduce:transition-none ${
+        className={`absolute h-[1.125rem] w-[1.125rem] transition duration-300 ease-out motion-reduce:transform-none motion-reduce:transition-none ${
           isDark ? 'translate-y-3 scale-75 opacity-0' : 'translate-y-0 scale-100 opacity-100'
         }`}
         fill="none"
@@ -46,7 +46,7 @@ export function ThemeToggle({ theme, onToggle, labels }: ThemeToggleProps) {
       <svg
         aria-hidden="true"
         viewBox="0 0 24 24"
-        className={`absolute h-[1.125rem] w-[1.125rem] transition duration-[600ms] ease-out motion-reduce:transform-none motion-reduce:transition-none ${
+        className={`absolute h-[1.125rem] w-[1.125rem] transition duration-300 ease-out motion-reduce:transform-none motion-reduce:transition-none ${
           isDark ? 'translate-y-0 scale-100 opacity-100' : '-translate-y-3 scale-75 opacity-0'
         }`}
         fill="none"

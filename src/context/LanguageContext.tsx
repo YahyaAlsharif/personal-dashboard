@@ -2,9 +2,10 @@ import { useLayoutEffect, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 
 import { LanguageContext, type Language } from './language';
+import { readStorage, writeStorage } from './storage';
 
 const getInitialLanguage = (): Language => {
-  const savedLanguage = localStorage.getItem('language');
+  const savedLanguage = readStorage('language');
 
   return savedLanguage === 'ar' ? 'ar' : 'en';
 };
@@ -15,7 +16,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   useLayoutEffect(() => {
     document.documentElement.lang = language;
     document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
-    localStorage.setItem('language', language);
+    writeStorage('language', language);
   }, [language]);
 
   const value = useMemo(
